@@ -1,0 +1,6242 @@
+[
+  {
+    "id": "662b86c41afb9c00172dd31c",
+    "name": "Trần Quang Khải - Trần Khắc Chân",
+    "coordinates": {
+      "lon": 106.691054105759,
+      "lat": 10.7918902432446
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "5a6065c58576340017d06615",
+    "name": "Tô Ngọc Vân - TX25",
+    "coordinates": {
+      "lon": 106.677986383438,
+      "lat": 10.8797100979598
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "6623f4df6f998a001b2528eb",
+    "name": "Quốc Lộ 13 - cầu Ông Dầu",
+    "coordinates": {
+      "lon": 106.713809967041,
+      "lat": 10.8361932799182
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "662b7ce71afb9c00172dc676",
+    "name": "Cách Mạng Tháng Tám - Bùi Thị Xuân",
+    "coordinates": {
+      "lon": 106.691064834595,
+      "lat": 10.7726452614037
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "583f969161cfea0012cf68f7",
+    "name": "Nguyễn Thị Định - Đường D",
+    "coordinates": {
+      "lon": 106.781423091888,
+      "lat": 10.7646823693643
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "59ca317602eb490011a0a408",
+    "name": "QL1 - Tỉnh lộ 10 B (2)",
+    "coordinates": {
+      "lon": 106.593974232674,
+      "lat": 10.7492355507977
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "6623e8da6f998a001b2524a6",
+    "name": "Phan Đăng Lưu - Thích Quảng Đức",
+    "coordinates": {
+      "lon": 106.684530973434,
+      "lat": 10.8032933150268
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "56de42f611f398ec0c481299",
+    "name": "Võ Văn Kiệt - An Dương Vương 2",
+    "coordinates": {
+      "lon": 106.620351076126,
+      "lat": 10.7265671915496
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "66b1c426779f74001867415e",
+    "name": "Điện Biên Phủ - Nguyễn Gia Trí",
+    "coordinates": {
+      "lon": 106.715161800385,
+      "lat": 10.8010801833774
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "6623f1046f998a001b2527db",
+    "name": "Lũy Bán Bích - Thoại Ngọc Hầu",
+    "coordinates": {
+      "lon": 106.636122465134,
+      "lat": 10.7821519725547
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "5d9de4de766c880017188cbb",
+    "name": "Cao tốc LTDG - Võ Chí Công",
+    "coordinates": {
+      "lon": 106.790762543678,
+      "lat": 10.796827763223
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "6623f44f6f998a001b2528aa",
+    "name": "Võ Nguyên Giáp - Đỗ Xuân Hợp (1)",
+    "coordinates": {
+      "lon": 106.765716075897,
+      "lat": 10.8349709243101
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "662a881a1afb9c00172d2559",
+    "name": "Kinh Dương Vương - Tên Lửa",
+    "coordinates": {
+      "lon": 106.61497592926,
+      "lat": 10.7380517925754
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "662b4ecb1afb9c00172d8692",
+    "name": "Nguyễn Chí Thanh - Thuận Kiều",
+    "coordinates": {
+      "lon": 106.658009290695,
+      "lat": 10.7576784340111
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "5deb576d1dc17d7c5515ad15",
+    "name": "Lý Tự Trọng - Chu Mạnh Trinh",
+    "coordinates": {
+      "lon": 106.704602,
+      "lat": 10.781944
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "5b8b2323ca057700116405d0",
+    "name": "Trường Sơn - Ga Quốc Nội 2",
+    "coordinates": {
+      "lon": 106.664902567863,
+      "lat": 10.8129465937096
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "63ae7a50bfd3d90017e8f2b2",
+    "name": "Ba Tháng Hai – Sư Vạn Hạnh",
+    "coordinates": {
+      "lon": 106.670830249786,
+      "lat": 10.7697784337206
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "587ee0ecb807da0011e33d50",
+    "name": "Phan Đăng Lưu - Lê Văn Duyệt",
+    "coordinates": {
+      "lon": 106.696482896805,
+      "lat": 10.8019970541825
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "56de42f611f398ec0c48128f",
+    "name": "Võ Văn Kiệt - Huỳnh Mẫn Đạt",
+    "coordinates": {
+      "lon": 106.677197813988,
+      "lat": 10.751960277381
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "56de42f611f398ec0c4812a2",
+    "name": "Nút giao Mỹ Thủy 2",
+    "coordinates": {
+      "lon": 106.7755866,
+      "lat": 10.7701157
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "63bd1f21bfd3d90017ec3d04",
+    "name": "Huỳnh Tấn Phát - Phạm Hữu Lầu",
+    "coordinates": {
+      "lon": 106.737660169601,
+      "lat": 10.7052043577961
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "58df4d95dc195800111e04b9",
+    "name": "Phổ Quang - Hoàng Minh Giám",
+    "coordinates": {
+      "lon": 106.672879457474,
+      "lat": 10.8079619154301
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "586e28a0f9fab7001111b0b3",
+    "name": "Quốc lộ 1 - KCX Linh Trung 1",
+    "coordinates": {
+      "lon": 106.768741607666,
+      "lat": 10.872081942303
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "5d8cd4ee766c880017188946",
+    "name": "Lê Văn Sỹ - Huỳnh Văn Bánh",
+    "coordinates": {
+      "lon": 106.671452522278,
+      "lat": 10.7918902432446
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "662b81721afb9c00172dcc44",
+    "name": "Đinh Tiên Hoàng - Trần Quang Khải",
+    "coordinates": {
+      "lon": 106.696075201035,
+      "lat": 10.7927439077816
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "66b1c3c2779f740018674125",
+    "name": "Vòng xoay Mũi Tàu Phú Lâm",
+    "coordinates": {
+      "lon": 106.624095439911,
+      "lat": 10.7459416028391
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "5a8269c45058170011f6eae4",
+    "name": "Nguyễn Văn Quỳ - Cầu Phú Mỹ",
+    "coordinates": {
+      "lon": 106.7367374897,
+      "lat": 10.7409610852775
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "5822adbbedeb6c0012a2d65f",
+    "name": "Võ Văn Kiệt - Cầu Chữ Y 1",
+    "coordinates": {
+      "lon": 106.68367266655,
+      "lat": 10.7519444666594
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "6623e43e6f998a001b2522cb",
+    "name": "Nguyễn Thị Minh Khai - Bà Huyện Thanh Quan",
+    "coordinates": {
+      "lon": 106.690624952316,
+      "lat": 10.7748059039379
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "5a823e425058170011f6eaa4",
+    "name": "Đinh Tiên Hoàng - Võ Thị Sáu 1",
+    "coordinates": {
+      "lon": 106.695774793625,
+      "lat": 10.7917743133057
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "649da72ca6068200171a6dbb",
+    "name": "Tôn Đức Thắng - Hàm Nghi",
+    "coordinates": {
+      "lon": 106.70635342598,
+      "lat": 10.7710748334425
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "5a6088218576340017d06693",
+    "name": "QL1 - Nút giao An Lạc 2",
+    "coordinates": {
+      "lon": 106.601693630219,
+      "lat": 10.7235049089888
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "63b65fd8bfd3d90017eaa461",
+    "name": "Lê Văn Duyệt - Vũ Huy Tấn",
+    "coordinates": {
+      "lon": 106.696085929871,
+      "lat": 10.7956526724414
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "5deb576d1dc17d7c5515ad08",
+    "name": "Cộng Hòa - Tân Kỳ Tân Quý",
+    "coordinates": {
+      "lon": 106.637651324272,
+      "lat": 10.8041364085074
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "587c79e9b807da0011e33d3d",
+    "name": "Điện Biên Phủ - Nguyễn Văn Thương 2",
+    "coordinates": {
+      "lon": 106.718965172768,
+      "lat": 10.7986878751089
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "63b65ebebfd3d90017eaa3ae",
+    "name": "Nguyễn Hữu Cảnh - Ngô Tất Tố 2 (Dạ cầu Thủ Thiêm 1)",
+    "coordinates": {
+      "lon": 106.71642780304,
+      "lat": 10.7891447995017
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "5874769eb807da0011e33cec",
+    "name": "Cộng Hòa - Út Tịch 2",
+    "coordinates": {
+      "lon": 106.657757163048,
+      "lat": 10.8001053464053
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "63b660f8bfd3d90017eaa4ea",
+    "name": "Cầu Tân Thuận 2 - Q7 (Q7-Q4)",
+    "coordinates": {
+      "lon": 106.723862886429,
+      "lat": 10.7526506780822
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "58af994abd82540010390c37",
+    "name": "Nguyễn Hữu Cảnh - Tôn Đức Thắng",
+    "coordinates": {
+      "lon": 106.706235408783,
+      "lat": 10.7826315159924
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "56df8108c062921100c143db",
+    "name": "Hoàng Minh Giám - Hồng Hà",
+    "coordinates": {
+      "lon": 106.674022078514,
+      "lat": 10.8090315732439
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "63ae7903bfd3d90017e8f211",
+    "name": "Hậu Giang -  Hẻm 491",
+    "coordinates": {
+      "lon": 106.636669635773,
+      "lat": 10.7483923035435
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "63ae7727bfd3d90017e8f14a",
+    "name": "Hoàng Diệu - Đoàn Văn Bơ 2",
+    "coordinates": {
+      "lon": 106.703719496727,
+      "lat": 10.7635071530486
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "6623f36e6f998a001b252878",
+    "name": "Phạm Văn Đồng - Kha Vạn Cân 2",
+    "coordinates": {
+      "lon": 106.762282848358,
+      "lat": 10.8663923069317
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "5d9ddec9766c880017188c9c",
+    "name": "Nút giao Hàng Xanh 5 (Hàng Xanh - Bạch Đằng)",
+    "coordinates": {
+      "lon": 106.711503267288,
+      "lat": 10.8021551350728
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "5deb576d1dc17d7c5515ad02",
+    "name": "Điện Biên Phủ - Pasteur",
+    "coordinates": {
+      "lon": 106.691552996635,
+      "lat": 10.7843441648872
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "63ae79aabfd3d90017e8f26a",
+    "name": "Cách Mạng Tháng Tám - Trường Sơn",
+    "coordinates": {
+      "lon": 106.6664904356,
+      "lat": 10.7858618271433
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "5d8cd7fb766c880017188954",
+    "name": "Phạm Văn Đồng - Đường 20 (hướng đi Sân bay)",
+    "coordinates": {
+      "lon": 106.722366213799,
+      "lat": 10.8291383225836
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "63b66089bfd3d90017eaa4bd",
+    "name": "Nơ Trang Long - Chu Văn An",
+    "coordinates": {
+      "lon": 106.695753335953,
+      "lat": 10.8114079914905
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "63ae798abfd3d90017e8f255",
+    "name": "Cách Mạng Tháng Tám - Bắc Hải",
+    "coordinates": {
+      "lon": 106.664623618126,
+      "lat": 10.7869104851311
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "662a89f51afb9c00172d26ef",
+    "name": "Nguyễn Văn Linh - Trịnh Quang Nghị 2",
+    "coordinates": {
+      "lon": 106.634652614593,
+      "lat": 10.7024001433989
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "6318287ec9eae60017a19f36",
+    "name": "Nguyễn Thị Minh Khai - Đinh Tiên Hoàng 2",
+    "coordinates": {
+      "lon": 106.701729297638,
+      "lat": 10.7865626894198
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "6792f3058c5ed4001b27f58e",
+    "name": "Trần Văn Giàu - Cầu Đôi",
+    "coordinates": {
+      "lon": 106.505670547485,
+      "lat": 10.7937661942221
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "587476e3b807da0011e33cee",
+    "name": "Cộng Hòa - Út Tịch 1",
+    "coordinates": {
+      "lon": 106.657853722572,
+      "lat": 10.8010380283306
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "597bf277faa7ea0011c7c29f",
+    "name": "Cầu Phú Hữu 2",
+    "coordinates": {
+      "lon": 106.792302131653,
+      "lat": 10.8208924000834
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "5d9de49d766c880017188cb9",
+    "name": "Cao tốc LTDG - Đỗ Xuân Hợp 2",
+    "coordinates": {
+      "lon": 106.778848171234,
+      "lat": 10.7961796195486
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "5d9ddf49766c880017188ca0",
+    "name": "Nút giao Hàng Xanh 7 (Hàng Xanh - Cầu Văn Thánh)",
+    "coordinates": {
+      "lon": 106.712324023247,
+      "lat": 10.8012277259948
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "63ae763bbfd3d90017e8f0c4",
+    "name": "Lý Thái Tổ - Nguyễn Đình Chiểu",
+    "coordinates": {
+      "lon": 106.678780317307,
+      "lat": 10.7662581006404
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "5d8cda6a766c880017188960",
+    "name": "Phạm Văn Đồng - Kha Vạn Cân (hướng đi Sân bay)",
+    "coordinates": {
+      "lon": 106.743823885918,
+      "lat": 10.8411932946322
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "662b80e81afb9c00172dcbec",
+    "name": "Cách Mạng Tháng Tám - Sương Nguyệt Anh",
+    "coordinates": {
+      "lon": 106.690050959587,
+      "lat": 10.7730352321784
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "56df84abc062921100c143e5",
+    "name": "Nút giao Nguyễn Thái Sơn 3 (Phạm Văn Đồng)",
+    "coordinates": {
+      "lon": 106.679236292839,
+      "lat": 10.8142217306645
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "662a86a11afb9c00172d2410",
+    "name": "Tùng Thiện Vương - Cao Xuân Dục",
+    "coordinates": {
+      "lon": 106.65856719017,
+      "lat": 10.7456043005395
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "56de42f611f398ec0c48128b",
+    "name": "Võ Văn Kiệt - Nguyễn Văn Cừ 1",
+    "coordinates": {
+      "lon": 106.68691277504,
+      "lat": 10.7543213358374
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "58e49ff8d9d6200011e0b9d4",
+    "name": "Nam Kỳ Khởi Nghĩa - Trần Quốc Toản",
+    "coordinates": {
+      "lon": 106.687223911285,
+      "lat": 10.7863150164711
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "5a8241105058170011f6eaa6",
+    "name": "Đinh Tiên Hoàng - Võ Thị Sáu 2",
+    "coordinates": {
+      "lon": 106.695785522461,
+      "lat": 10.7919218604929
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "65e054fb6b18080018db6632",
+    "name": "Lê Duẩn - Mạc Đĩnh Chi",
+    "coordinates": {
+      "lon": 106.701187491417,
+      "lat": 10.7832164525575
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "5a825ded5058170011f6ead7",
+    "name": "Quốc lộ 50 - Cầu Ông Thìn (2)",
+    "coordinates": {
+      "lon": 106.655831336975,
+      "lat": 10.6484508725221
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "5d8cdb0a766c880017188964",
+    "name": "Trường Chinh - Xuân Hồng",
+    "coordinates": {
+      "lon": 106.651657819748,
+      "lat": 10.7937134991298
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "5a6082698576340017d06678",
+    "name": "QL1 - Trạm thu phí AS-AL 2",
+    "coordinates": {
+      "lon": 106.59654378891,
+      "lat": 10.7947673992211
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "6792efe48c5ed4001b27f336",
+    "name": "Xa Lộ Hà Nội - Cổng ĐH An ninh",
+    "coordinates": {
+      "lon": 106.808030605316,
+      "lat": 10.8735359428243
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "63b5503bbfd3d90017ea7ccc",
+    "name": "Nút giao Mỹ Thủy (7)",
+    "coordinates": {
+      "lon": 106.775082349777,
+      "lat": 10.7697468141455
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "662a873b1afb9c00172d2483",
+    "name": "Võ Trần Chí - Trần Văn Giàu 1",
+    "coordinates": {
+      "lon": 106.581823825836,
+      "lat": 10.7489509551128
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "66b1c3fa779f740018674146",
+    "name": "Nguyễn Hữu Cảnh - Ung Văn Khiêm",
+    "coordinates": {
+      "lon": 106.723707318306,
+      "lat": 10.7991305062692
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "5ad0621c98d8fc001102e268",
+    "name": "Lý Tự Trọng - Hai Bà Trưng 2",
+    "coordinates": {
+      "lon": 106.702335476875,
+      "lat": 10.779137682017
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "66b1c34d779f74001867409e",
+    "name": "Ba Tháng Hai - Thành Thái",
+    "coordinates": {
+      "lon": 106.666828393936,
+      "lat": 10.768197450899
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "56de42f611f398ec0c48128c",
+    "name": "Võ Văn Kiệt - Nguyễn Văn Cừ 2",
+    "coordinates": {
+      "lon": 106.6864407,
+      "lat": 10.7536415
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "662b558c1afb9c00172d8ed2",
+    "name": "625 Quang Trung",
+    "coordinates": {
+      "lon": 106.663491725922,
+      "lat": 10.8351289878163
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "6623f4836f998a001b2528bf",
+    "name": "Võ Nguyên Giáp - Đỗ Xuân Hợp (2)",
+    "coordinates": {
+      "lon": 106.765801906586,
+      "lat": 10.8354978023394
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "662b85bf1afb9c00172dd149",
+    "name": "Nam Kỳ Khởi Nghĩa - Hàm Nghi",
+    "coordinates": {
+      "lon": 106.701128482819,
+      "lat": 10.7709694352995
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "63b3c274bfd3d90017e9ab93",
+    "name": "Hồng Bàng - Phù Đổng Thiên Vương",
+    "coordinates": {
+      "lon": 106.662520766258,
+      "lat": 10.7546955197447
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "63b54bcdbfd3d90017ea7a82",
+    "name": "Tỉnh lộ 43 - KCX Linh Trung 2",
+    "coordinates": {
+      "lon": 106.718090772629,
+      "lat": 10.8960825794088
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "662b81a31afb9c00172dcc65",
+    "name": "Nam Kỳ Khởi Nghĩa - Võ Văn Tần",
+    "coordinates": {
+      "lon": 106.693907976151,
+      "lat": 10.7805394362678
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "63ae7b3cbfd3d90017e8f34d",
+    "name": "Ba Tháng Hai - Lý Thường Kiệt 3",
+    "coordinates": {
+      "lon": 106.659817099571,
+      "lat": 10.7644610285251
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "6318283cc9eae60017a19f0c",
+    "name": "Nguyễn Thị Minh Khai - Đinh Tiên Hoàng 1",
+    "coordinates": {
+      "lon": 106.701568365097,
+      "lat": 10.7866101161314
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "5deb576d1dc17d7c5515acf6",
+    "name": "Nút giao Ngã sáu Cộng Hòa",
+    "coordinates": {
+      "lon": 106.681205,
+      "lat": 10.765389
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "58746488b807da0011e33cd7",
+    "name": "Cầu vượt Sóng Thần 2",
+    "coordinates": {
+      "lon": 106.748507022858,
+      "lat": 10.8743050851613
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "662b83381afb9c00172dcf88",
+    "name": "Hai Bà Trưng - Nguyễn Đình Chiểu",
+    "coordinates": {
+      "lon": 106.695957183838,
+      "lat": 10.7846919631639
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "63b660d8bfd3d90017eaa4d5",
+    "name": "Cầu Tân Thuận 2 - Q7 (Q4-Q7)",
+    "coordinates": {
+      "lon": 106.723691225052,
+      "lat": 10.7527666230832
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "63ae7be0bfd3d90017e8f3a8",
+    "name": "Ba Tháng Hai - Lê Đại Hành 1",
+    "coordinates": {
+      "lon": 106.657199263573,
+      "lat": 10.7621527500863
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "63b54a04bfd3d90017ea783e",
+    "name": "Lê Văn Việt - Hoàng Hữu Nam",
+    "coordinates": {
+      "lon": 106.813673973084,
+      "lat": 10.8502078623705
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "63b54f70bfd3d90017ea7c86",
+    "name": "Cầu Sài Gòn (10)",
+    "coordinates": {
+      "lon": 106.726276874542,
+      "lat": 10.7985614089434
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "5a8267fe5058170011f6eae1",
+    "name": "Lê Văn Lương - Cầu Rạch Đĩa",
+    "coordinates": {
+      "lon": 106.697700619698,
+      "lat": 10.7235786992945
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "58746122b807da0011e33cc5",
+    "name": "Quốc lộ 1 - ĐH Nông Lâm 2",
+    "coordinates": {
+      "lon": 106.787940859795,
+      "lat": 10.8672299545045
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "63ae768dbfd3d90017e8f0f1",
+    "name": "Khánh Hội - Vĩnh Hội",
+    "coordinates": {
+      "lon": 106.701278686523,
+      "lat": 10.7560025246799
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "662a89ae1afb9c00172d26ad",
+    "name": "Nguyễn Văn Linh - Trịnh Quang Nghị",
+    "coordinates": {
+      "lon": 106.633536815643,
+      "lat": 10.7028218314316
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "63b54a70bfd3d90017ea7862",
+    "name": "Lã Xuân Oai - Đường D2",
+    "coordinates": {
+      "lon": 106.804490089417,
+      "lat": 10.830049838744
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "58e49783d9d6200011e0b9ce",
+    "name": "Trường Chinh - Phan Văn Hớn 2 (HM-Q12)",
+    "coordinates": {
+      "lon": 106.624760627747,
+      "lat": 10.8274733494884
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "5deb576d1dc17d7c5515ad0c",
+    "name": "Nút giao Ngã sáu Phù Đổng 1",
+    "coordinates": {
+      "lon": 106.693342,
+      "lat": 10.771135
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "6623ef776f998a001b252768",
+    "name": "Quốc Lộ 22 - Nguyễn Thị Sóc",
+    "coordinates": {
+      "lon": 106.602745056152,
+      "lat": 10.8616719345273
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "58d7bbf2c1e33c00112b3216",
+    "name": "Quốc lộ 1 - Đinh Đức Thiện 2",
+    "coordinates": {
+      "lon": 106.570794582367,
+      "lat": 10.6656266937569
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "662b51d21afb9c00172d89bf",
+    "name": "Tên Lửa - Đường số 7",
+    "coordinates": {
+      "lon": 106.610255241394,
+      "lat": 10.7521974381054
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "58746295b807da0011e33ccb",
+    "name": "Quốc lộ 1 - Bình Đường",
+    "coordinates": {
+      "lon": 106.758962273598,
+      "lat": 10.8752217316573
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "585b2baec3f96200127dc508",
+    "name": "Nguyễn Văn Linh - Huỳnh Tấn Phát 2",
+    "coordinates": {
+      "lon": 106.728331446648,
+      "lat": 10.7525452734972
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "5a606cd08576340017d06628",
+    "name": "BX Miền Đông - Đinh Bộ Lĩnh 2",
+    "coordinates": {
+      "lon": 106.71005487442,
+      "lat": 10.8144114199963
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "662b80051afb9c00172dcaf6",
+    "name": "Nguyễn Trãi - Nguyễn Cư Trinh",
+    "coordinates": {
+      "lon": 106.686580181122,
+      "lat": 10.7625269242757
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "589d0bceb3bf7600110283d6",
+    "name": "Cầu Sài Gòn 2 (dạ cầu)",
+    "coordinates": {
+      "lon": 106.727387309074,
+      "lat": 10.7990303873734
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "587ee2aeb807da0011e33d52",
+    "name": "Phan Đăng Lưu - Phan Xích Long",
+    "coordinates": {
+      "lon": 106.683232784271,
+      "lat": 10.8020392090947
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "662b5bc31afb9c00172d92e2",
+    "name": "Lê Trọng Tấn - Đường Kênh 19/5",
+    "coordinates": {
+      "lon": 106.615083217621,
+      "lat": 10.8093424582973
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "662b58401afb9c00172d90f5",
+    "name": "Hoàng Văn Thụ - Bùi Thị Xuân",
+    "coordinates": {
+      "lon": 106.661823391914,
+      "lat": 10.8006480938667
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "5874644cb807da0011e33cd5",
+    "name": "Cầu vượt Sóng Thần 1",
+    "coordinates": {
+      "lon": 106.750985383987,
+      "lat": 10.8758064874328
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "662b867b1afb9c00172dd250",
+    "name": "Trần Hưng Đạo - Ký Con",
+    "coordinates": {
+      "lon": 106.696676015854,
+      "lat": 10.7692988698081
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "597bf0b8faa7ea0011c7c293",
+    "name": "Cầu Phú Hữu 1",
+    "coordinates": {
+      "lon": 106.791679859161,
+      "lat": 10.8163926125139
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "5a10c79f02eb490011a0b0dd",
+    "name": "Mai Chí Thọ - Tố Hữu (C6)",
+    "coordinates": {
+      "lon": 106.716717481613,
+      "lat": 10.7713172490313
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "662b83ff1afb9c00172dcffb",
+    "name": "Lê Duẩn - Phạm Ngọc Thạch",
+    "coordinates": {
+      "lon": 106.698188781738,
+      "lat": 10.7805078178228
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "5deb576d1dc17d7c5515ad19",
+    "name": "Nguyễn Thị Minh Khai - Mạc Đĩnh Chi",
+    "coordinates": {
+      "lon": 106.699659,
+      "lat": 10.784426
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "5b6329fdfd4edb0019c7dc0b",
+    "name": "Nguyễn Trãi - Nguyễn Văn Cừ",
+    "coordinates": {
+      "lon": 106.684375405312,
+      "lat": 10.7596494601112
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "589add0fb3bf7600110283ae",
+    "name": "Tô Ký (Tỉnh lộ 15) - Đông Bắc",
+    "coordinates": {
+      "lon": 106.623339056969,
+      "lat": 10.8556133114939
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "5deb576d1dc17d7c5515ad01",
+    "name": "Võ Thị Sáu - Hai Bà Trưng",
+    "coordinates": {
+      "lon": 106.691815853119,
+      "lat": 10.7878590168447
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "58abbf72bd82540010390ba4",
+    "name": "Cầu Sài Gòn 9 (Bình Thạnh - Thủ Đức)",
+    "coordinates": {
+      "lon": 106.726319789886,
+      "lat": 10.7985614089434
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "6623f1f16f998a001b25281f",
+    "name": "Phạm Văn Đồng - Đào Trinh Nhất",
+    "coordinates": {
+      "lon": 106.759042739868,
+      "lat": 10.865064709737
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "58ad6961bd82540010390be5",
+    "name": "Nút giao Phú Nhuận 1 (Phan Đình Phùng)",
+    "coordinates": {
+      "lon": 106.680378913879,
+      "lat": 10.7990461956223
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "5a8257e25058170011f6eacd",
+    "name": "Hoàng Hữu Nam - Đường D400",
+    "coordinates": {
+      "lon": 106.814097762108,
+      "lat": 10.8700853140978
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "5a606dbc8576340017d0662b",
+    "name": "Điện Biên Phủ - Nguyễn Hữu Cảnh",
+    "coordinates": {
+      "lon": 106.721127033234,
+      "lat": 10.7978184191454
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "662b52a31afb9c00172d8b01",
+    "name": "Lê Đức Thọ - Hẻm 688",
+    "coordinates": {
+      "lon": 106.670604944229,
+      "lat": 10.846467192202
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "58abbee5bd82540010390ba2",
+    "name": "Cầu Sài Gòn 5 (dạ cầu Thủ Đức)",
+    "coordinates": {
+      "lon": 106.729398965836,
+      "lat": 10.7991621227557
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "662a8ef41afb9c00172d2af2",
+    "name": "Lê Văn Lương - Đường số 15",
+    "coordinates": {
+      "lon": 106.704325675964,
+      "lat": 10.7449876687987
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "6623f5b56f998a001b25292f",
+    "name": "Võ Nguyên Giáp - quay đầu An Phú (2)",
+    "coordinates": {
+      "lon": 106.746608018875,
+      "lat": 10.8022710610062
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "66b1c398779f7400186740e3",
+    "name": "Ba Tháng Hai - Tạ Uyên",
+    "coordinates": {
+      "lon": 106.653256416321,
+      "lat": 10.7601975506409
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "6623e31e6f998a001b252250",
+    "name": "Kỳ Đồng - Bà Huyện Thanh Quan",
+    "coordinates": {
+      "lon": 106.681677103043,
+      "lat": 10.7816671586319
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "5deb576d1dc17d7c5515acfe",
+    "name": "Lý Chính Thắng - Trương Định",
+    "coordinates": {
+      "lon": 106.683688759804,
+      "lat": 10.7825155824841
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "6792f3cf8c5ed4001b27f61e",
+    "name": "Tỉnh Lộ 8 - Cầu Phú Cường",
+    "coordinates": {
+      "lon": 106.643643379211,
+      "lat": 10.9771309811361
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "58df4e22dc195800111e04bb",
+    "name": "Yên Thế - Bạch Đằng",
+    "coordinates": {
+      "lon": 106.668593287468,
+      "lat": 10.8141637700114
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "58d7b3e8c1e33c00112b3207",
+    "name": "Quốc lộ 1 - Nguyễn Văn Linh",
+    "coordinates": {
+      "lon": 106.595363616943,
+      "lat": 10.6901498501196
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "5d8cdc57766c88001718896e",
+    "name": "Lý Thường Kiệt - Lạc Long Quân",
+    "coordinates": {
+      "lon": 106.652473211288,
+      "lat": 10.7904463853615
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "66f1266f538c780017c93579",
+    "name": "Hùng Vương - Nguyễn Chí Thanh",
+    "coordinates": {
+      "lon": 106.67405962944,
+      "lat": 10.760766720521
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "5ad0679598d8fc001102e274",
+    "name": "Lê Văn Việt - Man Thiện",
+    "coordinates": {
+      "lon": 106.786707043648,
+      "lat": 10.8452343413582
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "5a824b6c5058170011f6eaab",
+    "name": "Nút giao Bốn Xã 3 (Lê Văn Quới)",
+    "coordinates": {
+      "lon": 106.621397137642,
+      "lat": 10.773841521503
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "6623f0576f998a001b2527ac",
+    "name": "Âu Cơ - Thoại Ngọc Hầu",
+    "coordinates": {
+      "lon": 106.641583442688,
+      "lat": 10.7859250629045
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "62da3e840637a10017d7073d",
+    "name": "Quốc Lộ 13 - Đinh Thị Thi 3",
+    "coordinates": {
+      "lon": 106.71789765358,
+      "lat": 10.8451078948305
+    },
+    "type": "tth_axis",
+    "status": "UP"
+  },
+  {
+    "id": "56de42f611f398ec0c481288",
+    "name": "Võ Văn Kiệt - Cầu Ông Lãnh 1",
+    "coordinates": {
+      "lon": 106.697652339935,
+      "lat": 10.7637917349984
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "5d8cd614766c88001718894a",
+    "name": "Lê Quang Định - Nơ Trang Long",
+    "coordinates": {
+      "lon": 106.69519007206,
+      "lat": 10.8081937627675
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "5a824f975058170011f6eab8",
+    "name": "Nguyễn Oanh - Phan Văn Trị (2)",
+    "coordinates": {
+      "lon": 106.676913499832,
+      "lat": 10.8310719980749
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "5a824c3e5058170011f6eaae",
+    "name": "Nút giao Bốn Xã 1 (Bình Long)",
+    "coordinates": {
+      "lon": 106.621649265289,
+      "lat": 10.7738836803625
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "5deb576d1dc17d7c5515acf9",
+    "name": "Nút giao Công Trường Dân Chủ",
+    "coordinates": {
+      "lon": 106.68202,
+      "lat": 10.777768
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "587470c2b807da0011e33ce4",
+    "name": "Nguyễn Hữu Cảnh - Ngô Tất Tố (Cầu Thủ Thiêm 1)",
+    "coordinates": {
+      "lon": 106.715097427368,
+      "lat": 10.7892027649838
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "584e734a61cfea0012cf694f",
+    "name": "Quốc lộ 1 - Lê Trọng Tấn",
+    "coordinates": {
+      "lon": 106.60130739212,
+      "lat": 10.8162345391232
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "662b7f251afb9c00172dc8bc",
+    "name": "Nam Kỳ Khởi Nghĩa - Nguyễn Du",
+    "coordinates": {
+      "lon": 106.697995662689,
+      "lat": 10.7767873576075
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "6623ec826f998a001b252686",
+    "name": "Nguyễn Oanh - Lê Đức Thọ",
+    "coordinates": {
+      "lon": 106.676613092422,
+      "lat": 10.8419361769392
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "5deb576d1dc17d7c5515ad23",
+    "name": "Ba Tháng Hai - Lý Thường Kiệt",
+    "coordinates": {
+      "lon": 106.659903,
+      "lat": 10.763649
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "587efb60b807da0011e33d5d",
+    "name": "Phạm Văn Đồng - Lê Quang Định 1",
+    "coordinates": {
+      "lon": 106.689192652702,
+      "lat": 10.8192748027252
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "589ad89eb3bf7600110283ac",
+    "name": "Tô Ký (Tỉnh lộ 15) - Hẻm 146",
+    "coordinates": {
+      "lon": 106.633611917496,
+      "lat": 10.8486167661312
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "662b5adc1afb9c00172d925b",
+    "name": "Trường Chinh - Phan Huy Ích 1",
+    "coordinates": {
+      "lon": 106.629202365875,
+      "lat": 10.8235795946401
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "5b87c386ca057700116404a6",
+    "name": "Đường hầm (Đầu hầm Tp Thủ Đức)",
+    "coordinates": {
+      "lon": 106.715902090073,
+      "lat": 10.7710432140034
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "5d8cd542766c880017188948",
+    "name": "Võ Văn Ngân - Đặng Văn Bi",
+    "coordinates": {
+      "lon": 106.757980585098,
+      "lat": 10.8511456568495
+    },
+    "type": "tth_axis",
+    "status": "UP"
+  },
+  {
+    "id": "6623e8406f998a001b252465",
+    "name": "Phan Đăng Lưu - Hoàng Hoa Thám",
+    "coordinates": {
+      "lon": 106.692352294922,
+      "lat": 10.8031773894881
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "5875cef0b807da0011e33d14",
+    "name": "Trường Chinh - Phạm Văn Bạch 2",
+    "coordinates": {
+      "lon": 106.632796525955,
+      "lat": 10.8134629721378
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "5a823d555058170011f6eaa2",
+    "name": "Lý Tự Trọng - Hai Bà Trưng 1",
+    "coordinates": {
+      "lon": 106.702115535736,
+      "lat": 10.7791113331904
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "595da2853dcfc400106f2883",
+    "name": "Quốc lộ 1 - Đường 15 (1)",
+    "coordinates": {
+      "lon": 106.698827147484,
+      "lat": 10.8601019727034
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "587c8183b807da0011e33d3f",
+    "name": "Hoàng Văn Thụ - Trần Quốc Hoàn",
+    "coordinates": {
+      "lon": 106.662268638611,
+      "lat": 10.8013067666529
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "5deb576d1dc17d7c5515ad06",
+    "name": "Đinh Tiên Hoàng - Nguyễn Đình Chiểu",
+    "coordinates": {
+      "lon": 106.699558,
+      "lat": 10.788566
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "662b54711afb9c00172d8d4f",
+    "name": "90 Nguyễn Thái Sơn",
+    "coordinates": {
+      "lon": 106.680099964142,
+      "lat": 10.8160870038835
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "5a8279865058170011f6eaef",
+    "name": "Nguyễn Văn Linh - Phạm Hùng 2",
+    "coordinates": {
+      "lon": 106.677889823914,
+      "lat": 10.7275738904052
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "662b4faa1afb9c00172d875e",
+    "name": "Tháp Mười - Phạm Đình Hổ",
+    "coordinates": {
+      "lon": 106.649479866028,
+      "lat": 10.7497256871815
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "662a87641afb9c00172d24b0",
+    "name": "Võ Trần Chí - Trần Văn Giàu 2",
+    "coordinates": {
+      "lon": 106.580879688263,
+      "lat": 10.7492250102216
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "56de42f611f398ec0c4812a1",
+    "name": "Nút giao Mỹ Thủy 1",
+    "coordinates": {
+      "lon": 106.7747069,
+      "lat": 10.769926
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "63ae7669bfd3d90017e8f0d9",
+    "name": "Khánh Hội - Cầu Kênh Tẻ",
+    "coordinates": {
+      "lon": 106.702179908752,
+      "lat": 10.7528720275909
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "63b65e6abfd3d90017eaa361",
+    "name": "Nguyễn Thị Định - Thân Văn Nhiếp",
+    "coordinates": {
+      "lon": 106.754236221313,
+      "lat": 10.7903304548658
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "662a8fd41afb9c00172d2bac",
+    "name": "Nguyễn Lương Bằng - Phạm Hữu Lầu",
+    "coordinates": {
+      "lon": 106.732370853424,
+      "lat": 10.7045402040992
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "585b2b1ec3f96200127dc505",
+    "name": "Nguyễn Văn Linh - Huỳnh Tấn Phát 1",
+    "coordinates": {
+      "lon": 106.728594303131,
+      "lat": 10.7528825680397
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "5a825b7d5058170011f6ead4",
+    "name": "Nguyễn Văn Linh - Nguyễn Hữu Thọ (3)",
+    "coordinates": {
+      "lon": 106.700441837311,
+      "lat": 10.7282010989927
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "5a6069238576340017d0661c",
+    "name": "Bạch Đằng - Lê Quang Định",
+    "coordinates": {
+      "lon": 106.698435544968,
+      "lat": 10.8026188385378
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "662b857b1afb9c00172dd106",
+    "name": "Điện Biên Phủ - Nguyễn Bỉnh Khiêm",
+    "coordinates": {
+      "lon": 106.699739098549,
+      "lat": 10.7920852162229
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "56de42f611f398ec0c481298",
+    "name": "Võ Văn Kiệt - An Dương Vương 1",
+    "coordinates": {
+      "lon": 106.61993265152,
+      "lat": 10.7263616348268
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "63ae75f9bfd3d90017e8f097",
+    "name": "Cao Thắng – Võ Văn Tần 2",
+    "coordinates": {
+      "lon": 106.683275699615,
+      "lat": 10.769072262419
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "63ae7829bfd3d90017e8f1ac",
+    "name": "Nguyễn Tất Thành - Cầu Tân Thuận 1",
+    "coordinates": {
+      "lon": 106.719351410866,
+      "lat": 10.7564346782916
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "65e0556b6b18080018db665e",
+    "name": "Nguyễn Thái Học - Phạm Ngũ Lão",
+    "coordinates": {
+      "lon": 106.694637537003,
+      "lat": 10.7689774034613
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "662b81eb1afb9c00172dcc85",
+    "name": "Nguyễn Thị Minh Khai - Nguyễn Bỉnh Khiêm 2",
+    "coordinates": {
+      "lon": 106.703939437866,
+      "lat": 10.7882331590867
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "595dd9ac3dcfc400106f28b4",
+    "name": "Quốc lộ 1 - BQB Trước UBND Q12 (hướng đi An Sương)",
+    "coordinates": {
+      "lon": 106.653299331665,
+      "lat": 10.8619827649163
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "63b54d27bfd3d90017ea7ae5",
+    "name": "Xa lộ Hà Nội - Đường D1",
+    "coordinates": {
+      "lon": 106.787774562836,
+      "lat": 10.8581948267685
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "662a8cc51afb9c00172d2938",
+    "name": "Huỳnh Tấn Phát - Phú Thuận",
+    "coordinates": {
+      "lon": 106.732006072998,
+      "lat": 10.7307995207108
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "587654d3b807da0011e33d36",
+    "name": "Võ Chí Công - Đường số 2",
+    "coordinates": {
+      "lon": 106.767582893372,
+      "lat": 10.7625480044979
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "5990ffdbbec3b90016d2ad2d",
+    "name": "Đường hầm (Đầu hầm Tp Thủ Đức)",
+    "coordinates": {
+      "lon": 106.713402271271,
+      "lat": 10.7705847317646
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "5a8259035058170011f6eacf",
+    "name": "Nguyễn Văn Linh - Nguyễn Hữu Thọ (1)",
+    "coordinates": {
+      "lon": 106.700549125671,
+      "lat": 10.7291234621994
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "58744f1fb807da0011e33cbd",
+    "name": "Hưng Phú - Chánh Hưng 1",
+    "coordinates": {
+      "lon": 106.668984889984,
+      "lat": 10.7459679545654
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "63b54cffbfd3d90017ea7ad0",
+    "name": "Tỉnh lộ 43 - Chân cầu Gò Dưa",
+    "coordinates": {
+      "lon": 106.732392311096,
+      "lat": 10.8730512767713
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "589b4644b3bf7600110283ce",
+    "name": "Hà Huy Giáp - Cầu Phú Long 1",
+    "coordinates": {
+      "lon": 106.693124771118,
+      "lat": 10.8984214318454
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "5d8cd8e2766c880017188958",
+    "name": "Phạm Văn Đồng - Hiệp Bình (hướng đi Sân bay)",
+    "coordinates": {
+      "lon": 106.732848286629,
+      "lat": 10.8374050930507
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "63b54938bfd3d90017ea77f6",
+    "name": "Nguyễn Duy Trinh - Lã Xuân Oai",
+    "coordinates": {
+      "lon": 106.817160844803,
+      "lat": 10.8055485847835
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "6623ebd76f998a001b25264d",
+    "name": "Quốc Lộ 1 - Tô Ký",
+    "coordinates": {
+      "lon": 106.626455783844,
+      "lat": 10.8522309658882
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "5a6086e88576340017d0668a",
+    "name": "QL1-Cty Pouyuen (1)",
+    "coordinates": {
+      "lon": 106.594237089157,
+      "lat": 10.7485662234825
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "586e2995f9fab7001111b0b5",
+    "name": "Ung Văn Khiêm - Nguyễn Gia Trí (D2)",
+    "coordinates": {
+      "lon": 106.716395616531,
+      "lat": 10.8075192972885
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "5d8cd98d766c88001718895a",
+    "name": "Phạm Văn Đồng - Tô Ngọc Vân (hướng đi Bình Dương)",
+    "coordinates": {
+      "lon": 106.751462817192,
+      "lat": 10.8533952979021
+    },
+    "type": "tth_axis",
+    "status": "UP"
+  },
+  {
+    "id": "6623ee666f998a001b252726",
+    "name": "Quang Trung - Phan Huy Ích",
+    "coordinates": {
+      "lon": 106.640124320984,
+      "lat": 10.8442965283387
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "662b84c11afb9c00172dd0b5",
+    "name": "Nguyễn Thị Minh Khai - Phạm Ngọc Thạch",
+    "coordinates": {
+      "lon": 106.696933507919,
+      "lat": 10.7817830924671
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "662b51201afb9c00172d889a",
+    "name": "Hương Lộ 2 - Mã Lò",
+    "coordinates": {
+      "lon": 106.60413980484,
+      "lat": 10.7654465210122
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "56df8198c062921100c143dd",
+    "name": "Nút giao Thủ Đức (Võ Văn Ngân)",
+    "coordinates": {
+      "lon": 106.773784160614,
+      "lat": 10.8492753334826
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "5a6066608576340017d06617",
+    "name": "Quang Trung - Tân Sơn",
+    "coordinates": {
+      "lon": 106.647216081619,
+      "lat": 10.839438820585
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "6623ea416f998a001b25260a",
+    "name": "Phan Đình Phùng - Nguyễn Trọng Tuyển",
+    "coordinates": {
+      "lon": 106.681151390076,
+      "lat": 10.7971913554037
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "662b872d1afb9c00172dd36a",
+    "name": "Lê Văn Sỹ - Trần Quang Diệu",
+    "coordinates": {
+      "lon": 106.677889823914,
+      "lat": 10.7878115903301
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "6623e4b06f998a001b2522f1",
+    "name": "Nguyễn Thị Minh Khai - Nguyễn Thượng Hiền",
+    "coordinates": {
+      "lon": 106.686387062073,
+      "lat": 10.7703792050172
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "595dd3a63dcfc400106f28a7",
+    "name": "Quốc lộ 1 - Đường Tô Ngọc Vân 1",
+    "coordinates": {
+      "lon": 106.671018004417,
+      "lat": 10.8617667641718
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "56f8d743025e9511002786c5",
+    "name": "Trường Sơn - Ga Quốc Nội 1",
+    "coordinates": {
+      "lon": 106.664929389954,
+      "lat": 10.8128675561166
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "5a8266105058170011f6eadf",
+    "name": "Nguyễn Văn Linh - Quốc lộ 50 (2)",
+    "coordinates": {
+      "lon": 106.655761599541,
+      "lat": 10.7190774577163
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "662b5afe1afb9c00172d9284",
+    "name": "Trường Chinh - Phan Huy Ích 2",
+    "coordinates": {
+      "lon": 106.629813909531,
+      "lat": 10.8227260178037
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "5a82602c5058170011f6ead9",
+    "name": "Vĩnh Lộc - Nguyễn Thị Tú 1",
+    "coordinates": {
+      "lon": 106.579173803329,
+      "lat": 10.8135788937036
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "585b2980c3f96200127dc502",
+    "name": "Huỳnh Tấn Phát - Lưu Trọng Lư 2",
+    "coordinates": {
+      "lon": 106.727993488312,
+      "lat": 10.755127675229
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "56de42f611f398ec0c481284",
+    "name": "Nguyễn Thị Minh Khai - Nguyễn Thiện Thuật",
+    "coordinates": {
+      "lon": 106.682481765747,
+      "lat": 10.7664899801327
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "662b56c51afb9c00172d9071",
+    "name": "Bạch Đằng - Đặng Văn Sâm",
+    "coordinates": {
+      "lon": 106.671742200851,
+      "lat": 10.8146485314923
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "63ae7a08bfd3d90017e8f285",
+    "name": "Ba Tháng Hai - Lê Hồng Phong 1",
+    "coordinates": {
+      "lon": 106.673265695572,
+      "lat": 10.7710959130666
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "662a8b061afb9c00172d27d7",
+    "name": "Nguyễn Văn Linh - đường số 1",
+    "coordinates": {
+      "lon": 106.660873889923,
+      "lat": 10.7232729964823
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "587ee7d7b807da0011e33d55",
+    "name": "Phan Đăng Lưu - Nơ Trang Long",
+    "coordinates": {
+      "lon": 106.694852113724,
+      "lat": 10.8031879281753
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "5deb576d1dc17d7c5515ad17",
+    "name": "Nguyễn Thị Minh Khai - Hai Bà Trưng",
+    "coordinates": {
+      "lon": 106.698076,
+      "lat": 10.782987
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "662b51a41afb9c00172d8926",
+    "name": "Lê Văn Quới - Mã Lò",
+    "coordinates": {
+      "lon": 106.601006984711,
+      "lat": 10.7763973916927
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "63ae7893bfd3d90017e8f1e1",
+    "name": "Nguyễn Tất Thành - Lê Văn Linh",
+    "coordinates": {
+      "lon": 106.707345843315,
+      "lat": 10.7643450880206
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "662a8b9e1afb9c00172d284d",
+    "name": "đường dẫn cao tốc Thành Phố Hồ Chí Minh - Trung Lương - Tân Túc 1",
+    "coordinates": {
+      "lon": 106.585782766342,
+      "lat": 10.6882837981823
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "5a823ba75058170011f6ea9e",
+    "name": "Trần Hưng Đạo - Nguyễn Thái Học 1",
+    "coordinates": {
+      "lon": 106.695769429207,
+      "lat": 10.7682501504601
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "662b5a401afb9c00172d91fc",
+    "name": "Trường Chinh - Nguyễn Hồng Đào",
+    "coordinates": {
+      "lon": 106.6437292099,
+      "lat": 10.7980239271457
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "56df8544c062921100c143e6",
+    "name": "Trường Sơn - Ga Quốc Tế",
+    "coordinates": {
+      "lon": 106.665363907814,
+      "lat": 10.8136315853096
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "595ddb493dcfc400106f28b6",
+    "name": "Quốc lộ 1 - Cầu vượt Tân Thới Hiệp 2",
+    "coordinates": {
+      "lon": 106.649731993675,
+      "lat": 10.8620881310764
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "66b1c1f2779f740018673f0d",
+    "name": "An Dương Vương - Nguyễn Văn Cừ",
+    "coordinates": {
+      "lon": 106.683179140091,
+      "lat": 10.7611040058688
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "589b4379b3bf7600110283c9",
+    "name": "QL 22 - Giáp Hải",
+    "coordinates": {
+      "lon": 106.481675505638,
+      "lat": 10.9713380309812
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "5a60604f8576340017d0660b",
+    "name": "Nguyễn Thái Sơn - Nguyễn Văn Nghi 2",
+    "coordinates": {
+      "lon": 106.686376333237,
+      "lat": 10.8243172516762
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "5d8cd9cb766c88001718895c",
+    "name": "Phạm Văn Đồng - Tô Ngọc Vân (hướng đi Sân bay)",
+    "coordinates": {
+      "lon": 106.751317977905,
+      "lat": 10.8536007677866
+    },
+    "type": "tth_axis",
+    "status": "UP"
+  },
+  {
+    "id": "6623e6b86f998a001b2523b8",
+    "name": "Lý Thái Tổ - Hồ Thị Kỷ",
+    "coordinates": {
+      "lon": 106.676344871521,
+      "lat": 10.7669642785384
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "5a8256315058170011f6eac9",
+    "name": "Đinh Bộ Lĩnh - Nguyễn Xí",
+    "coordinates": {
+      "lon": 106.709566712379,
+      "lat": 10.8133575888573
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "5ad064b498d8fc001102e26f",
+    "name": "Lã Xuân Oai - Cầu Tăng Long (2)",
+    "coordinates": {
+      "lon": 106.805992126465,
+      "lat": 10.827699912827
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "58af8d68bd82540010390c2e",
+    "name": "Nam Kỳ Khởi Nghĩa - Điện Biên Phủ 2",
+    "coordinates": {
+      "lon": 106.690700054169,
+      "lat": 10.7833376554873
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "65e0552f6b18080018db6647",
+    "name": "Lê Lai - Phan Chu Trinh",
+    "coordinates": {
+      "lon": 106.697888374329,
+      "lat": 10.7717072215258
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "66b1c22f779f740018673f6e",
+    "name": "Vòng xoay Phú Lâm (2)",
+    "coordinates": {
+      "lon": 106.633923053741,
+      "lat": 10.7536309389593
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "662a8e121afb9c00172d2a3f",
+    "name": "Huỳnh Tấn Phát - cầu Tân Thuận 1",
+    "coordinates": {
+      "lon": 106.723868250847,
+      "lat": 10.7554228054478
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "662b5be91afb9c00172d939b",
+    "name": "Lê Trọng Tấn - Tây Thạnh",
+    "coordinates": {
+      "lon": 106.618773937225,
+      "lat": 10.8082464553192
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "5b728aafca0577001163ff7e",
+    "name": "Hồng Bàng - Châu Văn Liêm",
+    "coordinates": {
+      "lon": 106.658910512924,
+      "lat": 10.7548430851016
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "63ae7966bfd3d90017e8f240",
+    "name": "Cách Mạng Tháng Tám - Tô Hiến Thành",
+    "coordinates": {
+      "lon": 106.672096252441,
+      "lat": 10.7828791919741
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "662b4efc1afb9c00172d86bc",
+    "name": "Trần Hưng Đạo - Trần Phú",
+    "coordinates": {
+      "lon": 106.667847633362,
+      "lat": 10.7525663544172
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "5a607fa38576340017d06671",
+    "name": "QL1-KCN Vĩnh Lộc (2) - Hướng An Lạc",
+    "coordinates": {
+      "lon": 106.603088378906,
+      "lat": 10.8253815821995
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "662b87551afb9c00172dd43a",
+    "name": "Trần Quốc Thảo - Kỳ Đồng",
+    "coordinates": {
+      "lon": 106.683104038239,
+      "lat": 10.7848974801384
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "5deb576d1dc17d7c5515ad21",
+    "name": "Nút giao Ngã sáu Nguyễn Tri Phương",
+    "coordinates": {
+      "lon": 106.668851,
+      "lat": 10.759539
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "56de42f611f398ec0c481289",
+    "name": "Võ Văn Kiệt - Cầu Ông Lãnh 2",
+    "coordinates": {
+      "lon": 106.698285341263,
+      "lat": 10.7639024056841
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "58ad69c4bd82540010390be7",
+    "name": "Nút giao Phú Nhuận 2 (Phan Đăng Lưu)",
+    "coordinates": {
+      "lon": 106.680368185043,
+      "lat": 10.7993096663153
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "6623f5876f998a001b25291a",
+    "name": "Võ Nguyên Giáp - quay đầu An Phú (1)",
+    "coordinates": {
+      "lon": 106.745932102203,
+      "lat": 10.8021340576256
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "6623e2e16f998a001b252233",
+    "name": "Hai Bà Trưng - Trần Quốc Toản",
+    "coordinates": {
+      "lon": 106.689380407333,
+      "lat": 10.7899088890498
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "63b54898bfd3d90017ea77ae",
+    "name": "Nguyễn Duy Trinh - Bưng Ông Thoàn",
+    "coordinates": {
+      "lon": 106.796894073486,
+      "lat": 10.7912052020479
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "63b549b8bfd3d90017ea782c",
+    "name": "Đỗ Xuân Hợp - Tây Hòa",
+    "coordinates": {
+      "lon": 106.769192218781,
+      "lat": 10.8244331690453
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "662b5b271afb9c00172d9296",
+    "name": "Trường Chinh - Tân Hải",
+    "coordinates": {
+      "lon": 106.640210151672,
+      "lat": 10.7999419950356
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "662a87df1afb9c00172d2522",
+    "name": "Trần Văn Giàu - Nguyễn Cửu Phú",
+    "coordinates": {
+      "lon": 106.585021018982,
+      "lat": 10.7478547321893
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "5a823bd55058170011f6eaa0",
+    "name": "Trần Hưng Đạo - Nguyễn Thái Học 2",
+    "coordinates": {
+      "lon": 106.695860624313,
+      "lat": 10.7675334356397
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "5a6085688576340017d06684",
+    "name": "QL1-Tỉnh lộ 10 (3)",
+    "coordinates": {
+      "lon": 106.591758728027,
+      "lat": 10.756524271036
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "595dd7693dcfc400106f28b0",
+    "name": "Quốc lộ 1 - Đường Lê Thị Riêng 1",
+    "coordinates": {
+      "lon": 106.65426492691,
+      "lat": 10.8619248135124
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "59ca329d02eb490011a0a410",
+    "name": "QL1 - Nút giao An Lạc 1",
+    "coordinates": {
+      "lon": 106.601028442383,
+      "lat": 10.7240003578389
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "6623e88c6f998a001b25248b",
+    "name": "Hoàng Minh Giám - Đăng Văn Sâm",
+    "coordinates": {
+      "lon": 106.676033735275,
+      "lat": 10.8111972234488
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "63b54996bfd3d90017ea781a",
+    "name": "Đỗ Xuân Hợp - Dương Đình Hội",
+    "coordinates": {
+      "lon": 106.774277687073,
+      "lat": 10.8167087590452
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "56de42f611f398ec0c481283",
+    "name": "Mai Chí Thọ - Trần Não 1",
+    "coordinates": {
+      "lon": 106.72761797905,
+      "lat": 10.775796632403
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "662b57ec1afb9c00172d90e3",
+    "name": "Cộng Hòa - Hoàng Hoa Thám",
+    "coordinates": {
+      "lon": 106.64838552475,
+      "lat": 10.8018284344744
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "58af9670bd82540010390c34",
+    "name": "Phạm Văn Đồng - Phan Văn Trị 1",
+    "coordinates": {
+      "lon": 106.693714857101,
+      "lat": 10.8212296179772
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "662b50571afb9c00172d87df",
+    "name": "Quốc Lộ 50 - Bùi Minh Trực",
+    "coordinates": {
+      "lon": 106.656239032745,
+      "lat": 10.7375142028136
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "56df8274c062921100c143df",
+    "name": "Võ Nguyên Giáp - Tây Hòa 1",
+    "coordinates": {
+      "lon": 106.761032938957,
+      "lat": 10.8264933293527
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "662b52131afb9c00172d8a23",
+    "name": "Tỉnh lộ 10 - Mã Lò",
+    "coordinates": {
+      "lon": 106.606982946396,
+      "lat": 10.7581738268099
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "5a6061fd8576340017d06613",
+    "name": "Quang Trung - Trưng Nữ Vương",
+    "coordinates": {
+      "lon": 106.596522331238,
+      "lat": 10.8885285926454
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "6623f0246f998a001b252797",
+    "name": "Âu Cơ - Lũy Bán Bích",
+    "coordinates": {
+      "lon": 106.638236045837,
+      "lat": 10.7957475229889
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "6623f3436f998a001b252863",
+    "name": "Phạm Văn Đồng - Kha Vạn Cân 1",
+    "coordinates": {
+      "lon": 106.761660575867,
+      "lat": 10.8664976715355
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "66b1c311779f740018674083",
+    "name": "Vòng xoay Phú Lâm (1)",
+    "coordinates": {
+      "lon": 106.634910106659,
+      "lat": 10.7543371464344
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "662a896e1afb9c00172d2674",
+    "name": "Võ Trần Chí - Trần Đại Nghĩa",
+    "coordinates": {
+      "lon": 106.577425003052,
+      "lat": 10.7302724592873
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "59ca30fd02eb490011a0a406",
+    "name": "QL1 - Tỉnh lộ 10 (1)",
+    "coordinates": {
+      "lon": 106.591324210167,
+      "lat": 10.7564662992633
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "662a8cfe1afb9c00172d296e",
+    "name": "Huỳnh Tấn Phát - Trần Trọng Cung",
+    "coordinates": {
+      "lon": 106.729581356049,
+      "lat": 10.7433433113335
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "589b39d9b3bf7600110283c1",
+    "name": "QL 22 - Nguyễn Ảnh Thủ 2",
+    "coordinates": {
+      "lon": 106.607159972191,
+      "lat": 10.8554657956616
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "5d8cd326766c88001718893e",
+    "name": "Nút giao Cây Gõ 3 (dạ cầu)",
+    "coordinates": {
+      "lon": 106.643235683441,
+      "lat": 10.75418958083
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "587461c1b807da0011e33cc8",
+    "name": "Quốc lộ 1 - Ngã tư Linh Xuân",
+    "coordinates": {
+      "lon": 106.765501499176,
+      "lat": 10.8735570152435
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "63ae76afbfd3d90017e8f106",
+    "name": "Khánh Hội - Đường số 41",
+    "coordinates": {
+      "lon": 106.699776649475,
+      "lat": 10.7579524811918
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "63b661a3bfd3d90017eaa520",
+    "name": "Nguyễn Tất Thành - Cảng SG (Q4-Q7)",
+    "coordinates": {
+      "lon": 106.713321805,
+      "lat": 10.7596125693667
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "583f926761cfea0012cf68f1",
+    "name": "Nguyễn Thị Định - Cổng A Cảng Cát Lái",
+    "coordinates": {
+      "lon": 106.786578297615,
+      "lat": 10.7599709364081
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "56df81d8c062921100c143de",
+    "name": "Nút giao Thủ Đức (trên cầu)",
+    "coordinates": {
+      "lon": 106.774009466171,
+      "lat": 10.8491804998734
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "63ae73cebfd3d90017e8f00d",
+    "name": "Nguyễn Thị Minh Khai - Cống Quỳnh",
+    "coordinates": {
+      "lon": 106.684364676476,
+      "lat": 10.7684240589462
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "662a8a661afb9c00172d2762",
+    "name": "Nguyễn Văn Linh - Quản Trọng Linh",
+    "coordinates": {
+      "lon": 106.610469818115,
+      "lat": 10.6939873445986
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "6623e7526f998a001b252407",
+    "name": "Thành Thái - cư xá Đồng Tiến",
+    "coordinates": {
+      "lon": 106.666313409805,
+      "lat": 10.7694200783416
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "5a6084898576340017d06680",
+    "name": "QL1 - Tân Tạo Chợ Đệm 3",
+    "coordinates": {
+      "lon": 106.590535640717,
+      "lat": 10.7642238774455
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "56de42f611f398ec0c48129b",
+    "name": "Võ Văn Kiệt - Hồ Học Lãm 2",
+    "coordinates": {
+      "lon": 106.611467599869,
+      "lat": 10.721839351587
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "586e2492f9fab7001111b0ab",
+    "name": "Nguyễn Văn Trỗi - Nguyễn Đình Chính",
+    "coordinates": {
+      "lon": 106.675336360931,
+      "lat": 10.7955947082032
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "662b571d1afb9c00172d9083",
+    "name": "Cách Mạng Tháng Tám - Phạm Văn Hai (2)",
+    "coordinates": {
+      "lon": 106.660181879997,
+      "lat": 10.7892923479795
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "587479b1b807da0011e33cf9",
+    "name": "Trường Chinh - Tây Thạnh 2",
+    "coordinates": {
+      "lon": 106.628301143646,
+      "lat": 10.8189533898328
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "62da3e620637a10017d70720",
+    "name": "Quốc Lộ 13 - Đinh Thị Thi 2",
+    "coordinates": {
+      "lon": 106.718176603317,
+      "lat": 10.8456979781692
+    },
+    "type": "tth_axis",
+    "status": "UP"
+  },
+  {
+    "id": "5b0b7aba0e517b00119fd800",
+    "name": "Nguyễn Văn Cừ - Trần Hưng Đạo 1",
+    "coordinates": {
+      "lon": 106.685367822647,
+      "lat": 10.7563714363383
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "63b54909bfd3d90017ea77e4",
+    "name": "Nguyễn Duy Trinh - Võ Chí Công 2",
+    "coordinates": {
+      "lon": 106.792902946472,
+      "lat": 10.7909838807122
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "662a8ddd1afb9c00172d2a0f",
+    "name": "Nguyễn Văn Linh - cầu Tân Thuận 2",
+    "coordinates": {
+      "lon": 106.725064516068,
+      "lat": 10.752102573838
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "5d9de43b766c880017188cb6",
+    "name": "Cao tốc LTDG - Đỗ Xuân Hợp 1",
+    "coordinates": {
+      "lon": 106.778896450996,
+      "lat": 10.7965537514336
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "5d8cd3b7766c880017188942",
+    "name": "Lê Hồng Phong - Nguyễn Trãi",
+    "coordinates": {
+      "lon": 106.678184866905,
+      "lat": 10.7573411448313
+    },
+    "type": "tth_axis",
+    "status": "UP"
+  },
+  {
+    "id": "56de42f611f398ec0c48129a",
+    "name": "Võ Văn Kiệt - Hồ Học Lãm 1",
+    "coordinates": {
+      "lon": 106.610904335976,
+      "lat": 10.722239929521
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "662b57711afb9c00172d90a7",
+    "name": "Cộng Hòa - Đường A4",
+    "coordinates": {
+      "lon": 106.649898290634,
+      "lat": 10.8017125083701
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "63b54968bfd3d90017ea7808",
+    "name": "Nguyễn Duy Trinh - Đỗ Xuân Hợp",
+    "coordinates": {
+      "lon": 106.781616210938,
+      "lat": 10.7904358462274
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "58df5016dc195800111e04bd",
+    "name": "Yên Thế - Hồng Hà",
+    "coordinates": {
+      "lon": 106.668566465378,
+      "lat": 10.8133259738659
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "5d8cdac3766c880017188962",
+    "name": "Trường Chinh - Đồng Đen",
+    "coordinates": {
+      "lon": 106.645912528038,
+      "lat": 10.7970385413523
+    },
+    "type": "tth_axis",
+    "status": "UP"
+  },
+  {
+    "id": "587ef5dfb807da0011e33d59",
+    "name": "Nguyễn Văn Trỗi - Huỳnh Văn Bánh",
+    "coordinates": {
+      "lon": 106.679853200912,
+      "lat": 10.7928914544929
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "595dc2f03dcfc400106f2896",
+    "name": "Quốc lộ 1 - Rạch Láng Le 2",
+    "coordinates": {
+      "lon": 106.686226129532,
+      "lat": 10.8610924193788
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "662b85f51afb9c00172dd1c2",
+    "name": "Nguyễn Thị Nghĩa - Lê Lai",
+    "coordinates": {
+      "lon": 106.694197654724,
+      "lat": 10.7698416728609
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "5d8cdbdc766c88001718896a",
+    "name": "Hoàng Văn Thụ - Cộng Hòa",
+    "coordinates": {
+      "lon": 106.660782694817,
+      "lat": 10.8006744408059
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "63b54d5abfd3d90017ea7afe",
+    "name": "Đường số 1 - Cảng Phước Long",
+    "coordinates": {
+      "lon": 106.755888462067,
+      "lat": 10.8266672041268
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "5deb576d1dc17d7c5515ad13",
+    "name": "Pasteur - Lê Thánh Tôn",
+    "coordinates": {
+      "lon": 106.700359,
+      "lat": 10.775708
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "662b862a1afb9c00172dd1ff",
+    "name": "Hàm Nghi - Phó Đức Chính",
+    "coordinates": {
+      "lon": 106.699524521828,
+      "lat": 10.7711749616441
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "5deb576d1dc17d7c5515acf2",
+    "name": "Điện Biên Phủ - Cách Mạng Tháng Tám",
+    "coordinates": {
+      "lon": 106.683694124222,
+      "lat": 10.7765712954739
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "5a824e465058170011f6eab4",
+    "name": "Quang Trung - Lê Văn Thọ (2)",
+    "coordinates": {
+      "lon": 106.658325791359,
+      "lat": 10.8366990807787
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "662b57471afb9c00172d9095",
+    "name": "Cộng Hòa - Ấp Bắc",
+    "coordinates": {
+      "lon": 106.641572713852,
+      "lat": 10.8023975256098
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "56de42f611f398ec0c481291",
+    "name": "Võ Văn Kiệt - Nguyễn Tri Phương 1",
+    "coordinates": {
+      "lon": 106.668738126755,
+      "lat": 10.7503370389747
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "584e71cb61cfea0012cf694b",
+    "name": "Quốc lộ 1 - KCN Vĩnh Lộc 3",
+    "coordinates": {
+      "lon": 106.603265404701,
+      "lat": 10.8248968380735
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "63b54c93bfd3d90017ea7ab8",
+    "name": "Lê Văn Chí - Linh Trung",
+    "coordinates": {
+      "lon": 106.777850389481,
+      "lat": 10.8589007882855
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "595f874d3dcfc400106f28ec",
+    "name": "Quốc lộ 1 - Nguyễn Văn Quá 2",
+    "coordinates": {
+      "lon": 106.639571785927,
+      "lat": 10.8566669938921
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "63b3c9bfbfd3d90017e9b039",
+    "name": "Kha Vạn Cân - Đường Số 2",
+    "coordinates": {
+      "lon": 106.746854782104,
+      "lat": 10.8418834903115
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "5deb576d1dc17d7c5515acf4",
+    "name": "Nút giao Ngã bảy Lý Thái Tổ",
+    "coordinates": {
+      "lon": 106.674156,
+      "lat": 10.767465
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "58af99abbd82540010390c39",
+    "name": "Nguyễn Hữu Cảnh - Nguyễn Bỉnh Khiêm",
+    "coordinates": {
+      "lon": 106.707914471626,
+      "lat": 10.7846234574745
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "6623ecc16f998a001b25269e",
+    "name": "Nguyễn Oanh - Nguyễn Văn Lượng",
+    "coordinates": {
+      "lon": 106.675518751144,
+      "lat": 10.838553676621
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "6623e3ea6f998a001b2522ae",
+    "name": "Nguyễn Đình Chiểu - Cao Thắng",
+    "coordinates": {
+      "lon": 106.682138442993,
+      "lat": 10.7700419300508
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "662b7d0c1afb9c00172dc6a6",
+    "name": "Cống Quỳnh - Bùi Viện",
+    "coordinates": {
+      "lon": 106.690131425858,
+      "lat": 10.7652778808151
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "662b54bb1afb9c00172d8dbb",
+    "name": "Phạm Văn Chiêu - Đường số 59",
+    "coordinates": {
+      "lon": 106.652623414993,
+      "lat": 10.8502078623705
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "662b58bd1afb9c00172d9119",
+    "name": "Lê Văn Sỹ - Đặng Văn Ngữ",
+    "coordinates": {
+      "lon": 106.66899561882,
+      "lat": 10.7937556552044
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "595f86c43dcfc400106f28ea",
+    "name": "Quốc lộ 1 - Nguyễn Văn Quá 1",
+    "coordinates": {
+      "lon": 106.639485955238,
+      "lat": 10.8566248466676
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "59ca321b02eb490011a0a40d",
+    "name": "QL1 - Cầu An Lập",
+    "coordinates": {
+      "lon": 106.601784825325,
+      "lat": 10.7286174804458
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "5a82439f5058170011f6eaa9",
+    "name": "Nguyễn Biểu - Cầu Chữ Y",
+    "coordinates": {
+      "lon": 106.68364584446,
+      "lat": 10.75113811876
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "6623e5d66f998a001b25235a",
+    "name": "Cách Mạng Tháng Tám - Đỗ Thị Lời",
+    "coordinates": {
+      "lon": 106.670325994492,
+      "lat": 10.783880433226
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "58d7c20ac1e33c00112b321c",
+    "name": "Phạm Văn Đồng - Phan Văn Trị 2",
+    "coordinates": {
+      "lon": 106.69480919838,
+      "lat": 10.8207659432755
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "589d0b74b3bf7600110283d4",
+    "name": "Cầu Sài Gòn 4 (Thủ Đức 1)",
+    "coordinates": {
+      "lon": 106.730428934097,
+      "lat": 10.7997417577515
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "56df807bc062921100c143da",
+    "name": "Trường Chinh - Âu Cơ",
+    "coordinates": {
+      "lon": 106.63648724556,
+      "lat": 10.8019180137061
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "662b82a61afb9c00172dcdfd",
+    "name": "Trần Quang Khải - Trần Nhật Duật",
+    "coordinates": {
+      "lon": 106.689380407333,
+      "lat": 10.7916478442304
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "586e266ef9fab7001111b0b0",
+    "name": "Trường Chinh - Phạm Văn Bạch 1",
+    "coordinates": {
+      "lon": 106.633150577545,
+      "lat": 10.8140847327392
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "63ae7a74bfd3d90017e8f2c7",
+    "name": "Tô Hiến Thành – Sư Vạn Hạnh",
+    "coordinates": {
+      "lon": 106.665540933609,
+      "lat": 10.7778940148849
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "59d3414302eb490011a0a610",
+    "name": "Xa Lộ Hà Nội - Đường 120",
+    "coordinates": {
+      "lon": 106.803814172745,
+      "lat": 10.8674828287814
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "6623e9e96f998a001b2525ce",
+    "name": "Phan Đình Phùng - Huynh Văn Bánh",
+    "coordinates": {
+      "lon": 106.681923866272,
+      "lat": 10.7958634513952
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "63ae7a9cbfd3d90017e8f303",
+    "name": "Điện Biên Phủ – Cao Thắng",
+    "coordinates": {
+      "lon": 106.679091453552,
+      "lat": 10.7727295794518
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "5a6085188576340017d06682",
+    "name": "QL1-Tỉnh lộ 10 (2)",
+    "coordinates": {
+      "lon": 106.592434644699,
+      "lat": 10.7563292750288
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "5a606a0f8576340017d0661e",
+    "name": "Nơ Trang Long - Nguyễn Xí",
+    "coordinates": {
+      "lon": 106.704116463661,
+      "lat": 10.8200809679719
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "56de42f611f398ec0c481286",
+    "name": "Mai Chí Thọ - Nguyễn Cơ Thạch 2",
+    "coordinates": {
+      "lon": 106.722918748856,
+      "lat": 10.7733830435244
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "6623f14b6f998a001b2527f0",
+    "name": "Tân Kỳ Tân Quý - Lê Trọng Tấn",
+    "coordinates": {
+      "lon": 106.632571220398,
+      "lat": 10.8037570167341
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "662b4f411afb9c00172d86fc",
+    "name": "Hậu Giang - Minh Phụng",
+    "coordinates": {
+      "lon": 106.642361283302,
+      "lat": 10.7497836602495
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "6792f9c88c5ed4001b27fb3d",
+    "name": "Quốc Lộ 1K - Đường GS1",
+    "coordinates": {
+      "lon": 106.776037216187,
+      "lat": 10.8880966294513
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "662b843d1afb9c00172dd02d",
+    "name": "Lê Thánh Tôn - Đồng Khởi",
+    "coordinates": {
+      "lon": 106.701825857162,
+      "lat": 10.7771984022141
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "595d9b3b3dcfc400106f287e",
+    "name": "Quốc lộ 1 - An Phú Đông 12 (1)",
+    "coordinates": {
+      "lon": 106.70542538166,
+      "lat": 10.8592853785591
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "58df50ffdc195800111e04c0",
+    "name": "Cộng Hòa - Thăng Long",
+    "coordinates": {
+      "lon": 106.660755872726,
+      "lat": 10.8009484488364
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "662b50e51afb9c00172d886a",
+    "name": "Bà Hom - An Dương Vương",
+    "coordinates": {
+      "lon": 106.624610424042,
+      "lat": 10.7559709036596
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "5deb576d1dc17d7c5515ad1a",
+    "name": "Pasteur - Lê Duẩn",
+    "coordinates": {
+      "lon": 106.697417,
+      "lat": 10.779127
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "5deb576d1dc17d7c5515ad0b",
+    "name": "Nam Kỳ Khởi Nghĩa - Lý Tự Trọng",
+    "coordinates": {
+      "lon": 106.699042,
+      "lat": 10.775615
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "5a6087858576340017d0668e",
+    "name": "QL1-Trạm Biến Áp 500Kv Phú Lâm",
+    "coordinates": {
+      "lon": 106.598871946335,
+      "lat": 10.7414565055181
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "662b4e581afb9c00172d862f",
+    "name": "Lê Hồng Phong - Trần Phú",
+    "coordinates": {
+      "lon": 106.677095890045,
+      "lat": 10.7604188946108
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "587464e2b807da0011e33cd9",
+    "name": "Cầu vượt nút giao thông Gò Dưa",
+    "coordinates": {
+      "lon": 106.733132600784,
+      "lat": 10.8699588780888
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "63b54c51bfd3d90017ea7aa0",
+    "name": "Đường số 1 - Nguyễn Văn Bá",
+    "coordinates": {
+      "lon": 106.760228276253,
+      "lat": 10.8266882798502
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "58ad6214bd82540010390be2",
+    "name": "Cộng Hòa - Hoàng Hoa Thám",
+    "coordinates": {
+      "lon": 106.647366285324,
+      "lat": 10.8013120360293
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "5deb576d1dc17d7c5515ad09",
+    "name": "Trường Chinh - Hoàng Hoa Thám",
+    "coordinates": {
+      "lon": 106.647017598152,
+      "lat": 10.7964536316791
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "58af8a0bbd82540010390c25",
+    "name": "Nam Kỳ Khởi Nghĩa - Võ Thị Sáu",
+    "coordinates": {
+      "lon": 106.688543558121,
+      "lat": 10.784533873088
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "56de42f611f398ec0c48128e",
+    "name": "Võ Văn Kiệt - Cầu Chữ Y 2",
+    "coordinates": {
+      "lon": 106.684101819992,
+      "lat": 10.7514332528817
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "587ef859b807da0011e33d5b",
+    "name": "Phạm Văn Đồng - Lê Quang Định 2",
+    "coordinates": {
+      "lon": 106.689868569374,
+      "lat": 10.8200546227367
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "58744e97b807da0011e33cb9",
+    "name": "Dương Bá Trạc - Hẻm 219",
+    "coordinates": {
+      "lon": 106.689042448998,
+      "lat": 10.7469851294422
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "63b54a48bfd3d90017ea7850",
+    "name": "Lã Xuân Oai - Lò Lu",
+    "coordinates": {
+      "lon": 106.808009147644,
+      "lat": 10.8243804793376
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "58c2717ed56e930010a39ac0",
+    "name": "Quốc Lộ 50 - Cầu Nhị Thiên Đường 2",
+    "coordinates": {
+      "lon": 106.656062516536,
+      "lat": 10.7418073259385
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "58afcd9bbd82540010390c41",
+    "name": "Quốc lộ 1 - Nguyễn Hữu Trí 2",
+    "coordinates": {
+      "lon": 106.596699357033,
+      "lat": 10.6965544326304
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "63b54a9ebfd3d90017ea7911",
+    "name": "Nguyễn Xiển - Nguyễn Văn Tăng",
+    "coordinates": {
+      "lon": 106.828694343567,
+      "lat": 10.8428107736029
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "5bbc7163ca0577001164127f",
+    "name": "Lê Văn Lương - Cầu Long Kiểng (HCM)",
+    "coordinates": {
+      "lon": 106.702550053597,
+      "lat": 10.6895647333739
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "6623f3d66f998a001b252890",
+    "name": "Quốc Lộ 1K - đường số 8",
+    "coordinates": {
+      "lon": 106.769835948944,
+      "lat": 10.8822808688795
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "5b6005b6fd4edb0019c7db25",
+    "name": "Trần Hưng Đạo - Nguyễn Biểu",
+    "coordinates": {
+      "lon": 106.683527827263,
+      "lat": 10.7561079280569
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "662a902a1afb9c00172d2bed",
+    "name": "Quốc Lộ 1 - Hưng Nhơn",
+    "coordinates": {
+      "lon": 106.59907579422,
+      "lat": 10.7114030554397
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "662b85481afb9c00172dd0f1",
+    "name": "Võ Văn Kiệt - Pasteur",
+    "coordinates": {
+      "lon": 106.703091859818,
+      "lat": 10.7687191761474
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "6623ef2b6f998a001b252753",
+    "name": "Phan Văn Hớn - Trần Văn Mười",
+    "coordinates": {
+      "lon": 106.587703227997,
+      "lat": 10.8498285289366
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "66b1c4e7779f7400186741e4",
+    "name": "Hoàng Văn Thụ - Phạm Văn Hai",
+    "coordinates": {
+      "lon": 106.665455102921,
+      "lat": 10.8004004325254
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "56de42f611f398ec0c48129c",
+    "name": "Võ Văn Kiệt - Quốc Lộ 1",
+    "coordinates": {
+      "lon": 106.600942611694,
+      "lat": 10.7170534584198
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "587c8661b807da0011e33d43",
+    "name": "Lê Văn Sỹ - Hoàng Văn Thụ",
+    "coordinates": {
+      "lon": 106.660519838333,
+      "lat": 10.7999683420367
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "5b632a79fd4edb0019c7dc0f",
+    "name": "Nguyễn Tri Phương - Trần Hưng Đạo",
+    "coordinates": {
+      "lon": 106.669510602951,
+      "lat": 10.7524240581789
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "662a87a41afb9c00172d24e9",
+    "name": "Trần Văn Giàu - Tỉnh Lộ 10",
+    "coordinates": {
+      "lon": 106.569678783417,
+      "lat": 10.7617258747396
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "595dd4133dcfc400106f28a9",
+    "name": "Quốc lộ 1 - Đường Tô Ngọc Vân 2",
+    "coordinates": {
+      "lon": 106.671023368835,
+      "lat": 10.8619616916798
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "5ad0644698d8fc001102e26b",
+    "name": "Lã Xuân Oai - Cầu Tăng Long (1)",
+    "coordinates": {
+      "lon": 106.806828975677,
+      "lat": 10.82640375746
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "662b5b8c1afb9c00172d92ca",
+    "name": "Bình Long - Lê Thúc Hoạch",
+    "coordinates": {
+      "lon": 106.617207527161,
+      "lat": 10.7884439432433
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "5d8cd7bb766c880017188952",
+    "name": "Phạm Văn Đồng - Đường 20 (hướng đi Thủ Đức)",
+    "coordinates": {
+      "lon": 106.722747087479,
+      "lat": 10.8289275670072
+    },
+    "type": "tth_axis",
+    "status": "UP"
+  },
+  {
+    "id": "58af9a07bd82540010390c3b",
+    "name": "Tôn Đức Thắng - Lê Duẩn",
+    "coordinates": {
+      "lon": 106.703263521194,
+      "lat": 10.7852927046947
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "63ae75debfd3d90017e8f082",
+    "name": "Cao Thắng – Võ Văn Tần 1",
+    "coordinates": {
+      "lon": 106.683892607689,
+      "lat": 10.7685031082248
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "6623eb466f998a001b252632",
+    "name": "Hà Huy Giáp - An Lộc",
+    "coordinates": {
+      "lon": 106.679220199585,
+      "lat": 10.8536955999934
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "5a824dc05058170011f6eab2",
+    "name": "Quang Trung - Lê Văn Thọ (1)",
+    "coordinates": {
+      "lon": 106.658180952072,
+      "lat": 10.8366042431825
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "5d8cd49f766c880017188944",
+    "name": "Nguyễn Tri Phương - Nguyễn Trãi",
+    "coordinates": {
+      "lon": 106.669499874115,
+      "lat": 10.7547007899372
+    },
+    "type": "tth_axis",
+    "status": "UP"
+  },
+  {
+    "id": "662b836d1afb9c00172dcfa0",
+    "name": "Lê Duẩn - Nguyễn Bỉnh Khiêm",
+    "coordinates": {
+      "lon": 106.704819202423,
+      "lat": 10.7873373247725
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "5a606c078576340017d06624",
+    "name": "Quốc lộ 13 - Hiệp Bình",
+    "coordinates": {
+      "lon": 106.718916893005,
+      "lat": 10.8495545656016
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "5deb576d1dc17d7c5515acf3",
+    "name": "Ba Tháng Hai - Lý Thái Tổ",
+    "coordinates": {
+      "lon": 106.668459,
+      "lat": 10.768198
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "5a8254b05058170011f6eac3",
+    "name": "Xô Viết Nghệ Tĩnh - Nguyễn Xí 1",
+    "coordinates": {
+      "lon": 106.712254285812,
+      "lat": 10.809674419948
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "662b50c11afb9c00172d8843",
+    "name": "An Dương Vương - Đường số 7",
+    "coordinates": {
+      "lon": 106.624084711075,
+      "lat": 10.7517441974476
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "63ae77bfbfd3d90017e8f18f",
+    "name": "Nguyễn Tất Thành - Cầu Tân Thuận 2",
+    "coordinates": {
+      "lon": 106.717768907547,
+      "lat": 10.757040746338
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "6623f51a6f998a001b252900",
+    "name": "Quốc Lộ 13 - Nguyễn Thị Nhung",
+    "coordinates": {
+      "lon": 106.716363430023,
+      "lat": 10.8403450366927
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "5deb576d1dc17d7c5515ad0a",
+    "name": "Hoàng Văn Thụ - Xuân Diệu",
+    "coordinates": {
+      "lon": 106.655729,
+      "lat": 10.795418
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "58744e3eb807da0011e33cb7",
+    "name": "Dương Bá Trạc - Hẻm 288",
+    "coordinates": {
+      "lon": 106.688919067383,
+      "lat": 10.7444131987789
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "58744dd9b807da0011e33cb5",
+    "name": "Quốc lộ 50 - Tạ Quang Bửu",
+    "coordinates": {
+      "lon": 106.656190752983,
+      "lat": 10.7341621509602
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "56de42f611f398ec0c481290",
+    "name": "Võ Văn Kiệt - An Bình",
+    "coordinates": {
+      "lon": 106.673292517662,
+      "lat": 10.7493356862526
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "58af8b69bd82540010390c28",
+    "name": "Nam Kỳ Khởi Nghĩa - Điện Biên Phủ 1",
+    "coordinates": {
+      "lon": 106.69091463089,
+      "lat": 10.7832744191822
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "6623e3a26f998a001b252291",
+    "name": "Lý Chính Thắng - Trần Quốc Thảo",
+    "coordinates": {
+      "lon": 106.684466600418,
+      "lat": 10.7843863222755
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "595dcab53dcfc400106f289d",
+    "name": "Quốc lộ 1 - BQB Trước bến xe Ngã 4 Ga (hướng đi Bình Phước)",
+    "coordinates": {
+      "lon": 106.678490638733,
+      "lat": 10.861629788009
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "58ad7291bd82540010390bf9",
+    "name": "Phan Đăng Lưu - Nguyễn Văn Đậu",
+    "coordinates": {
+      "lon": 106.687197089195,
+      "lat": 10.8038413260585
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "662a89211afb9c00172d2636",
+    "name": "Quốc Lộ 1 - Dương Đình Cúc",
+    "coordinates": {
+      "lon": 106.597981452942,
+      "lat": 10.705952846726
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "5deb576d1dc17d7c5515ad05",
+    "name": "Điện Biên Phủ - Đinh Tiên Hoàng",
+    "coordinates": {
+      "lon": 106.697491,
+      "lat": 10.790705
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "595dd4f43dcfc400106f28ab",
+    "name": "Quốc lộ 1 - Cầu Bến Cát 1",
+    "coordinates": {
+      "lon": 106.663309335709,
+      "lat": 10.8616403246391
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "6792ef4f8c5ed4001b27f2c0",
+    "name": "Quốc Lộ 1 - Ba Làng",
+    "coordinates": {
+      "lon": 106.5558385849,
+      "lat": 10.6562217600296
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "662b84771afb9c00172dd076",
+    "name": "Nguyễn Du - Công xã Paris",
+    "coordinates": {
+      "lon": 106.700012683868,
+      "lat": 10.7790322866967
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "6623f0b46f998a001b2527c3",
+    "name": "Hòa Bình - Lũy Bán Bích",
+    "coordinates": {
+      "lon": 106.631401777267,
+      "lat": 10.7704213643614
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "665861d864f11e00173c73a9",
+    "name": "Huỳnh Tấn Phát - Cầu Tân Thuận 1",
+    "coordinates": {
+      "lon": 106.723374724388,
+      "lat": 10.7554702370632
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "5a607f078576340017d0666f",
+    "name": "QL1-Phan Văn Hớn (H.Hoc Mon)",
+    "coordinates": {
+      "lon": 106.606779098511,
+      "lat": 10.8344440453534
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "5a824ee15058170011f6eab6",
+    "name": "Nguyễn Oanh - Phan Văn Trị (1)",
+    "coordinates": {
+      "lon": 106.67790055275,
+      "lat": 10.8306083386046
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "6623ed396f998a001b2526b8",
+    "name": "Nguyễn Thái Sơn - Phạm Ngũ Lão",
+    "coordinates": {
+      "lon": 106.683468818665,
+      "lat": 10.820344420197
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "5b632b60fd4edb0019c7dc12",
+    "name": "Hồng Bàng - Ngô Quyền 1",
+    "coordinates": {
+      "lon": 106.666420698166,
+      "lat": 10.7557179353779
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "587c8d97b807da0011e33d49",
+    "name": "Hoàng Văn Thụ - Nguyễn Văn Trỗi 2",
+    "coordinates": {
+      "lon": 106.669188737869,
+      "lat": 10.8001000770077
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "59414c883dcfc400106f260b",
+    "name": "Cộng Hòa - Bình Giã",
+    "coordinates": {
+      "lon": 106.645107865334,
+      "lat": 10.8018653200436
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "56df82d4c062921100c143e0",
+    "name": "Võ Nguyên Giáp - Tây Hòa 2",
+    "coordinates": {
+      "lon": 106.760866641998,
+      "lat": 10.8264933293527
+    },
+    "type": "tth_axis",
+    "status": "UP"
+  },
+  {
+    "id": "6792f1008c5ed4001b27f41f",
+    "name": "Quốc Lộ 22 - Võ Văn Điều",
+    "coordinates": {
+      "lon": 106.452713012695,
+      "lat": 10.9882952554727
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "58affc6017139d0010f35cc8",
+    "name": "Phạm Văn Đồng - Quốc Lộ 13 (1)",
+    "coordinates": {
+      "lon": 106.714013814926,
+      "lat": 10.8262720340397
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "587463bab807da0011e33cd3",
+    "name": "Quốc lộ 1 - Lê Thị Hoa",
+    "coordinates": {
+      "lon": 106.748399734497,
+      "lat": 10.8747792130109
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "5deb576d1dc17d7c5515ad1c",
+    "name": "Hoàng Diệu - Nguyễn Tất Thành",
+    "coordinates": {
+      "lon": 106.707260012627,
+      "lat": 10.7652936908376
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "56de42f611f398ec0c481287",
+    "name": "Võ Văn Kiệt - Ký Con",
+    "coordinates": {
+      "lon": 106.700146794319,
+      "lat": 10.7654781410386
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "662b5c981afb9c00172d94c0",
+    "name": "Tân Kỳ Tân Quý - Tân Quý",
+    "coordinates": {
+      "lon": 106.619310379028,
+      "lat": 10.7994361321658
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "662a861e1afb9c00172d23ad",
+    "name": "Nguyễn Hữu Thọ - Phạm Hữu Lầu",
+    "coordinates": {
+      "lon": 106.718187332153,
+      "lat": 10.6954843759884
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "662b5a9c1afb9c00172d9240",
+    "name": "Trường Chinh - Nguyễn Thái Bình",
+    "coordinates": {
+      "lon": 106.650145053864,
+      "lat": 10.7946620093783
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "662a88a01afb9c00172d25d1",
+    "name": "Trần Văn Giàu - Đường Thanh Niên",
+    "coordinates": {
+      "lon": 106.517043113709,
+      "lat": 10.788032914001
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "662b4e201afb9c00172d85f9",
+    "name": "Hồng Bàng - Tạ Uyên",
+    "coordinates": {
+      "lon": 106.653825044632,
+      "lat": 10.7537258027461
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "5d8cdb4b766c880017188966",
+    "name": "Hoàng Văn Thụ - Út Tịch",
+    "coordinates": {
+      "lon": 106.658374071121,
+      "lat": 10.7980555437486
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "63b66051bfd3d90017eaa4a3",
+    "name": "Nơ Trang Long - Phan Văn Trị",
+    "coordinates": {
+      "lon": 106.695485115051,
+      "lat": 10.8112288386645
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "62da3e390637a10017d706ff",
+    "name": "Quốc Lộ 13 - Đinh Thị Thi 1",
+    "coordinates": {
+      "lon": 106.718230247498,
+      "lat": 10.8444440496827
+    },
+    "type": "tth_axis",
+    "status": "UP"
+  },
+  {
+    "id": "56f11ac33ac17b11001c504c",
+    "name": "Nguyễn Văn Trỗi - Hoàng Văn Thụ 1",
+    "coordinates": {
+      "lon": 106.668410897255,
+      "lat": 10.7996311002478
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "66b1c4a2779f74001867418c",
+    "name": "Lê Văn Sỹ - Phạm Văn Hai",
+    "coordinates": {
+      "lon": 106.664553880692,
+      "lat": 10.7971175831128
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "631813ebc9eae60017a196b0",
+    "name": "Cầu Sài Gòn 8 (Thủ Đức)",
+    "coordinates": {
+      "lon": 106.731228232384,
+      "lat": 10.7995520591487
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "587475abb807da0011e33cea",
+    "name": "Trường Sơn - Cửu Long",
+    "coordinates": {
+      "lon": 106.664789915085,
+      "lat": 10.8091738427151
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "5deb576d1dc17d7c5515ad0e",
+    "name": "Cách Mạng Tháng Tám - Nguyễn Đình Chiểu",
+    "coordinates": {
+      "lon": 106.686639,
+      "lat": 10.774969
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "5deb576d1dc17d7c5515ad11",
+    "name": "Nguyễn Đình Chiểu - Trương Định",
+    "coordinates": {
+      "lon": 106.689658,
+      "lat": 10.777922
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "587478d8b807da0011e33cf3",
+    "name": "Nút giao Bảy Hiền 1 (Cách Mạng Tháng Tám)",
+    "coordinates": {
+      "lon": 106.653594374657,
+      "lat": 10.7928387592472
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "5deb576d1dc17d7c5515acf8",
+    "name": "Ba Tháng Hai - Cao Thắng",
+    "coordinates": {
+      "lon": 106.67782,
+      "lat": 10.773823
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "591c6833a6bfb500119400a3",
+    "name": "Đặng Thúc Vịnh - Trịnh Thị Miếng",
+    "coordinates": {
+      "lon": 106.613377332687,
+      "lat": 10.890809558636
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "63ae7938bfd3d90017e8f226",
+    "name": "Quốc Lộ 1- Công ty Pouyen 3 (Cổng)",
+    "coordinates": {
+      "lon": 106.595476269722,
+      "lat": 10.7470852656437
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "63b664edbfd3d90017eaaa24",
+    "name": "CT Trung Lương - Võ Trần Chí 2",
+    "coordinates": {
+      "lon": 106.566883921623,
+      "lat": 10.6846307310993
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "56df83d8c062921100c143e3",
+    "name": "Nút giao Nguyễn Thái Sơn 1 (Hồng Hà)",
+    "coordinates": {
+      "lon": 106.678351163864,
+      "lat": 10.8140847327392
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "6623e5776f998a001b252337",
+    "name": "Trần Quang Diệu - Trường Sa",
+    "coordinates": {
+      "lon": 106.678436994553,
+      "lat": 10.7845127944049
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "59ca308302eb490011a0a403",
+    "name": "QL1 - Tân Tạo Chợ Đệm 1",
+    "coordinates": {
+      "lon": 106.590755581856,
+      "lat": 10.7672014274613
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "5deb576d1dc17d7c5515acfd",
+    "name": "Lý Chính Thắng - Nguyễn Thông",
+    "coordinates": {
+      "lon": 106.682181358337,
+      "lat": 10.7793063144528
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "56df8159c062921100c143dc",
+    "name": "Nút giao Thủ Đức (Lê Văn Việt)",
+    "coordinates": {
+      "lon": 106.774283051491,
+      "lat": 10.8490751291612
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "587ef2e4b807da0011e33d57",
+    "name": "Nguyễn Văn Trỗi - Nguyễn Trọng Tuyển",
+    "coordinates": {
+      "lon": 106.672310829163,
+      "lat": 10.7976866831738
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "589b3f7db3bf7600110283c6",
+    "name": "QL 22 - Nguyễn Văn Bứa 2",
+    "coordinates": {
+      "lon": 106.586925387383,
+      "lat": 10.8841088420888
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "6623e6706f998a001b25239b",
+    "name": "Hùng Vương - Trần Nhân Tôn",
+    "coordinates": {
+      "lon": 106.675046682358,
+      "lat": 10.7612726484012
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "662b86551afb9c00172dd227",
+    "name": "Trần Hưng Đạo - Calmette",
+    "coordinates": {
+      "lon": 106.697469949722,
+      "lat": 10.7702052976598
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "662a88521afb9c00172d2592",
+    "name": "Kinh Dương Vương - Hồ Học Lãm",
+    "coordinates": {
+      "lon": 106.607261896133,
+      "lat": 10.7281852870275
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "649da77ea6068200171a6dd4",
+    "name": "Tôn Đức Thắng - Công trường Mê Linh",
+    "coordinates": {
+      "lon": 106.70676112175,
+      "lat": 10.775301268578
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "63b3c59fbfd3d90017e9ace8",
+    "name": "Vĩnh Lộc - Quách Điêu",
+    "coordinates": {
+      "lon": 106.577596664429,
+      "lat": 10.8125250596398
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "58b5510817139d0010f35d4e",
+    "name": "Phạm Văn Đồng - Quốc Lộ 13 (2)",
+    "coordinates": {
+      "lon": 106.71435713768,
+      "lat": 10.8254711543978
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "5a824c905058170011f6eab0",
+    "name": "Nút giao Bốn Xã 2 (Hòa Bình)",
+    "coordinates": {
+      "lon": 106.62178337574,
+      "lat": 10.7736939654481
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "5deb576d1dc17d7c5515ad16",
+    "name": "Nguyễn Thị Minh Khai - Pasteur",
+    "coordinates": {
+      "lon": 106.695957,
+      "lat": 10.780518
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "63ae7c73bfd3d90017e8f3ed",
+    "name": "Lý Thường Kiệt - Tô Hiến Thành 2",
+    "coordinates": {
+      "lon": 106.658003926277,
+      "lat": 10.7708113380158
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "586e1d4ef9fab7001111b0a2",
+    "name": "Cộng Hòa - Đường C 18",
+    "coordinates": {
+      "lon": 106.651110649109,
+      "lat": 10.8016071209638
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "63195512c9eae60017a1c279",
+    "name": "Nguyễn Trãi - Cống Quỳnh 1",
+    "coordinates": {
+      "lon": 106.688103715542,
+      "lat": 10.7663399395947
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "6623df636f998a001b251e92",
+    "name": "Hai Bà Trưng - Trần Cao Vân",
+    "coordinates": {
+      "lon": 106.69704079628,
+      "lat": 10.7839015119534
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "5d8cdc9d766c880017188970",
+    "name": "Lạc Long Quân - Âu Cơ",
+    "coordinates": {
+      "lon": 106.647881269455,
+      "lat": 10.7747690150491
+    },
+    "type": "tth_axis",
+    "status": "UP"
+  },
+  {
+    "id": "6792f1b78c5ed4001b27f4a9",
+    "name": "Quốc Lộ 13 - Cầu Vĩnh Bình",
+    "coordinates": {
+      "lon": 106.716213226318,
+      "lat": 10.8682888641092
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "5a8254f25058170011f6eac5",
+    "name": "Xô Viết Nghệ Tĩnh - Nguyễn Xí 2",
+    "coordinates": {
+      "lon": 106.712415218353,
+      "lat": 10.8102803807443
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "63ae7c53bfd3d90017e8f3d8",
+    "name": "Lý Thường Kiệt - Tô Hiến Thành 1",
+    "coordinates": {
+      "lon": 106.658336520195,
+      "lat": 10.7704951431996
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "5deb576d1dc17d7c5515ad20",
+    "name": "Hồng Bàng - Ngô Quyền 2",
+    "coordinates": {
+      "lon": 106.666241,
+      "lat": 10.755881
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "5874796db807da0011e33cf7",
+    "name": "Trường Chinh - Tây Thạnh 1",
+    "coordinates": {
+      "lon": 106.630790233612,
+      "lat": 10.8199228965258
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "5deb576d1dc17d7c5515acfa",
+    "name": "Nút giao Công Trường Dân Chủ",
+    "coordinates": {
+      "lon": 106.681336,
+      "lat": 10.777664
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "58746536b807da0011e33cdc",
+    "name": "Cầu vượt Bình Phước 1",
+    "coordinates": {
+      "lon": 106.723519563675,
+      "lat": 10.8659497751896
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "662b4f7e1afb9c00172d872e",
+    "name": "Hậu Giang - Nguyễn Văn Luông",
+    "coordinates": {
+      "lon": 106.635103225708,
+      "lat": 10.7480971664479
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "662b59291afb9c00172d912b",
+    "name": "Lê Văn Sỹ - Nguyễn Trọng Tuyển",
+    "coordinates": {
+      "lon": 106.662569046021,
+      "lat": 10.7987511081718
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "5a6060a88576340017d0660d",
+    "name": "Nguyễn Thái Sơn - Phan Văn Trị  1",
+    "coordinates": {
+      "lon": 106.689493060112,
+      "lat": 10.8261245037402
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "63b65f33bfd3d90017eaa405",
+    "name": "Nguyễn Hữu Cảnh - Ngô Tất Tố 3 (Nhánh chính cầu Thủ Thiêm 1)",
+    "coordinates": {
+      "lon": 106.716953516006,
+      "lat": 10.7887970063747
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "5deb576d1dc17d7c5515ad1e",
+    "name": "Pasteur - Hàm Nghi",
+    "coordinates": {
+      "lon": 106.702639,
+      "lat": 10.770674
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "589b3705b3bf7600110283bd",
+    "name": "QL 22 - Nguyễn Ảnh Thủ 1",
+    "coordinates": {
+      "lon": 106.607385277748,
+      "lat": 10.8551338847726
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "63ae7759bfd3d90017e8f162",
+    "name": "Nguyễn Tất Thành - Cầu Khánh Hội",
+    "coordinates": {
+      "lon": 106.706036925316,
+      "lat": 10.7675070857977
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "63ae7709bfd3d90017e8f135",
+    "name": "Hoàng Diệu - Đoàn Văn Bơ 1",
+    "coordinates": {
+      "lon": 106.703810691834,
+      "lat": 10.7632541910898
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "662b55111afb9c00172d8e2e",
+    "name": "Quang Trung - Phạm Văn Chiêu",
+    "coordinates": {
+      "lon": 106.640725135803,
+      "lat": 10.8446442571047
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "649da419a6068200171a6c90",
+    "name": "Nguyễn Chí Thanh - Ngô Quyền",
+    "coordinates": {
+      "lon": 106.665605306625,
+      "lat": 10.759206770879
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "58afccadbd82540010390c3f",
+    "name": "Quốc lộ 1 - Nguyễn Hữu Trí 1",
+    "coordinates": {
+      "lon": 106.596463322639,
+      "lat": 10.6966335007055
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "662b82761afb9c00172dcda3",
+    "name": "Trần Quang Khải - Trần Nguyên Đán",
+    "coordinates": {
+      "lon": 106.694144010544,
+      "lat": 10.7923592320866
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "5deb576d1dc17d7c5515acf7",
+    "name": "Nút giao Ngã sáu Cộng Hòa",
+    "coordinates": {
+      "lon": 106.68172,
+      "lat": 10.765059
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "5d8cd767766c880017188950",
+    "name": "Phạm Văn Đồng - Nguyễn Xí (hướng đi Sân bay)",
+    "coordinates": {
+      "lon": 106.702968478203,
+      "lat": 10.8230474266509
+    },
+    "type": "tth_axis",
+    "status": "UP"
+  },
+  {
+    "id": "6792f16e8c5ed4001b27f482",
+    "name": "Cao tốc LT-DG - Trạm thu phí Long Phước",
+    "coordinates": {
+      "lon": 106.850624084473,
+      "lat": 10.7858829057319
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "5874656eb807da0011e33cde",
+    "name": "Cầu vượt Bình Phước 2",
+    "coordinates": {
+      "lon": 106.724211573601,
+      "lat": 10.8647433460363
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "6623e3566f998a001b25226d",
+    "name": "Lê Văn Sỹ - Trường Sa",
+    "coordinates": {
+      "lon": 106.680936813354,
+      "lat": 10.786135848679
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "5abbb6d698d8fc001102dfc8",
+    "name": "Nguyễn Văn Linh - Nguyễn Lương Bằng (1)",
+    "coordinates": {
+      "lon": 106.720451116562,
+      "lat": 10.7314425344033
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "56de42f611f398ec0c481296",
+    "name": "Võ Văn Kiệt - Cao Văn Lầu",
+    "coordinates": {
+      "lon": 106.650842428207,
+      "lat": 10.7442498171975
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "5deb576d1dc17d7c5515ad03",
+    "name": "Nam Kỳ Khởi Nghĩa - Nguyễn Đình Chiểu",
+    "coordinates": {
+      "lon": 106.692835092545,
+      "lat": 10.7814721788992
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "63ae777cbfd3d90017e8f177",
+    "name": "Nguyễn Tất Thành - Đoàn Như Hài",
+    "coordinates": {
+      "lon": 106.706455349922,
+      "lat": 10.7667745592657
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "631828cac9eae60017a19f50",
+    "name": "Nguyễn Thị Minh Khai - Nguyễn Bỉnh Khiêm 1",
+    "coordinates": {
+      "lon": 106.703531742096,
+      "lat": 10.7887074232314
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "63b3c2fbbfd3d90017e9abbf",
+    "name": "Cầu Sài Gòn 1 (dạ cầu Bình Thạnh)",
+    "coordinates": {
+      "lon": 106.724379211664,
+      "lat": 10.7980089972696
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "58d7c2e6c1e33c00112b321e",
+    "name": "Trường Chinh - Phan Văn Hớn 1 (Q12-HM)",
+    "coordinates": {
+      "lon": 106.625425815582,
+      "lat": 10.8269833398213
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "63b54ad1bfd3d90017ea7974",
+    "name": "Võ Chí Công - Liên Phường 1",
+    "coordinates": {
+      "lon": 106.792543530464,
+      "lat": 10.8045368770814
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "662b5b481afb9c00172d92a8",
+    "name": "Trường Chinh - Trương Công Định",
+    "coordinates": {
+      "lon": 106.641937494278,
+      "lat": 10.7990461956223
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "56de42f611f398ec0c48129e",
+    "name": "Đồng Văn Cống - Phan Văn Đáng",
+    "coordinates": {
+      "lon": 106.7572618,
+      "lat": 10.7785053
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "5d9dddb9766c880017188c96",
+    "name": "Nút giao Hàng Xanh 2 (ĐH Hồng Bàng)",
+    "coordinates": {
+      "lon": 106.706600189209,
+      "lat": 10.7998787622235
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "5d8cd372766c880017188940",
+    "name": "Nút giao Cây Gõ 2 (Minh Phụng)",
+    "coordinates": {
+      "lon": 106.643267869949,
+      "lat": 10.7550275416962
+    },
+    "type": "tth_axis",
+    "status": "UP"
+  },
+  {
+    "id": "5ad06a0d98d8fc001102e27b",
+    "name": "Vĩnh Lộc - Nguyễn Thị Tú 2",
+    "coordinates": {
+      "lon": 106.579318642616,
+      "lat": 10.8135578170586
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "5a60839c8576340017d0667c",
+    "name": "QL1 - Hương Lộ 2 (2)",
+    "coordinates": {
+      "lon": 106.591436862946,
+      "lat": 10.769962881176
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "63b65f64bfd3d90017eaa41f",
+    "name": "Xô Viết Nghệ Tĩnh - Đường D5",
+    "coordinates": {
+      "lon": 106.711615920067,
+      "lat": 10.8068184838962
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "58746371b807da0011e33cd1",
+    "name": "Quốc lộ 1 - Đường 14",
+    "coordinates": {
+      "lon": 106.775951385498,
+      "lat": 10.8696796650458
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "63bd1e95bfd3d90017ec3cd5",
+    "name": "Nguyễn Lương Bằng - Hoàng Quốc Việt",
+    "coordinates": {
+      "lon": 106.731684207916,
+      "lat": 10.7131108376067
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "63ae7cd3bfd3d90017e8f408",
+    "name": "Lạc Long Quân - Ông Ích Khiêm",
+    "coordinates": {
+      "lon": 106.64261341095,
+      "lat": 10.7667007795163
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "5d8cd70e766c88001718894e",
+    "name": "Phạm Văn Đồng - Nguyễn Xí (hướng đi Thủ Đức)",
+    "coordinates": {
+      "lon": 106.703445911407,
+      "lat": 10.8228313977916
+    },
+    "type": "tth_axis",
+    "status": "UP"
+  },
+  {
+    "id": "58b555ac17139d0010f35d59",
+    "name": "Tùng Thiện Vương - Cầu Nhị Thiên Đường",
+    "coordinates": {
+      "lon": 106.656072735786,
+      "lat": 10.7443815765443
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "595ddc123dcfc400106f28ba",
+    "name": "Quốc lộ 1 - Cầu vượt Tân Thới Hiệp 1",
+    "coordinates": {
+      "lon": 106.649812459946,
+      "lat": 10.8617509592331
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "587460aab807da0011e33cc2",
+    "name": "Quốc lộ 1 - ĐH Nông Lâm 1",
+    "coordinates": {
+      "lon": 106.788429021835,
+      "lat": 10.8671930769878
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "662a8f701afb9c00172d2b5e",
+    "name": "Nguyễn Thị Thập - Lê Văn Lương",
+    "coordinates": {
+      "lon": 106.703596115112,
+      "lat": 10.739928078758
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "63b55020bfd3d90017ea7cb7",
+    "name": "Nút giao Mỹ Thủy (6)",
+    "coordinates": {
+      "lon": 106.77515745163,
+      "lat": 10.7702738066308
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "6623eec96f998a001b25273b",
+    "name": "Quang Trung - Thống Nhất",
+    "coordinates": {
+      "lon": 106.664371490479,
+      "lat": 10.8346442594662
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "662b4d781afb9c00172d8571",
+    "name": "An Dương Vương - Lê Hồng Phong",
+    "coordinates": {
+      "lon": 106.677567958832,
+      "lat": 10.7589116443632
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "5a606a958576340017d06621",
+    "name": "Đinh Bộ Lĩnh - Bạch Đằng 3",
+    "coordinates": {
+      "lon": 106.709464788437,
+      "lat": 10.8028664980496
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "662a8c381afb9c00172d28b6",
+    "name": "Dương Bá Trạc - đường 9A",
+    "coordinates": {
+      "lon": 106.689584255218,
+      "lat": 10.7388529049553
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "63b6617ebfd3d90017eaa50b",
+    "name": "Nguyễn Tất Thành - Cảng SG (Q7-Q4)",
+    "coordinates": {
+      "lon": 106.713917255402,
+      "lat": 10.7592436616732
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "56de42f611f398ec0c48129d",
+    "name": "Quốc lộ 1 - Trần Đại Nghĩa",
+    "coordinates": {
+      "lon": 106.600669026375,
+      "lat": 10.7223980522437
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "56de42f611f398ec0c481292",
+    "name": "Võ Văn Kiệt - Phạm Phú Thứ",
+    "coordinates": {
+      "lon": 106.645520925522,
+      "lat": 10.7413616378753
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "5deb576d1dc17d7c5515acff",
+    "name": "Hai Bà Trưng - Lý Chính Thắng",
+    "coordinates": {
+      "lon": 106.687554,
+      "lat": 10.791464
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "662b58791afb9c00172d9107",
+    "name": "255 Hoàng Văn Thụ",
+    "coordinates": {
+      "lon": 106.664301753044,
+      "lat": 10.8005216285264
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "662b811d1afb9c00172dcc1d",
+    "name": "Trần Hưng Đạo - Nguyễn Cư Trinh",
+    "coordinates": {
+      "lon": 106.692867279053,
+      "lat": 10.7650143803183
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "662a8eb41afb9c00172d2aba",
+    "name": "Nguyễn Văn Linh - Nguyễn Thị Thập 2",
+    "coordinates": {
+      "lon": 106.721824407578,
+      "lat": 10.7379990877391
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "63b548ecbfd3d90017ea77d2",
+    "name": "Nguyễn Duy Trinh - Võ Chí Công 1",
+    "coordinates": {
+      "lon": 106.791990995407,
+      "lat": 10.7909628024813
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "5deb576d1dc17d7c5515acfb",
+    "name": "Võ Thị Sáu - Bà Huyện Thanh Quan",
+    "coordinates": {
+      "lon": 106.684262752533,
+      "lat": 10.7801863634439
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "6792f03d8c5ed4001b27f378",
+    "name": "Quốc Lộ 50 - Cổng chào Long An",
+    "coordinates": {
+      "lon": 106.657032966614,
+      "lat": 10.6424723207925
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "6623e7076f998a001b2523ea",
+    "name": "Lý Thái Tổ - Sư Vạn Hạnh",
+    "coordinates": {
+      "lon": 106.671495437622,
+      "lat": 10.7677758540786
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "5aab1f852d266a0017e5afd4",
+    "name": "Võ Chí Công - Cầu Phú Mỹ",
+    "coordinates": {
+      "lon": 106.754032373428,
+      "lat": 10.7496677141024
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "5d8cda2e766c88001718895e",
+    "name": "Phạm Văn Đồng - Kha Vạn Cân (hướng đi Quốc lộ 1)",
+    "coordinates": {
+      "lon": 106.74354493618,
+      "lat": 10.840819218446
+    },
+    "type": "tth_axis",
+    "status": "UP"
+  },
+  {
+    "id": "586e25e1f9fab7001111b0ae",
+    "name": "Trường Chinh - Tân Kỳ Tân Quý",
+    "coordinates": {
+      "lon": 106.635918617249,
+      "lat": 10.8037728247342
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "63ae76ddbfd3d90017e8f11b",
+    "name": "Khánh Hội -  Hoàng Diệu",
+    "coordinates": {
+      "lon": 106.698489189148,
+      "lat": 10.7596389198989
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "5deb576d1dc17d7c5515ad14",
+    "name": "Lý Tự Trọng - Đồng Khởi",
+    "coordinates": {
+      "lon": 106.701037287712,
+      "lat": 10.7778940148849
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "63b66035bfd3d90017eaa48e",
+    "name": "Nơ Trang Long - Nguyễn Huy Lượng (Bệnh viện Ung Bướu)",
+    "coordinates": {
+      "lon": 106.695023775101,
+      "lat": 10.8053483512381
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "585b284ac3f96200127dc500",
+    "name": "Huỳnh Tấn Phát - Lưu Trọng Lư 1",
+    "coordinates": {
+      "lon": 106.727795004845,
+      "lat": 10.7545321437295
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "5deb576d1dc17d7c5515ad04",
+    "name": "Võ Thị Sáu - Pasteur",
+    "coordinates": {
+      "lon": 106.690008044243,
+      "lat": 10.7860304558102
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "5a8278f35058170011f6eaed",
+    "name": "Nguyễn Văn Linh - Phạm Hùng 1",
+    "coordinates": {
+      "lon": 106.677117347717,
+      "lat": 10.7284488196731
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "662b830e1afb9c00172dcf50",
+    "name": "Cách Mạng Tháng Tám - Võ Văn Tần",
+    "coordinates": {
+      "lon": 106.688017845154,
+      "lat": 10.7743421575788
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "5a6084208576340017d0667e",
+    "name": "QL1 - Tân Tạo Chợ Đệm 2",
+    "coordinates": {
+      "lon": 106.590557098389,
+      "lat": 10.7661000008843
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "63b54aedbfd3d90017ea79c3",
+    "name": "Võ Chí Công - Liên Phường 2",
+    "coordinates": {
+      "lon": 106.791937351227,
+      "lat": 10.8049478837466
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "586e20a0f9fab7001111b0a7",
+    "name": "Nguyễn Kiệm - Hồ Văn Huê",
+    "coordinates": {
+      "lon": 106.6783618927,
+      "lat": 10.8062968247449
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "5b0b7bbe0e517b00119fd806",
+    "name": "Nguyễn Văn Cừ - Trần Hưng Đạo 2",
+    "coordinates": {
+      "lon": 106.685357093811,
+      "lat": 10.7563925169909
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "6623edd26f998a001b2526f7",
+    "name": "Vòng xoay Gò Vấp (2)",
+    "coordinates": {
+      "lon": 106.679542064667,
+      "lat": 10.8267936584446
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "5a8255a55058170011f6eac7",
+    "name": "BX Miền Đông - Đinh Bộ Lĩnh 1",
+    "coordinates": {
+      "lon": 106.711433529854,
+      "lat": 10.8168141411482
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "56de42f611f398ec0c481294",
+    "name": "Đường hầm - Đầu Quận 1",
+    "coordinates": {
+      "lon": 106.702040433884,
+      "lat": 10.7675334356397
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "587ed91db807da0011e33d4e",
+    "name": "Phan Đăng Lưu - Đinh Tiên Hoàng 2",
+    "coordinates": {
+      "lon": 106.697963476181,
+      "lat": 10.8024818353159
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "63b54dcbbfd3d90017ea7ba8",
+    "name": "Quốc Lộ 1 - Cổng ĐH Quốc gia TPHCM",
+    "coordinates": {
+      "lon": 106.793847084045,
+      "lat": 10.865338658848
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "6623ed9b6f998a001b2526cd",
+    "name": "Vòng xoay Gò Vấp (1)",
+    "coordinates": {
+      "lon": 106.680099964142,
+      "lat": 10.8260981590362
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "58b5752e17139d0010f35d5f",
+    "name": "Nam Kỳ Khởi Nghĩa -Nguyễn Thị Minh Khai 2",
+    "coordinates": {
+      "lon": 106.695173978806,
+      "lat": 10.7794696770349
+    },
+    "type": "tth_axis",
+    "status": "UP"
+  },
+  {
+    "id": "58175c81edeb6c0012a2d5c2",
+    "name": "Mai Chí Thọ - Trần Não 2",
+    "coordinates": {
+      "lon": 106.727376580238,
+      "lat": 10.7757228548636
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "631812e6c9eae60017a19567",
+    "name": "Cầu Sài Gòn 11 (Bình Thạnh)",
+    "coordinates": {
+      "lon": 106.723358631134,
+      "lat": 10.7980818909152
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "6623e7b76f998a001b25242d",
+    "name": "Đinh Bộ Lĩnh - Bùi Đình Túy",
+    "coordinates": {
+      "lon": 106.709260940552,
+      "lat": 10.8083518403949
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "5ad068b198d8fc001102e278",
+    "name": "Quốc lộ 50 - Cầu Ông Thìn (1)",
+    "coordinates": {
+      "lon": 106.654586791992,
+      "lat": 10.6524259645754
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "66f126e8538c780017c9362f",
+    "name": "Nguyễn Chí Thanh - Nguyễn Kim",
+    "coordinates": {
+      "lon": 106.662740707397,
+      "lat": 10.7587008395322
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "63ae75a3bfd3d90017e8f051",
+    "name": "Cống Quỳnh - Phạm Viết Chánh",
+    "coordinates": {
+      "lon": 106.685453653336,
+      "lat": 10.767891793263
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "662b7d8a1afb9c00172dc71f",
+    "name": "Lê Lai - Phạm Hồng Thái",
+    "coordinates": {
+      "lon": 106.695914268494,
+      "lat": 10.7712223907807
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "5abbb77298d8fc001102dfce",
+    "name": "Nguyễn Văn Linh - Nguyễn Lương Bằng (2)",
+    "coordinates": {
+      "lon": 106.720327734947,
+      "lat": 10.7315637581429
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "63bd1f48bfd3d90017ec3d19",
+    "name": "Huỳnh Tấn Phát - Nguyễn Thị Thập",
+    "coordinates": {
+      "lon": 106.730353832245,
+      "lat": 10.7375247437985
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "58aff2c6bd82540010390c55",
+    "name": "Quốc lộ 1 - Đinh Đức Thiện 1",
+    "coordinates": {
+      "lon": 106.569807529449,
+      "lat": 10.6647884855642
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "5deb576d1dc17d7c5515ad18",
+    "name": "Hai Bà Trưng - Lê Duẩn",
+    "coordinates": {
+      "lon": 106.699614,
+      "lat": 10.781431
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "66b1c1bf779f740018673ef2",
+    "name": "An Dương Vương - Trần Phú",
+    "coordinates": {
+      "lon": 106.674488782883,
+      "lat": 10.7577416756903
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "56de42f611f398ec0c4812a0",
+    "name": "Nguyễn Thị Định - Đường A",
+    "coordinates": {
+      "lon": 106.783590316772,
+      "lat": 10.7627851568961
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "6623efc26f998a001b25277f",
+    "name": "Tô Ký - Nguyễn Ảnh Thủ",
+    "coordinates": {
+      "lon": 106.615512371063,
+      "lat": 10.8675723883698
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "662b50841afb9c00172d880d",
+    "name": "Tùng Thiện Vương - Xóm Củi",
+    "coordinates": {
+      "lon": 106.660562753677,
+      "lat": 10.7466952613032
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "58abc0cbbd82540010390ba6",
+    "name": "Cầu Sài Gòn 3 (Dạ cầu Bình Thạnh)",
+    "coordinates": {
+      "lon": 106.724311485887,
+      "lat": 10.7982289959934
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "58afea5dbd82540010390c4d",
+    "name": "Quốc lộ 1 - Bùi Thanh Khiết 1",
+    "coordinates": {
+      "lon": 106.580477356911,
+      "lat": 10.6741931544789
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "5deb576d1dc17d7c5515ad07",
+    "name": "Nguyễn Văn Trỗi - Trương Quốc Dung",
+    "coordinates": {
+      "lon": 106.672665,
+      "lat": 10.797381
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "5d8cdc1d766c88001718896c",
+    "name": "Trường Sơn - Hậu Giang",
+    "coordinates": {
+      "lon": 106.664478778839,
+      "lat": 10.8076721060064
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "5a606c758576340017d06626",
+    "name": "BX Miền Đông - Quốc Lộ 13 (1)",
+    "coordinates": {
+      "lon": 106.712779998779,
+      "lat": 10.8142322689639
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "5a82628e5058170011f6eadb",
+    "name": "Nguyễn Văn Linh - Quốc lộ 50 (1)",
+    "coordinates": {
+      "lon": 106.655665040016,
+      "lat": 10.7199365991593
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "6792f2248c5ed4001b27f4dc",
+    "name": "Quốc Lộ 1 - Độc Lập (cổng KCN Sóng Thần)",
+    "coordinates": {
+      "lon": 106.751575469971,
+      "lat": 10.8756221051048
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "5d8cd653766c88001718894c",
+    "name": "Kha Vạn Cân - Võ Văn Ngân",
+    "coordinates": {
+      "lon": 106.75500869751,
+      "lat": 10.8509770648006
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "662b4de41afb9c00172d85c5",
+    "name": "Hải Thượng Lãn Ông - Châu Văn Liêm",
+    "coordinates": {
+      "lon": 106.658996343613,
+      "lat": 10.7509852813336
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "58af8eb2bd82540010390c30",
+    "name": "Nam Kỳ Khởi Nghĩa -Nguyễn Thị Minh Khai 1",
+    "coordinates": {
+      "lon": 106.695082783699,
+      "lat": 10.7797542439016
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "6623ee176f998a001b25270c",
+    "name": "Phan Văn Trị - Lê Đức Thọ",
+    "coordinates": {
+      "lon": 106.6819024086,
+      "lat": 10.829417573494
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "58746314b807da0011e33cce",
+    "name": "Quốc lộ 1 - Cầu vượt Linh Xuân",
+    "coordinates": {
+      "lon": 106.765040159225,
+      "lat": 10.8733304866588
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "59d34ce302eb490011a0a616",
+    "name": "Đỗ Xuân Hợp - Cầu Cống Đập.",
+    "coordinates": {
+      "lon": 106.7762196064,
+      "lat": 10.8104489957249
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "662a8e641afb9c00172d2a7e",
+    "name": "Nguyễn Văn Linh - Nguyễn Thị Thập 1",
+    "coordinates": {
+      "lon": 106.721234321594,
+      "lat": 10.7379358419233
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "63ae7c12bfd3d90017e8f3c0",
+    "name": "Ba Tháng Hai - Lê Đại Hành 2",
+    "coordinates": {
+      "lon": 106.656598448753,
+      "lat": 10.7621422099615
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "5b0b835b0e517b00119fd80d",
+    "name": "Tam Bình (Số 81)",
+    "coordinates": {
+      "lon": 106.73014998436,
+      "lat": 10.8530844585776
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "662b82da1afb9c00172dce94",
+    "name": "Hai Bà Trưng - Nguyễn Hữu Cầu",
+    "coordinates": {
+      "lon": 106.690120697021,
+      "lat": 10.7893713917772
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "5d8cd2a3766c88001718893c",
+    "name": "Nút giao Cây Gõ 1 (trên cầu)",
+    "coordinates": {
+      "lon": 106.642913818359,
+      "lat": 10.7544425503934
+    },
+    "type": "tth_axis",
+    "status": "UP"
+  },
+  {
+    "id": "662b4e8e1afb9c00172d865c",
+    "name": "Lý Thường Kiệt - Nguyễn Chí Thanh",
+    "coordinates": {
+      "lon": 106.661485433578,
+      "lat": 10.7584267930315
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "66b1c190779f740018673ed4",
+    "name": "Nguyễn Trãi - Trần Phú",
+    "coordinates": {
+      "lon": 106.67188167572,
+      "lat": 10.7550749733738
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "662b7f9f1afb9c00172dca50",
+    "name": "Nguyễn Đình Chiểu - Nguyễn Bỉnh Khiêm",
+    "coordinates": {
+      "lon": 106.701471805573,
+      "lat": 10.7904674636287
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "58747923b807da0011e33cf5",
+    "name": "Nút giao Bảy Hiền 2 (Hoàng Văn Thụ)",
+    "coordinates": {
+      "lon": 106.653615832329,
+      "lat": 10.7931970867358
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "63ae7af4bfd3d90017e8f32c",
+    "name": "Ba Tháng Hai - Lý Thường Kiệt 2",
+    "coordinates": {
+      "lon": 106.659564971924,
+      "lat": 10.7636125538021
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "5875d4f8b807da0011e33d1a",
+    "name": "Tạ Quang Bửu - Phạm Hùng 1",
+    "coordinates": {
+      "lon": 106.670937538147,
+      "lat": 10.7372717600591
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "595d92013dcfc400106f2877",
+    "name": "Quốc Lộ 1A - Cầu Bình Phước",
+    "coordinates": {
+      "lon": 106.715140342712,
+      "lat": 10.8607025631008
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "583f976361cfea0012cf68f9",
+    "name": "Nguyễn Thị Định - Lê Phụng Hiểu",
+    "coordinates": {
+      "lon": 106.784512996674,
+      "lat": 10.7619577577189
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "662b80721afb9c00172dcb28",
+    "name": "Nguyễn Văn Thủ - Trần Doãn Khanh",
+    "coordinates": {
+      "lon": 106.69774889946,
+      "lat": 10.788633648858
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "586e1f18f9fab7001111b0a5",
+    "name": "Cộng Hòa - Trường Chinh",
+    "coordinates": {
+      "lon": 106.634953022003,
+      "lat": 10.8070661399436
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "63b65f8dbfd3d90017eaa434",
+    "name": "Xô Viết Nghệ Tĩnh - Phan Văn Hân (Cầu Thị Nghè)",
+    "coordinates": {
+      "lon": 106.707404851913,
+      "lat": 10.7927439077816
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "63ae7cfcbfd3d90017e8f422",
+    "name": "Cách Mạng Tháng Tám – Phạm Văn Hai",
+    "coordinates": {
+      "lon": 106.660680770874,
+      "lat": 10.7890446772791
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "5b0e1faacddcc80011ceb449",
+    "name": "Nút giao Hàng Xanh 8 (HX-VT)",
+    "coordinates": {
+      "lon": 106.711969971657,
+      "lat": 10.8012804197692
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "63b65fa9bfd3d90017eaa449",
+    "name": "Xô Viết Nghệ Tĩnh - Nguyễn Văn Lạc",
+    "coordinates": {
+      "lon": 106.709818840027,
+      "lat": 10.7953154258079
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "6623e7f06f998a001b25244a",
+    "name": "Đinh Bộ Lĩnh - Chu Văn An",
+    "coordinates": {
+      "lon": 106.709175109863,
+      "lat": 10.8105965337175
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "6623e5066f998a001b252317",
+    "name": "Nguyễn Thị Minh Khai - Tôn Thất Tùng",
+    "coordinates": {
+      "lon": 106.687191724777,
+      "lat": 10.7712645500069
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "662b5c141afb9c00172d93d7",
+    "name": "Tân Kỳ Tân Quý - Bình Long",
+    "coordinates": {
+      "lon": 106.613742113113,
+      "lat": 10.7965800987319
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "66b1c158779f740018673eb4",
+    "name": "Hùng Vương - Lê Hồng Phong",
+    "coordinates": {
+      "lon": 106.676441431046,
+      "lat": 10.7622528812529
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "56df8381c062921100c143e2",
+    "name": "Nguyễn Hữu Thọ - Nguyễn Thị Thập 1",
+    "coordinates": {
+      "lon": 106.700946092606,
+      "lat": 10.740497286869
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "5d8cd1f9766c880017188938",
+    "name": "Nguyễn Tri Phương - Trần Phú",
+    "coordinates": {
+      "lon": 106.669569611549,
+      "lat": 10.7535782368426
+    },
+    "type": "tth_axis",
+    "status": "UP"
+  },
+  {
+    "id": "6623e61d6f998a001b252377",
+    "name": "Cách Mạng Tháng Tám - Rạch Bùng Binh",
+    "coordinates": {
+      "lon": 106.678587198257,
+      "lat": 10.7794538677567
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "595da2dd3dcfc400106f2885",
+    "name": "Quốc lộ 1 - Đường 15 (2)",
+    "coordinates": {
+      "lon": 106.698709130287,
+      "lat": 10.8601177777294
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "6623f1996f998a001b252805",
+    "name": "Mai Chí Thọ - Xa Lộ Hà Nội (3)",
+    "coordinates": {
+      "lon": 106.756038665771,
+      "lat": 10.809194919668
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "5deb576d1dc17d7c5515acf5",
+    "name": "Nút giao Ngã bảy Lý Thái Tổ",
+    "coordinates": {
+      "lon": 106.674596,
+      "lat": 10.767428
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "631955e7c9eae60017a1c30a",
+    "name": "Cách Mạng Tháng Tám – Hòa Hưng",
+    "coordinates": {
+      "lon": 106.677144169807,
+      "lat": 10.7802232516687
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "5a6060e08576340017d0660f",
+    "name": "Nguyễn Thái Sơn - Phan Văn Trị 2",
+    "coordinates": {
+      "lon": 106.689149737358,
+      "lat": 10.8262720340397
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "63ae7a26bfd3d90017e8f29a",
+    "name": "Ba Tháng Hai - Lê Hồng Phong 2",
+    "coordinates": {
+      "lon": 106.672922372818,
+      "lat": 10.7711380723106
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "63b548c3bfd3d90017ea77c0",
+    "name": "Nguyễn Duy Trinh - Nguyễn Thị Tư",
+    "coordinates": {
+      "lon": 106.806946992874,
+      "lat": 10.792733368728
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "662a8c931afb9c00172d2901",
+    "name": "Huỳnh Tấn Phát - Hoàng Quốc Việt",
+    "coordinates": {
+      "lon": 106.736941337585,
+      "lat": 10.7143336880567
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "58df4adedc195800111e04b4",
+    "name": "Phổ Quang - Huỳnh Lan Khanh",
+    "coordinates": {
+      "lon": 106.666592359543,
+      "lat": 10.8049689609963
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "59ca301902eb490011a0a400",
+    "name": "QL1 - Hương Lộ 2 (1)",
+    "coordinates": {
+      "lon": 106.591292023659,
+      "lat": 10.7702369171868
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "584e738361cfea0012cf6951",
+    "name": "Quốc lộ 1 - Nguyễn Thị Tú",
+    "coordinates": {
+      "lon": 106.600910425186,
+      "lat": 10.8161291568165
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "583f958161cfea0012cf68f5",
+    "name": "Nguyễn Thị Định - Đường C",
+    "coordinates": {
+      "lon": 106.779872775078,
+      "lat": 10.7660209509751
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "5a8253615058170011f6eabf",
+    "name": "Đinh Bộ Lĩnh - Bạch Đằng 1",
+    "coordinates": {
+      "lon": 106.710022687912,
+      "lat": 10.8030720025958
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "5deb576d1dc17d7c5515ad0f",
+    "name": "Nguyễn Thị Minh Khai - Trương Định",
+    "coordinates": {
+      "lon": 106.691731,
+      "lat": 10.776014
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "662b51761afb9c00172d88ef",
+    "name": "Hương Lộ 3 - Đường kênh 19/5",
+    "coordinates": {
+      "lon": 106.610062122345,
+      "lat": 10.8029560769717
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "66b1c370779f7400186740b3",
+    "name": "Thành Thái - Tô Hiến Thành",
+    "coordinates": {
+      "lon": 106.663513183594,
+      "lat": 10.7763868520664
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "6623ec376f998a001b252671",
+    "name": "Tô Ký - Nguyễn Văn Quá",
+    "coordinates": {
+      "lon": 106.635167598724,
+      "lat": 10.8474892954581
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "5d9dde1f766c880017188c98",
+    "name": "Nút giao Hàng Xanh 3 (Cầu Thị Nghè - Hàng Xanh)",
+    "coordinates": {
+      "lon": 106.711294054985,
+      "lat": 10.8001422321862
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "58b5528e17139d0010f35d52",
+    "name": "Xa Lộ Hà Nội - Đường D400",
+    "coordinates": {
+      "lon": 106.807773113251,
+      "lat": 10.8719449708741
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "5deb576d1dc17d7c5515ad22",
+    "name": "Nút giao Ngã sáu Nguyễn Tri Phương",
+    "coordinates": {
+      "lon": 106.669124,
+      "lat": 10.76009
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "63b664d2bfd3d90017eaaa0f",
+    "name": "CT Trung Lương - Võ Trần Chí 1",
+    "coordinates": {
+      "lon": 106.571159362793,
+      "lat": 10.6852580285724
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "662b85031afb9c00172dd0dc",
+    "name": "Lê Lợi - Phan Bội Châu",
+    "coordinates": {
+      "lon": 106.698939800262,
+      "lat": 10.772307988975
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "58d7b5a7c1e33c00112b320a",
+    "name": "Nút giao Chợ Đệm 1 (CT Trung Lương - Bùi Thanh Khiết)",
+    "coordinates": {
+      "lon": 106.576287746429,
+      "lat": 10.6859643956044
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "662a8f3a1afb9c00172d2b31",
+    "name": "Nguyễn Hữu Thọ - Đường số 15",
+    "coordinates": {
+      "lon": 106.701600551605,
+      "lat": 10.7445238765742
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "58aff01fbd82540010390c50",
+    "name": "Quốc lộ 1 - Bùi Thanh Khiết 2",
+    "coordinates": {
+      "lon": 106.58026278019,
+      "lat": 10.6737028958529
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "5d8cdb9f766c880017188968",
+    "name": "Hoàng Văn Thụ - Trần Huy Liệu",
+    "coordinates": {
+      "lon": 106.677471399307,
+      "lat": 10.7993728992472
+    },
+    "type": "tth_axis",
+    "status": "UP"
+  },
+  {
+    "id": "5a6085fb8576340017d06686",
+    "name": "QL1-Tỉnh lộ 10B (1)",
+    "coordinates": {
+      "lon": 106.593507528305,
+      "lat": 10.7499628496621
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "5a8253bc5058170011f6eac1",
+    "name": "Đinh Bộ Lĩnh - Bạch Đằng 2",
+    "coordinates": {
+      "lon": 106.709395051003,
+      "lat": 10.8030930799773
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "59ca31d602eb490011a0a40b",
+    "name": "QL1 - Hồ Học Lãm",
+    "coordinates": {
+      "lon": 106.602809429169,
+      "lat": 10.7342095859156
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "587c782db807da0011e33d3b",
+    "name": "Võ Nguyên Giáp - Thảo Điền",
+    "coordinates": {
+      "lon": 106.738277077675,
+      "lat": 10.8010116814233
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "662a8d821afb9c00172d29c8",
+    "name": "Nguyễn Thị Thập - Tân Mỹ",
+    "coordinates": {
+      "lon": 106.718316078186,
+      "lat": 10.7381993660681
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "63ae7d29bfd3d90017e8f437",
+    "name": "Lý Thường Kiệt - Bắc Hải",
+    "coordinates": {
+      "lon": 106.656131744385,
+      "lat": 10.7778307774358
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "56de42f611f398ec0c48129f",
+    "name": "Đồng Văn Cống - Nguyễn Thị Định",
+    "coordinates": {
+      "lon": 106.7702866,
+      "lat": 10.7731722
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "662b80b91afb9c00172dcb5b",
+    "name": "Nút giao Ngã sáu Phù Đổng 2",
+    "coordinates": {
+      "lon": 106.693022847176,
+      "lat": 10.7715702042204
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "5deb576d1dc17d7c5515ad1f",
+    "name": "Hùng Vương - Ngô Gia Tự",
+    "coordinates": {
+      "lon": 106.666474342346,
+      "lat": 10.7563292750288
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "662b50261afb9c00172d87b2",
+    "name": "Dương Bá Trạc - Đường số 9",
+    "coordinates": {
+      "lon": 106.688178777695,
+      "lat": 10.7420784148825
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "59ca2d9d02eb490011a0a3f0",
+    "name": "QL1 - Phan Văn Hớn 2",
+    "coordinates": {
+      "lon": 106.606961488724,
+      "lat": 10.8342965190794
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "5a8256df5058170011f6eacb",
+    "name": "BX Miền Đông - Quốc Lộ 13 (2)",
+    "coordinates": {
+      "lon": 106.713198423386,
+      "lat": 10.8172620146729
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "5deb576d1dc17d7c5515acfc",
+    "name": "Điện Biên Phủ - Trương Định",
+    "coordinates": {
+      "lon": 106.68729364872,
+      "lat": 10.7800124617515
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "587c8c20b807da0011e33d47",
+    "name": "Hoàng Văn Thụ - Hồ Văn Huê",
+    "coordinates": {
+      "lon": 106.674934029579,
+      "lat": 10.7994466709843
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "58744fb0b807da0011e33cc0",
+    "name": "Hưng Phú - Chánh Hưng 2",
+    "coordinates": {
+      "lon": 106.669129729271,
+      "lat": 10.7463895818732
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "5822f23aedeb6c0012a2d6a8",
+    "name": "Hồng Bàng - Nguyễn Thị Nhỏ",
+    "coordinates": {
+      "lon": 106.651153564453,
+      "lat": 10.7535518857808
+    },
+    "type": "tth",
+    "status": "UP"
+  },
+  {
+    "id": "649da495a6068200171a6cb6",
+    "name": "Mai Chí Thọ - Trần Quý Kiên (3)",
+    "coordinates": {
+      "lon": 106.740009784698,
+      "lat": 10.7817936319045
+    },
+    "type": "tth",
+    "status": "UP"
+  }
+]

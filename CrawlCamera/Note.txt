@@ -1,0 +1,2 @@
+ListCamerasWithDistrict.json là final list camera (đã được gen ra tên Quận)
+index.js dùng để tạo ra child(crawl.js) + id cam để đa luồng lấy

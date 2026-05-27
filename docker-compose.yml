@@ -1,0 +1,58 @@
+version: "3.8"
+
+services:
+  # Frontend - Vite React App
+  frontend:
+    build:
+      context: ./traffic-app
+      dockerfile: ../trafficflow-api/Dockerfile.frontend
+    ports:
+      - "5173:80"
+    volumes:
+      - ./nginx.frontend.conf:/etc/nginx/nginx.conf:ro
+    depends_on:
+      - api
+    restart: unless-stopped
+
+  # Backend - FastAPI
+  api:
+    build:
+      context: ./trafficflow-api
+      dockerfile: ./Dockerfile
+    environment:
+      - DATABASE_URL=postgresql://trafficflow:trafficpass123@db:5432/trafficflow
+      - DB_HOST=db
+      - DB_PORT=5432
+      - DB_USER=trafficflow
+      - DB_PASSWORD=trafficpass123
+      - DB_NAME=trafficflow
+      - WRITER_INTERVAL_SECONDS=30
+      - TF_HOST=0.0.0.0
+      - TF_PORT=8000
+    volumes:
+      - ./trafficflow-api/ZIP:/app/ZIP:ro
+    depends_on:
+      - db
+    restart: unless-stopped
+    # Port 8000 không cần public - chỉ nginx truy cập nội bộ
+
+  # PostgreSQL with TimescaleDB
+  db:
+    image: timescale/timescaledb:latest-pg15
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=trafficflow
+      - POSTGRES_PASSWORD=trafficpass123
+      - POSTGRES_DB=trafficflow
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U trafficflow"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
+
+volumes:
+  postgres_data:
