@@ -1,16 +1,7 @@
-# Embedded git repositories (not to be tracked)
-CrawlCamera/
-ZIP/
-traffic-app/
-trafficflow-api/
-
 # Python cache
 __pycache__/
 *.pyc
 *.pyo
-
-# IDE
-.cursor/
 
 # OS
 .DS_Store

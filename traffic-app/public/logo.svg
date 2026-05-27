@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0058bd" />
+      <stop offset="100%" stop-color="#003b82" />
+    </linearGradient>
+  </defs>
+  <rect width="512" height="512" rx="120" fill="url(#bg)"/>
+  <!-- Map Pin Background -->
+  <path d="M256 120c-61.8 0-112 50.2-112 112 0 74.7 100.8 189.4 105.3 194.6a10.6 10.6 0 0 0 13.4 0C267.2 421.4 368 306.7 368 232c0-61.8-50.2-112-112-112zm0 168a56 56 0 1 1 56-56 56 56 0 0 1-56 56z" fill="#ffffff"/>
+  <!-- AI / Network details -->
+  <circle cx="256" cy="232" r="24" fill="#0058bd"/>
+  <circle cx="256" cy="232" r="8" fill="#86f898"/>
+  <circle cx="200" cy="180" r="10" fill="#86f898"/>
+  <circle cx="312" cy="180" r="10" fill="#86f898"/>
+  <path d="M208 186l40 38M304 186l-40 38" stroke="#86f898" stroke-width="4" stroke-linecap="round"/>
+</svg>

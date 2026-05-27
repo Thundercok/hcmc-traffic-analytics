@@ -1,0 +1,10 @@
+node_modules
+images
+.dockerignore
+Dockerfile
+ListCamera.json
+RawDataCameras.js
+Test.json
+GenLocationWithCoordinates.json
+GetDistrict.js
+pnpm-lock.yaml
