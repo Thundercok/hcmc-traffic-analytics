@@ -1,26 +1,18 @@
-# Logs
-logs
-*.log
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-pnpm-debug.log*
-lerna-debug.log*
+# Embedded git repositories (not to be tracked)
+CrawlCamera/
+ZIP/
+traffic-app/
+trafficflow-api/
 
-node_modules
-dist
-dist-ssr
-*.local
-.env
-.env.*
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
 
-# Editor directories and files
-.vscode/*
-!.vscode/extensions.json
-.idea
+# IDE
+.cursor/
+
+# OS
 .DS_Store
-*.suo
-*.ntvs*
-*.njsproj
-*.sln
-*.sw?
+Thumbs.db
+.cursor/
