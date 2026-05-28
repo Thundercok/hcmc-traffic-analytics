@@ -12,6 +12,8 @@ class CameraInfo(BaseModel):
     district: str = Field(..., description="District name")
     lat: float = Field(..., description="Latitude")
     lng: float = Field(..., description="Longitude")
+    density_level: Optional[str] = Field(None, description="Current traffic density level")
+    total_count: Optional[int] = Field(None, description="Current traffic total vehicle count")
 
 
 class CameraListResponse(BaseModel):
@@ -32,11 +34,38 @@ class PredictionResult(BaseModel):
     density_level: str = Field(
         ..., description="Traffic density level: low, moderate, heavy, severe"
     )
+    global_density_level: Optional[str] = Field(
+        None, description="Traffic density level for the full image"
+    )
     inference_time_ms: float = Field(
         ..., description="Model inference time in milliseconds"
     )
     heatmap_base64: Optional[str] = Field(
         None, description="Base64 encoded PNG of the density heatmap"
+    )
+
+    # Optional ROI specific fields
+    roi_count: Optional[int] = Field(
+        None, description="Predicted number of vehicles inside the road segment ROI"
+    )
+    roi_car_count: Optional[int] = Field(
+        None, description="Predicted number of cars inside the road segment ROI"
+    )
+    roi_motorbike_count: Optional[int] = Field(
+        None, description="Predicted number of motorbikes inside the road segment ROI"
+    )
+    roi_congestion_level: Optional[str] = Field(
+        None, description="Congestion level within the ROI: low, moderate, heavy, severe"
+    )
+    roi_area_ratio: Optional[float] = Field(
+        None, description="Area ratio of the ROI relative to the full image"
+    )
+    roi_density_score: Optional[float] = Field(
+        None,
+        description="ROI congestion score calculated as vehicle count divided by ROI area ratio",
+    )
+    has_roi: bool = Field(
+        False, description="Whether an ROI was used for this prediction"
     )
 
 

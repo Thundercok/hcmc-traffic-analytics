@@ -1,4 +1,5 @@
 import asyncio
+import json
 import logging
 import time
 from datetime import datetime
@@ -6,7 +7,7 @@ from typing import Optional
 
 import httpx
 import numpy as np
-from fastapi import APIRouter, Request, UploadFile, File, HTTPException, Query
+from fastapi import APIRouter, Request, UploadFile, File, HTTPException, Query, Form
 from fastapi.concurrency import run_in_threadpool
 from fastapi.responses import Response
 
@@ -145,7 +146,20 @@ async def list_cameras(
         filtered = get_cameras_by_district(district)
     else:
         filtered = CAMERAS
-    camera_list = [CameraInfo(**cam) for cam in filtered]
+        
+    cache = PredictionCache.get_instance()
+    camera_list = []
+    for cam in filtered:
+        cam_dict = dict(cam)
+        latest = cache.get_latest(cam["id"])
+        if latest:
+            cam_dict["density_level"] = latest.get("density_level", "unknown")
+            cam_dict["total_count"] = latest.get("total_count")
+        else:
+            cam_dict["density_level"] = "unknown"
+            cam_dict["total_count"] = None
+        camera_list.append(CameraInfo(**cam_dict))
+        
     return CameraListResponse(cameras=camera_list, total=len(camera_list))
 
 
@@ -181,6 +195,44 @@ def _build_predict_response(
     )
 
 
+def _parse_roi_polygon(raw_polygon: str | None) -> list[list[float]] | None:
+    """Parse a normalized ROI polygon: [[x, y], ...] with x/y in 0..1."""
+    if not raw_polygon:
+        return None
+
+    try:
+        polygon = json.loads(raw_polygon)
+    except json.JSONDecodeError as exc:
+        raise HTTPException(status_code=400, detail="Invalid roi_polygon JSON") from exc
+
+    if not isinstance(polygon, list) or len(polygon) < 3:
+        raise HTTPException(
+            status_code=400, detail="roi_polygon must contain at least 3 points"
+        )
+
+    parsed = []
+    for point in polygon:
+        if not isinstance(point, (list, tuple)) or len(point) != 2:
+            raise HTTPException(
+                status_code=400, detail="Each roi_polygon point must be [x, y]"
+            )
+        try:
+            x = float(point[0])
+            y = float(point[1])
+        except (TypeError, ValueError) as exc:
+            raise HTTPException(
+                status_code=400, detail="roi_polygon coordinates must be numbers"
+            ) from exc
+        if not 0 <= x <= 1 or not 0 <= y <= 1:
+            raise HTTPException(
+                status_code=400,
+                detail="roi_polygon coordinates must be normalized from 0 to 1",
+            )
+        parsed.append([x, y])
+
+    return parsed
+
+
 @router.post(
     "/predict",
     response_model=PredictResponse,
@@ -190,6 +242,12 @@ def _build_predict_response(
 async def predict_from_upload(
     file: UploadFile = File(..., description="Traffic camera image (JPEG/PNG)"),
     heatmap: bool = False,
+    roi_polygon: Optional[str] = Form(
+        None, description="JSON string of normalized ROI polygon coordinates"
+    ),
+    camera_id: Optional[str] = Query(
+        None, description="Camera ID associated with this prediction"
+    ),
 ):
     """[predict_from_upload] Run ZIP model inference on an uploaded image."""
     svc = ZIPModelService.get_instance()
@@ -205,15 +263,29 @@ async def predict_from_upload(
 
     _validate_image_bytes(image_bytes)
 
+    roi_coords = _parse_roi_polygon(roi_polygon)
+
     try:
-        result = await run_in_threadpool(svc.predict_from_bytes, image_bytes, heatmap)
+        result = await run_in_threadpool(
+            svc.predict_from_bytes,
+            image_bytes,
+            return_heatmap=heatmap,
+            roi_polygon=roi_coords,
+        )
     except HTTPException:
         raise
     except Exception as e:
         logger.error(f"[predict_from_upload] Inference failed: {e}", exc_info=True)
         raise HTTPException(status_code=500, detail="Internal prediction error")
 
-    return _build_predict_response(result)
+    camera_name = None
+    if camera_id:
+        camera = get_camera_by_id(camera_id)
+        if camera:
+            camera_name = camera.get("name")
+        PredictionCache.get_instance().record(camera_id, result)
+
+    return _build_predict_response(result, camera_id=camera_id, camera_name=camera_name)
 
 
 @router.get(

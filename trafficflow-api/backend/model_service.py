@@ -143,7 +143,12 @@ class ZIPModelService:
         tensor = transform(image).unsqueeze(0)  # (1, 3, H, W)
         return tensor.to(self.device)
 
-    def _generate_heatmap_base64(self, density_tensor) -> str:
+    def _generate_heatmap_base64(
+        self,
+        density_tensor,
+        roi_polygon: Optional[list] = None,
+        roi_congestion_level: Optional[str] = None,
+    ) -> str:
         # Convert (1, num_classes, H, W) or (1, 1, H, W) or (H, W) to (H, W)
         if density_tensor.ndim == 4:
             if density_tensor.shape[1] > 1:
@@ -155,10 +160,99 @@ class ZIPModelService:
         else:
             den = density_tensor.numpy()
 
+        if den.ndim == 3:
+            den = den[0]
+
         norm_map = cv2.normalize(den, None, 0, 255, cv2.NORM_MINMAX, dtype=cv2.CV_8U)
         color_map = cv2.applyColorMap(norm_map, cv2.COLORMAP_JET)
+
+        # Draw ROI polygon if provided
+        if roi_polygon:
+            h, w = color_map.shape[:2]
+            pts = np.array(
+                [[pt[0] * w, pt[1] * h] for pt in roi_polygon], dtype=np.int32
+            )
+            # Match colors with density level
+            colors = {
+                "low": (0, 255, 0),
+                "moderate": (0, 180, 255),
+                "heavy": (0, 0, 255),
+                "severe": (0, 0, 150),
+            }
+            color = colors.get(roi_congestion_level, (255, 255, 255))
+
+            # Semitransparent fill
+            overlay = color_map.copy()
+            cv2.fillPoly(overlay, [pts], color)
+            cv2.addWeighted(overlay, 0.25, color_map, 0.75, 0, dst=color_map)
+            # Solid border
+            cv2.polylines(
+                color_map,
+                [pts],
+                isClosed=True,
+                color=color,
+                thickness=2,
+                lineType=cv2.LINE_AA,
+            )
+
         _, buffer = cv2.imencode(".png", color_map)
         return "data:image/png;base64," + base64.b64encode(buffer).decode("utf-8")
+
+    def _normalize_density_tensor(self, model_out) -> torch.Tensor | None:
+        """Extract a CPU density tensor with shape (1, C, H, W) when available."""
+        if isinstance(model_out, torch.Tensor) and model_out.ndim == 4:
+            return model_out.detach().cpu()
+
+        if isinstance(model_out, dict):
+            for key in ["pred_den_map", "pred_density", "density_map"]:
+                if key not in model_out:
+                    continue
+                value = model_out[key]
+                try:
+                    den = value.detach().cpu()
+                except AttributeError:
+                    den = torch.tensor(value)
+                if den.ndim == 2:
+                    den = den.unsqueeze(0).unsqueeze(0)
+                elif den.ndim == 3:
+                    den = den.unsqueeze(0)
+                return den if den.ndim == 4 else None
+
+        return None
+
+    def _build_roi_mask(
+        self, roi_polygon: Optional[list[list[float]]], height: int, width: int
+    ) -> tuple[np.ndarray | None, float]:
+        if not roi_polygon or len(roi_polygon) < 3:
+            return None, 0.0
+
+        points = []
+        for point in roi_polygon:
+            if not isinstance(point, (list, tuple)) or len(point) != 2:
+                return None, 0.0
+            try:
+                x = min(1.0, max(0.0, float(point[0])))
+                y = min(1.0, max(0.0, float(point[1])))
+            except (TypeError, ValueError):
+                return None, 0.0
+            points.append([round(x * (width - 1)), round(y * (height - 1))])
+
+        pts = np.array(points, dtype=np.int32)
+        mask = np.zeros((height, width), dtype=np.float32)
+        cv2.fillPoly(mask, [pts], 1.0)
+        area_ratio = float(mask.sum() / mask.size)
+        if area_ratio < 0.001:
+            return None, 0.0
+        return mask, area_ratio
+
+    def _classify_congestion_score(self, score: float) -> str:
+        if score < 12.0:
+            return "low"
+        if score < 35.0:
+            return "moderate"
+        if score < 60.0:
+            return "heavy"
+        return "severe"
 
     def _validate_image(self, image_bytes: bytes) -> tuple[bool, str]:
         """
@@ -219,13 +313,13 @@ class ZIPModelService:
             return True
 
     def predict_from_image(
-        self, image: Image.Image, return_heatmap: bool = False
+        self,
+        image: Image.Image,
+        return_heatmap: bool = False,
+        roi_polygon: Optional[list[list[float]]] = None,
     ) -> dict:
         """
-        [predict_from_image] Run inference on a PIL Image.
-
-        Returns:
-            dict with keys: total_count, car_count, motorbike_count, density_level, inference_time_ms
+        [predict_from_image] Run inference on a PIL Image with optional ROI.
         """
         if not self._loaded:
             raise RuntimeError("Model is not loaded. Call load_model() first.")
@@ -245,12 +339,12 @@ class ZIPModelService:
 
         inference_time_ms = round((time.time() - start_time) * 1000, 1)
 
+        den = self._normalize_density_tensor(model_out)
         car_count = 0
         motorbike_count = 0
         total_count = 0
 
-        if isinstance(model_out, torch.Tensor) and model_out.ndim == 4:
-            den = model_out.detach().cpu()
+        if den is not None:
             num_classes = den.shape[1]
 
             if num_classes >= 2:
@@ -265,16 +359,6 @@ class ZIPModelService:
             else:
                 total_count = max(0, round(float(den.sum().item())))
 
-        elif isinstance(model_out, dict):
-            for key in ["pred_den_map", "pred_density", "density_map"]:
-                if key in model_out:
-                    try:
-                        den = model_out[key].detach().cpu()
-                    except AttributeError:
-                        den = torch.tensor(model_out[key])
-                    total_count = max(0, round(float(den.sum().item())))
-                    break
-
         elif hasattr(model_out, "sum"):
             total_count = max(0, round(float(model_out.sum().item())))
 
@@ -283,7 +367,43 @@ class ZIPModelService:
             motorbike_count = int(round(total_count * ratio))
             car_count = total_count - motorbike_count
 
-        # Classify density level
+        # ROI processing
+        roi_count = None
+        roi_car_count = None
+        roi_motorbike_count = None
+        roi_congestion_level = None
+        roi_area_ratio = None
+        has_roi = False
+
+        roi_density_score = None
+
+        if roi_polygon and den is not None:
+            h, w = den.shape[2], den.shape[3]
+            mask, roi_area_ratio = self._build_roi_mask(roi_polygon, h, w)
+
+            if mask is not None:
+                has_roi = True
+                mask_tensor = torch.tensor(mask, dtype=den.dtype)
+                num_classes = den.shape[1]
+                if num_classes >= 2:
+                    roi_car_raw = float((den[0, 0] * mask_tensor).sum().item())
+                    roi_bike_raw = float((den[0, 1] * mask_tensor).sum().item())
+                    roi_car_count = max(0, round(roi_car_raw))
+                    roi_motorbike_count = max(0, round(roi_bike_raw))
+                    roi_count = roi_car_count + roi_motorbike_count
+                else:
+                    roi_count_raw = float((den[0, 0] * mask_tensor).sum().item())
+                    roi_count = max(0, round(roi_count_raw))
+                    ratio = getattr(settings, "vehicle_split_motorbike_ratio", 0.7)
+                    roi_motorbike_count = int(round(roi_count * ratio))
+                    roi_car_count = roi_count - roi_motorbike_count
+
+                roi_density_score = round(float(roi_count / roi_area_ratio), 2)
+                roi_congestion_level = self._classify_congestion_score(
+                    roi_density_score
+                )
+
+        # Classify density level (fallback or global)
         if total_count < 10:
             density_level = "low"
         elif total_count < 30:
@@ -293,21 +413,36 @@ class ZIPModelService:
         else:
             density_level = "severe"
 
+        # If ROI is present, use ROI density level as the main density level
+        effective_density_level = (
+            roi_congestion_level if has_roi else density_level
+        )
+
         logger.info(
-            f"[predict_from_image] Total: {total_count}, car: {car_count}, bike: {motorbike_count}, Level: {density_level}, Time: {inference_time_ms}ms"
+            f"[predict_from_image] Total: {total_count}, ROI: {roi_count} (Car: {roi_car_count}, Bike: {roi_motorbike_count}), Level: {effective_density_level}, Time: {inference_time_ms}ms"
         )
 
         result = {
             "total_count": total_count,
             "car_count": int(car_count),
             "motorbike_count": int(motorbike_count),
-            "density_level": density_level,
+            "density_level": effective_density_level,
+            "global_density_level": density_level,
             "inference_time_ms": inference_time_ms,
+            "has_roi": has_roi,
+            "roi_count": roi_count,
+            "roi_car_count": roi_car_count,
+            "roi_motorbike_count": roi_motorbike_count,
+            "roi_congestion_level": roi_congestion_level,
+            "roi_area_ratio": roi_area_ratio,
+            "roi_density_score": roi_density_score,
         }
 
-        if return_heatmap and "den" in locals():
+        if return_heatmap and den is not None:
             try:
-                result["heatmap_base64"] = self._generate_heatmap_base64(den)
+                result["heatmap_base64"] = self._generate_heatmap_base64(
+                    den, roi_polygon, roi_congestion_level
+                )
             except Exception as e:
                 logger.warning(f"Failed to generate heatmap: {e}")
 
@@ -318,14 +453,10 @@ class ZIPModelService:
         image_bytes: bytes,
         return_heatmap: bool = False,
         skip_error_check: bool = False,
+        roi_polygon: Optional[list[list[float]]] = None,
     ) -> dict:
         """
-        [predict_from_bytes] Run inference from raw image bytes.
-
-        Features:
-        - Built-in image validation
-        - Error image detection
-        - Graceful fallback on failure
+        [predict_from_bytes] Run inference from raw image bytes with optional ROI.
         """
         self.total_inferences += 1
 
@@ -359,7 +490,9 @@ class ZIPModelService:
 
         try:
             image = Image.open(BytesIO(image_bytes))
-            return self.predict_from_image(image, return_heatmap=return_heatmap)
+            return self.predict_from_image(
+                image, return_heatmap=return_heatmap, roi_polygon=roi_polygon
+            )
         except Exception as e:
             self.failed_inferences += 1
             logger.error(f"[predict_from_bytes] Inference failed: {e}")

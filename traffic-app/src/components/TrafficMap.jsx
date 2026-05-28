@@ -33,6 +33,36 @@ const CAMERA_ICON = L.divIcon({
   popupAnchor: [0, -20],
 });
 
+function createCameraIcon(densityLevel, hasRoi) {
+  const colors = {
+    low: '#10b981',
+    moderate: '#f59e0b',
+    heavy: '#ef4444',
+    severe: '#991b1b',
+    unknown: '#3b82f6',
+  };
+  const color = colors[densityLevel] || colors.unknown;
+  const badgeHtml = hasRoi
+    ? `<div style="position:absolute;top:-4px;right:-4px;width:10px;height:10px;background:#3b82f6;border-radius:50%;border:1.5px solid white;box-shadow:0 0 4px rgba(59,130,246,0.6);z-index:99;"></div>`
+    : '';
+
+  return L.divIcon({
+    className: "",
+    html: `
+      <div class="camera-marker" style="border-color: ${color} !important; position: relative; width: 30px; height: 30px; display: flex; align-items: center; justify-content: center; background: white; border-radius: 50%;">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="${color}" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="m16 13 5.223 3.482a.5.5 0 0 0 .777-.416V7.934a.5.5 0 0 0-.777-.416L16 11"/>
+          <rect x="2" y="6" width="14" height="12" rx="2"/>
+        </svg>
+        ${badgeHtml}
+      </div>
+    `,
+    iconSize: [32, 32],
+    iconAnchor: [16, 16],
+    popupAnchor: [0, -20],
+  });
+}
+
 const USER_ICON = L.divIcon({
   className: "",
   html: `<div style="width:16px;height:16px;background:#4285F4;border-radius:50%;border:3px solid white;box-shadow:0 0 10px rgba(0,0,0,0.3)"></div>`,
@@ -927,30 +957,42 @@ const TrafficMap = React.memo(function TrafficMap({
     return () => window.removeEventListener("openCameraPopup", handleOpenPopup);
   }, []);
 
+  const isMountedRef = React.useRef(true);
   React.useEffect(() => {
-    let cancelled = false;
-    const fetchCameras = async () => {
-      try {
-        const apiUrl = import.meta.env.VITE_API_URL || "/api";
-        logRequest("GET", "/cameras");
-        const res = await fetch(`${apiUrl}/cameras`);
-        const data = await res.json();
-        if (!cancelled) {
-          logResponse("/cameras", data, res.status);
-          if (data?.cameras) {
-            setLiveCameras(data.cameras);
-            logInfo(`Loaded ${data.cameras.length} cameras`);
-          }
-        }
-      } catch (err) {
-        logError("Failed to load cameras", err.message);
-      }
-    };
-    fetchCameras();
+    isMountedRef.current = true;
     return () => {
-      cancelled = true;
+      isMountedRef.current = false;
     };
   }, []);
+
+  const fetchCameras = useCallback(async () => {
+    try {
+      const apiUrl = import.meta.env.VITE_API_URL || "/api";
+      logRequest("GET", "/cameras");
+      const res = await fetch(`${apiUrl}/cameras`);
+      const data = await res.json();
+      if (!isMountedRef.current) return;
+      logResponse("/cameras", data, res.status);
+      if (data?.cameras) {
+        setLiveCameras(data.cameras);
+        logInfo(`Loaded ${data.cameras.length} cameras`);
+      }
+    } catch (err) {
+      logError("Failed to load cameras", err.message);
+    }
+  }, [logRequest, logResponse, logInfo, logError]);
+
+  React.useEffect(() => {
+    fetchCameras();
+  }, [fetchCameras]);
+
+  React.useEffect(() => {
+    const handleRoisUpdated = () => {
+      fetchCameras();
+    };
+    window.addEventListener("cameraRoisUpdated", handleRoisUpdated);
+    return () => window.removeEventListener("cameraRoisUpdated", handleRoisUpdated);
+  }, [fetchCameras]);
 
 
 
@@ -981,25 +1023,36 @@ const TrafficMap = React.memo(function TrafficMap({
 
   const renderedMarkers = useMemo(
     () =>
-      liveCameras.map((cam) => (
-        <Marker
-          key={cam.id}
-          position={[cam.lat, cam.lng]}
-          icon={CAMERA_ICON}
-          eventHandlers={{
-            click: (e) => {
-              e.target.openPopup();
-            },
-          }}
-          ref={(leafletMarker) => {
-            if (leafletMarker) cameraRefs.current[cam.id] = leafletMarker;
-          }}
-        >
-          <Popup maxWidth={280} minWidth={200} closeButton={true}>
-              <CameraPopup camera={cam} />
-          </Popup>
-        </Marker>
-      )),
+      liveCameras.map((cam) => {
+        const hasRoi = (() => {
+          try {
+            const rois = JSON.parse(localStorage.getItem('camera_rois') || '{}');
+            return !!(rois[cam.id] && rois[cam.id].length >= 3);
+          } catch {
+            return false;
+          }
+        })();
+        const icon = createCameraIcon(cam.density_level, hasRoi);
+        return (
+          <Marker
+            key={cam.id}
+            position={[cam.lat, cam.lng]}
+            icon={icon}
+            eventHandlers={{
+              click: (e) => {
+                e.target.openPopup();
+              },
+            }}
+            ref={(leafletMarker) => {
+              if (leafletMarker) cameraRefs.current[cam.id] = leafletMarker;
+            }}
+          >
+            <Popup maxWidth={280} minWidth={200} closeButton={true}>
+                <CameraPopup camera={cam} />
+            </Popup>
+          </Marker>
+        );
+      }),
     [liveCameras],
   );
 

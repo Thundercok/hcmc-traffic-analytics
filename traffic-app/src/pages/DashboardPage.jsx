@@ -299,13 +299,13 @@ function CameraCard({ cam, onClick }) {
 // ─── Traffic Legend ────────────────────────────────────────────────────────
 function TrafficLegend() {
   return (
-    <Section icon={LuInfo} title="Giải thích mức độ kẹt xe" style={{ marginBottom: 16 }}>
+    <Section icon={LuInfo} title="Phương pháp đo lường & Phân loại mật độ" style={{ marginBottom: 16 }}>
       <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
         {[
-          { level: "low",      desc: "Đường thông thoáng, xe di chuyển bình thường, không có dấu hiệu ùn ứ." },
-          { level: "moderate", desc: "Mật độ xe đông vừa phải, một số đoạn có thể di chuyển chậm hơn bình thường." },
-          { level: "heavy",    desc: "Kẹt xe rõ rệt, nhiều đoạn ùn ứ, thời gian di chuyển tăng đáng kể." },
-          { level: "severe",   desc: "Ùn tắc nghiêm trọng, giao thông hầu như dừng hoàn toàn, cần tránh tuyến đường này." },
+          { level: "low",      desc: "Đường thông thoáng, xe di chuyển bình thường, mật độ tích phân ROI ở mức tối thiểu." },
+          { level: "moderate", desc: "Mật độ phương tiện đông vừa phải, tốc độ dòng chảy giao thông giảm nhẹ." },
+          { level: "heavy",    desc: "Mật độ tích phân ROI cao, ùn ứ xuất hiện trên các phân đoạn làn đường." },
+          { level: "severe",   desc: "Ùn tắc giao thông nghiêm trọng, tích phân mật độ vượt ngưỡng giới hạn, xe di chuyển cực kỳ khó khăn." },
         ].map(({ level, desc }) => {
           const d = DENSITY_META[level];
           return (
@@ -333,9 +333,7 @@ function TrafficLegend() {
           );
         })}
         <div style={{ marginTop: 4, padding: "10px 12px", background: "#f8fafc", borderRadius: 10, fontSize: 12, color: "#64748b", border: "1px dashed #cbd5e1", lineHeight: 1.6 }}>
-          <strong style={{ color: "#475569" }}>Cách đếm:</strong> Camera ghi nhận số lượng phương tiện trong khung hình mỗi 30 giây.
-          Dựa trên tổng xe đếm được + mật độ pixel trên đường, hệ thống phân loại thành 4 mức.
-          Forecast 15/30/60 phút sử dụng dữ liệu 60 phút gần nhất.
+          <strong style={{ color: "#475569" }}>Nguyên lý đo lường:</strong> Hệ thống sử dụng mạng nơ-ron tích chập để ước lượng bản đồ mật độ (Density Map) từ hình ảnh camera giao thông theo thời gian thực (chu kỳ 30 giây). Mức độ ùn tắc được xác định bằng cách tích phân mật độ phương tiện trên vùng diện tích làn đường được khoanh vùng (ROI - Region of Interest). Các thuật toán dự báo (Forecast) 15/30/60 phút được xây dựng dựa trên chuỗi thời gian phân tích tích lũy 60 phút.
         </div>
       </div>
     </Section>

@@ -309,18 +309,18 @@ body,
 
 /* Camera popup content */
 .camera-popup {
-    width: 240px;
+    width: 300px;
 }
 .camera-popup__img-wrap {
     position: relative;
-    height: 140px;
+    height: 180px;
     background: var(--surface-highest);
     overflow: hidden;
 }
 .camera-popup__img-wrap img {
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    object-fit: fill;
 }
 .camera-popup__live-badge {
     position: absolute;
@@ -1489,4 +1489,3 @@ body,
         right: -100%;
     }
 }
-

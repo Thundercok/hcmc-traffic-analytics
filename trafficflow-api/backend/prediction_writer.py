@@ -16,6 +16,7 @@ import io
 from .database import init_db_pool, init_schema, record_prediction, get_pool
 from .cameras import CAMERAS
 from .config import settings
+from .prediction_cache import PredictionCache
 
 logger = logging.getLogger("trafficflow.writer")
 
@@ -357,6 +358,7 @@ class PredictionWriter:
         tasks = [process(cam) for cam in batch]
         results = await asyncio.gather(*tasks, return_exceptions=True)
 
+        cache = PredictionCache.get_instance()
         valid = [r for r in results if isinstance(r, dict)]
         for r in valid:
             try:
@@ -368,6 +370,7 @@ class PredictionWriter:
                     motorbike_count=r["motorbike_count"],
                     density_level=r["density_level"],
                 )
+                cache.record(r["camera_id"], r)
                 self._total_records += 1
             except Exception:
                 pass
