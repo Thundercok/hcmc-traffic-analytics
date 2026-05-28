@@ -12,8 +12,6 @@ class CameraInfo(BaseModel):
     district: str = Field(..., description="District name")
     lat: float = Field(..., description="Latitude")
     lng: float = Field(..., description="Longitude")
-    density_level: Optional[str] = Field(None, description="Current traffic density level")
-    total_count: Optional[int] = Field(None, description="Current traffic total vehicle count")
 
 
 class CameraListResponse(BaseModel):
@@ -303,3 +301,16 @@ class ForecastResponse(BaseModel):
     statistics: Statistics
     forecasts: list[ForecastItem]
     time_features: TimeFeatures
+
+
+class CameraRoiRequest(BaseModel):
+    """Request schema for setting a camera's ROI."""
+
+    roi_polygon: list[list[float]] = Field(..., description="List of normalized [x, y] coordinates")
+
+
+class CameraRoiResponse(BaseModel):
+    """Response schema for getting a camera's ROI."""
+
+    camera_id: str
+    roi_polygon: Optional[list[list[float]]] = Field(None, description="List of normalized [x, y] coordinates")

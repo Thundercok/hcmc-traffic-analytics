@@ -30,6 +30,8 @@ from .schemas import (
     SystemCongestionStatsResponse,
     CongestionMetricsSchema,
     ForecastResponse,
+    CameraRoiRequest,
+    CameraRoiResponse,
 )
 from .forecast_service import get_forecaster
 from .cameras import (
@@ -146,21 +148,71 @@ async def list_cameras(
         filtered = get_cameras_by_district(district)
     else:
         filtered = CAMERAS
-        
-    cache = PredictionCache.get_instance()
-    camera_list = []
-    for cam in filtered:
-        cam_dict = dict(cam)
-        latest = cache.get_latest(cam["id"])
-        if latest:
-            cam_dict["density_level"] = latest.get("density_level", "unknown")
-            cam_dict["total_count"] = latest.get("total_count")
-        else:
-            cam_dict["density_level"] = "unknown"
-            cam_dict["total_count"] = None
-        camera_list.append(CameraInfo(**cam_dict))
-        
+    camera_list = [CameraInfo(**cam) for cam in filtered]
     return CameraListResponse(cameras=camera_list, total=len(camera_list))
+
+
+@router.get(
+    "/cameras/{camera_id}/roi",
+    response_model=CameraRoiResponse,
+    summary="Get Camera ROI",
+    description="Retrieve the saved ROI polygon coordinates for a camera."
+)
+async def get_camera_roi_endpoint(camera_id: str):
+    """[get_camera_roi_endpoint] Retrieve the saved ROI polygon coordinates for a camera."""
+    from .database import get_camera_roi
+    
+    camera = get_camera_by_id(camera_id)
+    if camera is None:
+        raise HTTPException(status_code=404, detail=f"Camera ID not found: {camera_id}")
+        
+    roi = await get_camera_roi(camera_id)
+    return CameraRoiResponse(camera_id=camera_id, roi_polygon=roi)
+
+
+@router.post(
+    "/cameras/{camera_id}/roi",
+    summary="Save Camera ROI",
+    description="Save the ROI polygon coordinates for a camera."
+)
+async def save_camera_roi_endpoint(camera_id: str, payload: CameraRoiRequest):
+    """[save_camera_roi_endpoint] Save the ROI polygon coordinates for a camera."""
+    from .database import save_camera_roi
+    
+    camera = get_camera_by_id(camera_id)
+    if camera is None:
+        raise HTTPException(status_code=404, detail=f"Camera ID not found: {camera_id}")
+        
+    # Validate polygon
+    if len(payload.roi_polygon) < 3:
+        raise HTTPException(status_code=400, detail="ROI polygon must contain at least 3 points")
+        
+    for point in payload.roi_polygon:
+        if len(point) != 2:
+            raise HTTPException(status_code=400, detail="Each ROI coordinate must be [x, y]")
+        x, y = point
+        if not (0.0 <= x <= 1.0) or not (0.0 <= y <= 1.0):
+            raise HTTPException(status_code=400, detail="ROI coordinates must be normalized from 0 to 1")
+            
+    await save_camera_roi(camera_id, payload.roi_polygon)
+    return {"status": "success", "message": f"ROI saved for camera {camera_id}"}
+
+
+@router.delete(
+    "/cameras/{camera_id}/roi",
+    summary="Delete Camera ROI",
+    description="Delete the ROI polygon coordinates for a camera."
+)
+async def delete_camera_roi_endpoint(camera_id: str):
+    """[delete_camera_roi_endpoint] Delete the ROI polygon coordinates for a camera."""
+    from .database import delete_camera_roi
+    
+    camera = get_camera_by_id(camera_id)
+    if camera is None:
+        raise HTTPException(status_code=404, detail=f"Camera ID not found: {camera_id}")
+        
+    await delete_camera_roi(camera_id)
+    return {"status": "success", "message": f"ROI deleted for camera {camera_id}"}
 
 
 _MAGIC_JPEG = b"\xff\xd8"
@@ -245,9 +297,6 @@ async def predict_from_upload(
     roi_polygon: Optional[str] = Form(
         None, description="JSON string of normalized ROI polygon coordinates"
     ),
-    camera_id: Optional[str] = Query(
-        None, description="Camera ID associated with this prediction"
-    ),
 ):
     """[predict_from_upload] Run ZIP model inference on an uploaded image."""
     svc = ZIPModelService.get_instance()
@@ -278,14 +327,7 @@ async def predict_from_upload(
         logger.error(f"[predict_from_upload] Inference failed: {e}", exc_info=True)
         raise HTTPException(status_code=500, detail="Internal prediction error")
 
-    camera_name = None
-    if camera_id:
-        camera = get_camera_by_id(camera_id)
-        if camera:
-            camera_name = camera.get("name")
-        PredictionCache.get_instance().record(camera_id, result)
-
-    return _build_predict_response(result, camera_id=camera_id, camera_name=camera_name)
+    return _build_predict_response(result)
 
 
 @router.get(

@@ -121,6 +121,38 @@ export default function CameraPopup({ camera }) {
     return () => clearInterval(interval);
   }, [camera.id]);
 
+  // Sync ROI from backend on camera.id change
+  useEffect(() => {
+    let active = true;
+    const fetchBackendRoi = async () => {
+      try {
+        const res = await fetch(`${API_URL}/cameras/${camera.id}/roi`);
+        if (res.ok && active) {
+          const data = await res.json();
+          if (data && data.roi_polygon) {
+            const rois = JSON.parse(localStorage.getItem('camera_rois') || '{}');
+            if (data.roi_polygon.length >= 3) {
+              rois[camera.id] = data.roi_polygon;
+              localStorage.setItem('camera_rois', JSON.stringify(rois));
+              setRoiPoints(data.roi_polygon);
+            } else {
+              delete rois[camera.id];
+              localStorage.setItem('camera_rois', JSON.stringify(rois));
+              setRoiPoints([]);
+            }
+          }
+        }
+      } catch (err) {
+        console.error("Failed to sync ROI from backend:", err);
+        // Fallback to local storage if API fails
+        const localRoi = loadStoredRoi(camera.id);
+        setRoiPoints(localRoi);
+      }
+    };
+    fetchBackendRoi();
+    return () => { active = false; };
+  }, [camera.id, setRoiPoints]);
+
   // Fetch prediction history
   const fetchHistory = useCallback(async () => {
     try {
@@ -131,10 +163,6 @@ export default function CameraPopup({ camera }) {
       }
     } catch { /* ignore */ }
   }, [camera.id]);
-
-  useEffect(() => {
-    fetchHistory();
-  }, [camera.id, fetchHistory]);
 
   const handlePredict = async (points = roiPoints) => {
     setLoading(true);
@@ -153,7 +181,7 @@ export default function CameraPopup({ camera }) {
         formData.append('roi_polygon', JSON.stringify(points));
       }
 
-      const predictResponse = await fetch(`${API_URL}/predict?heatmap=true&camera_id=${camera.id}`, {
+      const predictResponse = await fetch(`${API_URL}/predict?heatmap=true`, {
         method: 'POST',
         body: formData,
       });
@@ -185,17 +213,18 @@ export default function CameraPopup({ camera }) {
     setRoiPoints((prev) => prev.slice(0, -1));
   };
 
-  const handleClearRoi = () => {
+  const handleClearRoi = async () => {
+    setRoiPoints([]);
+    setPrediction(null);
     try {
       const rois = JSON.parse(localStorage.getItem('camera_rois') || '{}');
       delete rois[camera.id];
       localStorage.setItem('camera_rois', JSON.stringify(rois));
-    } catch (e) {
-      console.error("Failed to clear ROI from localStorage:", e);
+      
+      await fetch(`${API_URL}/cameras/${camera.id}/roi`, { method: 'DELETE' });
+    } catch (err) {
+      console.error("Failed to delete ROI on backend:", err);
     }
-    setRoiPoints([]);
-    setPrediction(null);
-    window.dispatchEvent(new CustomEvent('cameraRoisUpdated'));
   };
 
   const handleSaveRoi = async () => {
@@ -203,18 +232,37 @@ export default function CameraPopup({ camera }) {
       const rois = JSON.parse(localStorage.getItem('camera_rois') || '{}');
       if (roiPoints.length >= 3) {
         rois[camera.id] = roiPoints;
+        localStorage.setItem('camera_rois', JSON.stringify(rois));
+        
+        // Save to backend
+        try {
+          await fetch(`${API_URL}/cameras/${camera.id}/roi`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ roi_polygon: roiPoints }),
+          });
+        } catch (err) {
+          console.error("Failed to save ROI to backend:", err);
+        }
       } else {
         delete rois[camera.id];
+        localStorage.setItem('camera_rois', JSON.stringify(rois));
+        
+        // Delete on backend
+        try {
+          await fetch(`${API_URL}/cameras/${camera.id}/roi`, { method: 'DELETE' });
+        } catch (err) {
+          console.error("Failed to delete ROI on backend:", err);
+        }
       }
-      localStorage.setItem('camera_rois', JSON.stringify(rois));
+      
       setPrediction(null);
       setIsDrawing(false);
       if (roiPoints.length >= 3) {
         await handlePredict(roiPoints);
       }
-      window.dispatchEvent(new CustomEvent('cameraRoisUpdated'));
     } catch (e) {
-      console.error("Failed to save ROI to localStorage:", e);
+      console.error("Failed to save ROI:", e);
     }
   };
 

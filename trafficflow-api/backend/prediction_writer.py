@@ -16,7 +16,6 @@ import io
 from .database import init_db_pool, init_schema, record_prediction, get_pool
 from .cameras import CAMERAS
 from .config import settings
-from .prediction_cache import PredictionCache
 
 logger = logging.getLogger("trafficflow.writer")
 
@@ -306,6 +305,14 @@ class PredictionWriter:
 
         skipped = await self._get_skipped_cameras()
 
+        # Load all camera ROIs from DB
+        try:
+            from .database import get_all_camera_rois
+            camera_rois = await get_all_camera_rois()
+        except Exception as e:
+            logger.error(f"[writer] Failed to fetch camera ROIs from DB: {e}")
+            camera_rois = {}
+
         # Select next cameras (cycle through all)
         batch = []
         for i in range(len(CAMERAS)):
@@ -322,43 +329,79 @@ class PredictionWriter:
 
         self._cursor = (self._cursor + len(batch)) % len(CAMERAS)
 
-        semaphore = asyncio.Semaphore(30)
+        fetch_semaphore = asyncio.Semaphore(30)
+        infer_semaphore = asyncio.Semaphore(2)  # Limit concurrent CPU inferences to protect API response latency
 
         async def process(cam: dict) -> dict | None:
-            async with semaphore:
-                camera_id = cam["id"]
-                url = f"https://giaothong.hochiminhcity.gov.vn/render/ImageHandler.ashx?id={camera_id}"
+            camera_id = cam["id"]
+            url = f"https://giaothong.hochiminhcity.gov.vn/render/ImageHandler.ashx?id={camera_id}"
 
-                try:
+            try:
+                # 1. Fetch image (I/O bound operation)
+                async with fetch_semaphore:
                     resp = await self._http.get(url, headers=CAMERA_FETCH_HEADERS)
                     resp.raise_for_status()
                     image_bytes = resp.content
 
-                    is_err, reason = _is_error_image(image_bytes)
-                    if is_err:
-                        await self._log_error(camera_id, reason)
-                        self._skipped_this_session.add(camera_id)
-                        return None
-
-                    pred = _heuristic_predict(image_bytes)
-                    return {
-                        "camera_id": camera_id,
-                        "timestamp": datetime.now(timezone.utc),
-                        **pred,
-                    }
-
-                except httpx.TimeoutException:
-                    await self._log_error(camera_id, "timeout")
+                is_err, reason = _is_error_image(image_bytes)
+                if is_err:
+                    await self._log_error(camera_id, reason)
                     self._skipped_this_session.add(camera_id)
                     return None
-                except Exception as e:
-                    logger.warning(f"[writer] {camera_id}: {e}")
-                    return None
+
+                # 2. Predict (CPU/GPU bound operation)
+                from .model_service import ZIPModelService
+                from fastapi.concurrency import run_in_threadpool
+
+                svc = ZIPModelService.get_instance()
+                roi = camera_rois.get(camera_id)
+
+                if svc.is_loaded:
+                    try:
+                        async with infer_semaphore:
+                            model_pred = await run_in_threadpool(
+                                svc.predict_from_bytes,
+                                image_bytes,
+                                skip_error_check=True,
+                                roi_polygon=roi
+                            )
+                        if roi and model_pred.get("has_roi"):
+                            pred = {
+                                "total_count": model_pred["roi_count"],
+                                "car_count": model_pred["roi_car_count"],
+                                "motorbike_count": model_pred["roi_motorbike_count"],
+                                "density_level": model_pred["roi_congestion_level"],
+                            }
+                        else:
+                            pred = {
+                                "total_count": model_pred["total_count"],
+                                "car_count": model_pred["car_count"],
+                                "motorbike_count": model_pred["motorbike_count"],
+                                "density_level": model_pred["density_level"],
+                            }
+                    except Exception as e:
+                        logger.error(f"[writer] ML prediction failed for {camera_id}, using heuristic fallback: {e}")
+                        pred = _heuristic_predict(image_bytes)
+                else:
+                    pred = _heuristic_predict(image_bytes)
+
+                return {
+                    "camera_id": camera_id,
+                    "timestamp": datetime.now(timezone.utc),
+                    **pred,
+                }
+
+            except httpx.TimeoutException:
+                await self._log_error(camera_id, "timeout")
+                self._skipped_this_session.add(camera_id)
+                return None
+            except Exception as e:
+                logger.warning(f"[writer] {camera_id}: {e}")
+                return None
 
         tasks = [process(cam) for cam in batch]
         results = await asyncio.gather(*tasks, return_exceptions=True)
 
-        cache = PredictionCache.get_instance()
         valid = [r for r in results if isinstance(r, dict)]
         for r in valid:
             try:
@@ -370,7 +413,6 @@ class PredictionWriter:
                     motorbike_count=r["motorbike_count"],
                     density_level=r["density_level"],
                 )
-                cache.record(r["camera_id"], r)
                 self._total_records += 1
             except Exception:
                 pass

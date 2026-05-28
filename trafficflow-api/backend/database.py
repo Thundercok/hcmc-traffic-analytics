@@ -131,6 +131,21 @@ async def init_schema():
             logger.warning(f"[db] TimescaleDB not available: {e}")
             logger.info("[db] Using regular PostgreSQL table.")
 
+        # Create camera_rois table
+        try:
+            await conn.execute(
+                """
+                CREATE TABLE IF NOT EXISTS camera_rois (
+                    camera_id TEXT PRIMARY KEY,
+                    roi_polygon JSONB NOT NULL,
+                    updated_at TIMESTAMPTZ DEFAULT NOW()
+                )
+                """
+            )
+            logger.info("[db] camera_rois table initialized.")
+        except Exception as e:
+            logger.error(f"[db] Failed to initialize camera_rois table: {e}")
+
         logger.info("[db] Schema initialized successfully.")
 
 
@@ -188,3 +203,64 @@ async def get_camera_history(
         )
 
         return [dict(row) for row in rows]
+
+
+async def get_camera_roi(camera_id: str) -> list[list[float]] | None:
+    """Get the saved ROI polygon for a camera."""
+    import json
+    pool = await get_pool()
+    async with pool.acquire() as conn:
+        val = await conn.fetchval(
+            "SELECT roi_polygon FROM camera_rois WHERE camera_id = $1",
+            camera_id
+        )
+        if val is not None:
+            if isinstance(val, str):
+                return json.loads(val)
+            return val
+        return None
+
+
+async def save_camera_roi(camera_id: str, roi_polygon: list[list[float]]) -> None:
+    """Save the ROI polygon for a camera."""
+    import json
+    pool = await get_pool()
+    val = json.dumps(roi_polygon)
+    async with pool.acquire() as conn:
+        await conn.execute(
+            """
+            INSERT INTO camera_rois (camera_id, roi_polygon, updated_at)
+            VALUES ($1, $2, NOW())
+            ON CONFLICT (camera_id) DO UPDATE SET
+                roi_polygon = EXCLUDED.roi_polygon,
+                updated_at = NOW()
+            """,
+            camera_id,
+            val
+        )
+
+
+async def delete_camera_roi(camera_id: str) -> None:
+    """Delete the ROI polygon for a camera."""
+    pool = await get_pool()
+    async with pool.acquire() as conn:
+        await conn.execute(
+            "DELETE FROM camera_rois WHERE camera_id = $1",
+            camera_id
+        )
+
+
+async def get_all_camera_rois() -> dict[str, list[list[float]]]:
+    """Get ROI polygons for all cameras."""
+    import json
+    pool = await get_pool()
+    async with pool.acquire() as conn:
+        rows = await conn.fetch("SELECT camera_id, roi_polygon FROM camera_rois")
+        res = {}
+        for r in rows:
+            val = r["roi_polygon"]
+            if isinstance(val, str):
+                res[r["camera_id"]] = json.loads(val)
+            else:
+                res[r["camera_id"]] = val
+        return res

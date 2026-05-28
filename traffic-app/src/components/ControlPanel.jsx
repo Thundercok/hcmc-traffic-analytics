@@ -183,88 +183,62 @@ export default function ControlPanel({
       {/* Header Panel */}
       <div
         style={{
-          padding: "12px 16px",
+          padding: "16px",
           display: "flex",
           justifyContent: "space-between",
           alignItems: "center",
           background: "white",
-          borderBottom: isExpanded ? "1px solid var(--outline-variant)" : "none",
         }}
         onClick={() => !isExpanded && setIsExpanded(true)}
       >
-        <div style={{ display: "flex", flexDirection: "column", gap: "2px" }}>
-          <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-            <LuRoute size={20} color="var(--primary)" />
-            <span className="font-headline-md" style={{ fontSize: "16px", fontWeight: 700 }}>
-              TrafficFlow AI
-            </span>
-          </div>
-          <span style={{ fontSize: "10px", color: "var(--on-surface-variant)", marginLeft: "28px" }}>
-            Giám sát mật độ & Đo ùn tắc ROI (Đề tài NCKH)
+        <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+          <LuRoute size={20} color="var(--primary)" />
+          <span className="font-headline-md" style={{ fontSize: "16px" }}>
+            Tra cứu lộ trình
           </span>
         </div>
-        <div style={{ display: "flex", alignItems: "center", gap: "6px" }}>
-          <a
-            href="/dashboard"
-            onClick={(e) => {
-              e.preventDefault();
-              e.stopPropagation();
-              window.history.pushState({}, "", "/dashboard");
-              window.dispatchEvent(new PopStateEvent("popstate"));
-            }}
-            style={{
-              display: "flex", alignItems: "center", gap: 4,
-              padding: "4px 8px", borderRadius: 6,
-              background: "#f1f5f9", border: "1px solid #e2e8f0",
-              color: "#475569", fontSize: 11, fontWeight: 600,
-              textDecoration: "none",
-            }}
-            title="Dashboard"
-          >
-            <LuActivity size={13} />
-            Báo cáo
-          </a>
-          <button
-            onClick={(e) => {
-              e.stopPropagation();
-              setIsExpanded(!isExpanded);
-            }}
-            style={{
-              background: "none",
-              border: "none",
-              cursor: "pointer",
-              color: "var(--on-surface-variant)",
-              display: "flex",
-              alignItems: "center",
-              padding: "4px",
-            }}
-          >
-            {isExpanded ? <LuChevronUp size={20} /> : <LuChevronDown size={20} />}
-          </button>
-        </div>
+        <button
+          onClick={(e) => {
+            e.stopPropagation();
+            setIsExpanded(!isExpanded);
+          }}
+          style={{
+            background: "none",
+            border: "none",
+            cursor: "pointer",
+            color: "var(--on-surface-variant)",
+            display: "flex",
+            alignItems: "center",
+          }}
+        >
+          {isExpanded ? <LuChevronUp size={22} /> : <LuChevronDown size={22} />}
+        </button>
+        <a
+          href="/dashboard"
+          onClick={(e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            window.history.pushState({}, "", "/dashboard");
+            window.dispatchEvent(new PopStateEvent("popstate"));
+          }}
+          style={{
+            display: "flex", alignItems: "center", gap: 4,
+            padding: "4px 10px", borderRadius: 8,
+            background: "#f1f5f9", border: "1px solid #e2e8f0",
+            color: "#475569", fontSize: 12, fontWeight: 600,
+            textDecoration: "none", marginLeft: 4,
+          }}
+          title="Dashboard"
+        >
+          <LuActivity size={13} />
+          Dashboard
+        </a>
       </div>
 
       <div
         className="control-panel__body"
-        style={{ display: isExpanded ? "flex" : "none", paddingTop: "12px" }}
+        style={{ display: isExpanded ? "flex" : "none", paddingTop: 0 }}
       >
-        {/* Academic Card explaining methodology */}
-        <div style={{
-          background: "rgba(14, 165, 233, 0.08)",
-          border: "1px solid rgba(14, 165, 233, 0.2)",
-          borderRadius: "8px",
-          padding: "10px 12px",
-          fontSize: "11px",
-          lineHeight: "1.4",
-          color: "#0369a1",
-          marginBottom: "4px",
-        }}>
-          <div style={{ fontWeight: "bold", display: "flex", alignItems: "center", gap: "6px", marginBottom: "4px" }}>
-            <LuActivity size={13} style={{ flexShrink: 0 }} />
-            <span>Phương pháp Đo lường Mật độ ROI (NCKH)</span>
-          </div>
-          Hệ thống thực hiện tích phân bản đồ mật độ phương tiện (Density Map) trên vùng đa giác mặt đường (ROI) được cấu hình. Chỉ số này phản ánh chính xác lưu lượng xe thực tế, loại bỏ sai số từ vỉa hè hoặc vật cản.
-        </div>
         {/* Route Inputs */}
         <div className="route-inputs" style={{ position: "relative" }}>
           <div className="route-inputs__line" />
@@ -273,7 +247,7 @@ export default function ControlPanel({
             <LuLocateFixed size={18} className="icon-origin" />
             <input
               type="text"
-              placeholder="Điểm xuất phát (Tối ưu mật độ)"
+              placeholder="Điểm đi (Ví dụ: Chợ Bến Thành)"
               value={originText}
               onChange={handleOriginChange}
               onFocus={() => setActiveDropdown("origin")}
@@ -300,7 +274,7 @@ export default function ControlPanel({
             <LuMapPin size={18} className="icon-dest" />
             <input
               type="text"
-              placeholder="Điểm đến (Tránh ùn tắc ROI)"
+              placeholder="Điểm đến (Ví dụ: Đại học Tôn Đức Thắng)"
               value={localDestText}
               onChange={handleDestChange}
               onFocus={() => setActiveDropdown("dest")}
