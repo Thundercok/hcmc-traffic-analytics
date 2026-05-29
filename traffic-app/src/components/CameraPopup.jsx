@@ -13,6 +13,7 @@ import {
   LuPenTool,
   LuCircleX,
   LuRotateCcw,
+  LuX,
 } from 'react-icons/lu';
 
 const DENSITY_CONFIG = {
@@ -89,7 +90,7 @@ function TrendSparkline({ history }) {
   );
 }
 
-export default function CameraPopup({ camera }) {
+export default function CameraPopup({ camera, onClose }) {
   const [imageUrl, setImageUrl] = useState(getCameraImageUrl(camera.id));
   const [prediction, setPrediction] = useState(null);
   const [history, setHistory] = useState([]);
@@ -144,7 +145,6 @@ export default function CameraPopup({ camera }) {
         }
       } catch (err) {
         console.error("Failed to sync ROI from backend:", err);
-        // Fallback to local storage if API fails
         const localRoi = loadStoredRoi(camera.id);
         setRoiPoints(localRoi);
       }
@@ -168,12 +168,10 @@ export default function CameraPopup({ camera }) {
     setLoading(true);
     setError(null);
     try {
-      // 1. Tải ảnh từ HCMC bằng mạng Việt Nam (qua Vite Proxy để né CORS)
       const imageResponse = await fetch(imageUrl);
       if (!imageResponse.ok) throw new Error('Không thể lấy ảnh từ HCMC');
       const imageBlob = await imageResponse.blob();
 
-      // 2. Upload thẳng ảnh đó lên Hugging Face (tránh việc HF bị chặn IP)
       const formData = new FormData();
       formData.append('file', imageBlob, 'camera.jpg');
 
@@ -190,7 +188,6 @@ export default function CameraPopup({ camera }) {
       const data = await predictResponse.json();
       setPrediction(data.prediction);
 
-      // 3. Fetch updated history (trend chart)
       await fetchHistory();
     } catch (err) {
       console.error(err);
@@ -205,7 +202,6 @@ export default function CameraPopup({ camera }) {
     const rect = imgWrapRef.current.getBoundingClientRect();
     const x = (e.clientX - rect.left) / rect.width;
     const y = (e.clientY - rect.top) / rect.height;
-    // Keep 3 decimal points precision
     setRoiPoints((prev) => [...prev, [Math.round(x * 1000) / 1000, Math.round(y * 1000) / 1000]]);
   };
 
@@ -220,7 +216,7 @@ export default function CameraPopup({ camera }) {
       const rois = JSON.parse(localStorage.getItem('camera_rois') || '{}');
       delete rois[camera.id];
       localStorage.setItem('camera_rois', JSON.stringify(rois));
-      
+
       await fetch(`${API_URL}/cameras/${camera.id}/roi`, { method: 'DELETE' });
     } catch (err) {
       console.error("Failed to delete ROI on backend:", err);
@@ -233,8 +229,7 @@ export default function CameraPopup({ camera }) {
       if (roiPoints.length >= 3) {
         rois[camera.id] = roiPoints;
         localStorage.setItem('camera_rois', JSON.stringify(rois));
-        
-        // Save to backend
+
         try {
           await fetch(`${API_URL}/cameras/${camera.id}/roi`, {
             method: 'POST',
@@ -247,15 +242,14 @@ export default function CameraPopup({ camera }) {
       } else {
         delete rois[camera.id];
         localStorage.setItem('camera_rois', JSON.stringify(rois));
-        
-        // Delete on backend
+
         try {
           await fetch(`${API_URL}/cameras/${camera.id}/roi`, { method: 'DELETE' });
         } catch (err) {
           console.error("Failed to delete ROI on backend:", err);
         }
       }
-      
+
       setPrediction(null);
       setIsDrawing(false);
       if (roiPoints.length >= 3) {
@@ -272,8 +266,25 @@ export default function CameraPopup({ camera }) {
   const roiDensity = DENSITY_CONFIG[prediction?.roi_congestion_level] || DENSITY_CONFIG.low;
   const primaryDensity = prediction?.has_roi ? roiDensity : globalDensity;
 
+  const handlePopupEvents = (e) => {
+    e.stopPropagation();
+    if (e.nativeEvent) {
+      e.nativeEvent.stopPropagation();
+    }
+  };
+
   return (
-    <div className="camera-popup">
+    <div
+      className="camera-popup"
+      onClick={handlePopupEvents}
+      onMouseDown={handlePopupEvents}
+      onMouseUp={handlePopupEvents}
+      onMouseMove={handlePopupEvents}
+      onDoubleClick={handlePopupEvents}
+      onContextMenu={handlePopupEvents}
+      onWheel={handlePopupEvents}
+    >
+      {/* Image Container Block */}
       <div
         className="camera-popup__img-wrap"
         style={{ position: 'relative', cursor: isDrawing ? 'crosshair' : 'default' }}
@@ -366,9 +377,31 @@ export default function CameraPopup({ camera }) {
           </button>
         )}
       </div>
+
+      {/* Main Metadata and Control Panel */}
       <div className="camera-popup__info">
-        <div className="camera-popup__title">{camera.name}</div>
-        <div className="camera-popup__subtitle">{camera.district}</div>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
+          <div>
+            <div className="camera-popup__title">{camera.name}</div>
+            <div className="camera-popup__subtitle">{camera.district}</div>
+          </div>
+          {onClose && (
+            <button
+              onClick={onClose}
+              style={{
+                background: 'none', border: 'none', cursor: 'pointer',
+                color: '#64748b', padding: '4px', borderRadius: '50%',
+                display: 'flex', alignItems: 'center', justifyContent: 'center',
+                transition: 'background 0.2s', marginTop: '-4px'
+              }}
+              onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = 'rgba(0,0,0,0.05)' }}
+              onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = 'transparent' }}
+              title="Đóng"
+            >
+              <LuX size={18} />
+            </button>
+          )}
+        </div>
 
         <div style={{ display: 'flex', gap: 6, marginTop: 10, flexWrap: 'wrap' }}>
           {!isDrawing ? (

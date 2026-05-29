@@ -398,10 +398,26 @@ class ZIPModelService:
                     roi_motorbike_count = int(round(roi_count * ratio))
                     roi_car_count = roi_count - roi_motorbike_count
 
-                roi_density_score = round(float(roi_count / roi_area_ratio), 2)
-                roi_congestion_level = self._classify_congestion_score(
-                    roi_density_score
-                )
+                # Calculate active heatmap intersection with road segment
+                total_den = den[0].sum(dim=0)
+                active_heatmap = (total_den > 0.2).to(dtype=den.dtype)
+                intersection = active_heatmap * mask_tensor
+                
+                road_pixels = float(mask_tensor.sum().item())
+                intersection_pixels = float(intersection.sum().item())
+                
+                coverage_percentage = (intersection_pixels / road_pixels * 100) if road_pixels > 0 else 0.0
+                roi_density_score = round(coverage_percentage, 1)
+                
+                # Classify based on coverage percentage
+                if coverage_percentage < 15.0:
+                    roi_congestion_level = "low"
+                elif coverage_percentage < 40.0:
+                    roi_congestion_level = "moderate"
+                elif coverage_percentage < 70.0:
+                    roi_congestion_level = "heavy"
+                else:
+                    roi_congestion_level = "severe"
 
         # Classify density level (fallback or global)
         if total_count < 10:

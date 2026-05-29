@@ -908,6 +908,7 @@ const TrafficMap = React.memo(function TrafficMap({
   const { logRequest, logResponse, logError, logInfo, startAnalysis, endAnalysis } = useDebug();
   const mapRef = React.useRef(null);
   const cameraRefs = React.useRef({});
+  const [selectedCamera, setSelectedCamera] = React.useState(null);
 
   // Listen for openCameraPopup events from Dashboard
   React.useEffect(() => {
@@ -918,10 +919,7 @@ const TrafficMap = React.memo(function TrafficMap({
       if (cam.lat && cam.lng) {
         map.setView([cam.lat, cam.lng], 17, { animate: true });
       }
-      const marker = cameraRefs.current[cam.id];
-      if (marker) {
-        setTimeout(() => marker.openPopup(), 300);
-      }
+      setSelectedCamera(cam);
     };
     window.addEventListener("openCameraPopup", handleOpenPopup);
     return () => window.removeEventListener("openCameraPopup", handleOpenPopup);
@@ -987,18 +985,14 @@ const TrafficMap = React.memo(function TrafficMap({
           position={[cam.lat, cam.lng]}
           icon={CAMERA_ICON}
           eventHandlers={{
-            click: (e) => {
-              e.target.openPopup();
+            click: () => {
+              setSelectedCamera(cam);
             },
           }}
           ref={(leafletMarker) => {
             if (leafletMarker) cameraRefs.current[cam.id] = leafletMarker;
           }}
-        >
-          <Popup maxWidth={320} minWidth={300} closeButton={true} autoPan={false} keepInView={false}>
-              <CameraPopup camera={cam} />
-          </Popup>
-        </Marker>
+        />
       )),
     [liveCameras],
   );
@@ -1023,78 +1017,90 @@ const TrafficMap = React.memo(function TrafficMap({
   );
 
   return (
-    <MapContainer
-      ref={mapRef}
-      center={MAP_CENTER}
-      zoom={MAP_ZOOM}
-      zoomControl={false}
-      style={{ width: "100%", height: "100%" }}
-      id="traffic-map"
-    >
-      <ZoomControl position="bottomright" />
-      <MapController userLocation={userLocation} />
-      <LongPressHandler onLongPress={handleLongPress} />
-      <MapStyleSwitcher mapStyle={mapStyle} onChange={setMapStyle} />
+    <div style={{ position: "relative", width: "100%", height: "100%" }}>
+      <MapContainer
+        ref={mapRef}
+        center={MAP_CENTER}
+        zoom={MAP_ZOOM}
+        zoomControl={false}
+        style={{ width: "100%", height: "100%" }}
+        id="traffic-map"
+      >
+        <ZoomControl position="bottomright" />
+        <MapController userLocation={userLocation} />
+        <LongPressHandler onLongPress={handleLongPress} />
+        <MapStyleSwitcher mapStyle={mapStyle} onChange={setMapStyle} />
 
-      <TileLayer
-        key={`base-${mapStyle.id}`}
-        url={mapStyle.url}
-        maxZoom={mapStyle.maxZoom}
-        attribution={mapStyle.attribution}
-        subdomains={mapStyle.subdomains || "abc"}
-      />
-      {mapStyle.labelOverlay && (
         <TileLayer
-          key={`labels-${mapStyle.id}`}
-          url={mapStyle.labelOverlay}
-          subdomains="abcd"
-          maxZoom={20}
-          pane="overlayPane"
+          key={`base-${mapStyle.id}`}
+          url={mapStyle.url}
+          maxZoom={mapStyle.maxZoom}
+          attribution={mapStyle.attribution}
+          subdomains={mapStyle.subdomains || "abc"}
         />
+        {mapStyle.labelOverlay && (
+          <TileLayer
+            key={`labels-${mapStyle.id}`}
+            url={mapStyle.labelOverlay}
+            subdomains="abcd"
+            maxZoom={20}
+            pane="overlayPane"
+          />
+        )}
+
+        {/* Traffic Heatmap Layer */}
+        {/* <TrafficHeatmap sliderValue={sliderValue} /> */}
+
+        {/* Dropped Pin from long-press */}
+        {droppedPin && (
+          <DroppedPin
+            position={droppedPin}
+            onSetOrigin={handlePinOrigin}
+            onSetDestination={handlePinDestination}
+            onClose={() => setDroppedPin(null)}
+          />
+        )}
+
+        {userLocation && (
+          <Marker position={userLocation} icon={USER_ICON} zIndexOffset={1000} />
+        )}
+
+        {destLocation && (
+          <Marker
+            position={destLocation}
+            icon={DEST_ICON}
+            zIndexOffset={1000}
+          />
+        )}
+
+        {routePolylines}
+
+        {userLocation && destLocation && (
+          <AIAwareRouting
+            from={userLocation}
+            to={destLocation}
+            liveCameras={liveCameras}
+            sliderValue={sliderValue}
+            travelMode={travelMode}
+            onRouteFound={onRouteFound}
+            onRouteTraffic={onRouteTraffic}
+          />
+        )}
+        
+        {/* Direct markers without clustering */}
+        {renderedMarkers}
+      </MapContainer>
+
+      {/* Floating Camera Detail Sidebar */}
+      {selectedCamera && (
+        <div className="camera-sidebar-container">
+          <CameraPopup
+            camera={selectedCamera}
+            onClose={() => setSelectedCamera(null)}
+          />
+        </div>
       )}
-
-      {/* Traffic Heatmap Layer */}
-      {/* <TrafficHeatmap sliderValue={sliderValue} /> */}
-
-      {/* Dropped Pin from long-press */}
-      {droppedPin && (
-        <DroppedPin
-          position={droppedPin}
-          onSetOrigin={handlePinOrigin}
-          onSetDestination={handlePinDestination}
-          onClose={() => setDroppedPin(null)}
-        />
-      )}
-
-      {userLocation && (
-        <Marker position={userLocation} icon={USER_ICON} zIndexOffset={1000} />
-      )}
-
-      {destLocation && (
-        <Marker
-          position={destLocation}
-          icon={DEST_ICON}
-          zIndexOffset={1000}
-        />
-      )}
-
-      {routePolylines}
-
-      {userLocation && destLocation && (
-        <AIAwareRouting
-          from={userLocation}
-          to={destLocation}
-          liveCameras={liveCameras}
-          sliderValue={sliderValue}
-          travelMode={travelMode}
-          onRouteFound={onRouteFound}
-          onRouteTraffic={onRouteTraffic}
-        />
-      )}
-      
-      {/* Direct markers without clustering */}
-      {renderedMarkers}
-    </MapContainer>
+    </div>
   );
 });
 

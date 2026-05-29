@@ -382,8 +382,17 @@ async def predict_from_camera(request: Request, camera_id: str, heatmap: bool = 
                     status_code=502, detail="Failed to fetch camera image"
                 )
 
+    # Load ROI polygon from database
+    from .database import get_camera_roi
+    roi = await get_camera_roi(camera_id)
+
     try:
-        result = await run_in_threadpool(svc.predict_from_bytes, image_bytes, heatmap)
+        result = await run_in_threadpool(
+            svc.predict_from_bytes,
+            image_bytes,
+            return_heatmap=heatmap,
+            roi_polygon=roi,
+        )
     except Exception as e:
         logger.error(f"[predict_from_camera] Inference failed: {e}", exc_info=True)
         raise HTTPException(status_code=500, detail="Internal prediction error")
@@ -426,7 +435,16 @@ async def batch_predict(request: Request, body: BatchPredictRequest):
     cache = PredictionCache.get_instance()
     sem = asyncio.Semaphore(_BATCH_FETCH_SEMAPHORE)
 
+    # Load all camera ROIs from DB
+    try:
+        from .database import get_all_camera_rois
+        camera_rois = await get_all_camera_rois()
+    except Exception as e:
+        logger.error(f"[batch_predict] Failed to fetch camera ROIs: {e}")
+        camera_rois = {}
+
     async def _predict_one(cam: dict) -> dict:
+        roi = camera_rois.get(cam["id"])
         """Fetch image + run inference for a single camera."""
         latest = cache.get_latest(cam["id"])
         if latest:
@@ -453,7 +471,9 @@ async def batch_predict(request: Request, body: BatchPredictRequest):
                     resp.headers.get("content-type", "image/jpeg"),
                 )
 
-            result = await run_in_threadpool(svc.predict_from_bytes, image_bytes)
+            result = await run_in_threadpool(
+                svc.predict_from_bytes, image_bytes, roi_polygon=roi
+            )
             cache.record(cam["id"], result)
             return {"cam": cam, "result": result, "ok": True}
         except Exception as e:
@@ -463,7 +483,9 @@ async def batch_predict(request: Request, body: BatchPredictRequest):
                     f"[batch_predict] Fetch failed ({e}), using cached image for {cam['id']}."
                 )
                 image_bytes = cached["content"]
-                result = await run_in_threadpool(svc.predict_from_bytes, image_bytes)
+                result = await run_in_threadpool(
+                    svc.predict_from_bytes, image_bytes, roi_polygon=roi
+                )
                 cache.record(cam["id"], result)
                 return {"cam": cam, "result": result, "ok": True}
             else:
