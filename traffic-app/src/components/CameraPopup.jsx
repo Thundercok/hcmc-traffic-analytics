@@ -191,22 +191,12 @@ export default function CameraPopup({ camera, onClose }) {
     setLoading(true);
     setError(null);
     try {
-      const imageResponse = await fetch(imageUrl);
-      if (!imageResponse.ok) throw new Error('Không thể lấy ảnh từ HCMC');
-      const imageBlob = await imageResponse.blob();
-
-      const formData = new FormData();
-      formData.append('file', imageBlob, 'camera.jpg');
-
-      if (points.length >= 3) {
-        formData.append('roi_polygon', JSON.stringify(points));
+      let url = `${API_URL}/predict/camera/${camera.id}?heatmap=true`;
+      if (points && points.length >= 3) {
+        url += `&roi_polygon=${encodeURIComponent(JSON.stringify(points))}`;
       }
 
-      const predictResponse = await fetch(`${API_URL}/predict?heatmap=true`, {
-        method: 'POST',
-        body: formData,
-      });
-
+      const predictResponse = await fetch(url);
       if (!predictResponse.ok) throw new Error('AI Model phân tích thất bại');
       const data = await predictResponse.json();
       setPrediction(data.prediction);
@@ -336,8 +326,8 @@ export default function CameraPopup({ camera, onClose }) {
   const handleSaveRoi = async () => {
     try {
       const rois = JSON.parse(localStorage.getItem('camera_rois') || '{}');
-      if (roiPoints.length >= 3) {
-        rois[camera.id] = roiPoints;
+      if (validRoiPoints.length >= 3) {
+        rois[camera.id] = validRoiPoints;
         localStorage.setItem('camera_rois', JSON.stringify(rois));
 
         window.dispatchEvent(new CustomEvent('cameraRoiChanged', {
@@ -348,7 +338,7 @@ export default function CameraPopup({ camera, onClose }) {
           await fetch(`${API_URL}/cameras/${camera.id}/roi`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ roi_polygon: roiPoints }),
+            body: JSON.stringify({ roi_polygon: validRoiPoints }),
           });
         } catch (err) {
           console.error("Failed to save ROI to backend:", err);
@@ -370,8 +360,8 @@ export default function CameraPopup({ camera, onClose }) {
 
       setPrediction(null);
       setIsDrawing(false);
-      if (roiPoints.length >= 3) {
-        await handlePredict(roiPoints);
+      if (validRoiPoints.length >= 3) {
+        await handlePredict(validRoiPoints);
       }
     } catch (e) {
       console.error("Failed to save ROI:", e);
@@ -401,7 +391,7 @@ export default function CameraPopup({ camera, onClose }) {
         
         // Ctrl+S or Enter to save (if valid)
         if (((e.ctrlKey || e.metaKey) && e.key === 's') || e.key === 'Enter') {
-          if (roiPoints.length >= 3 && !loading) {
+          if (validRoiPoints.length >= 3 && !loading) {
             e.preventDefault();
             handleSaveRoi();
           }
@@ -410,9 +400,12 @@ export default function CameraPopup({ camera, onClose }) {
     };
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [isDrawing, roiPoints, loading, camera.id, onClose]);
+  }, [isDrawing, validRoiPoints, loading, camera.id, onClose]);
 
-  const hasRoadSegment = roiPoints.length >= 3;
+  const validRoiPoints = Array.isArray(roiPoints)
+    ? roiPoints.filter(p => Array.isArray(p) && p.length === 2 && typeof p[0] === 'number' && typeof p[1] === 'number')
+    : [];
+  const hasRoadSegment = validRoiPoints.length >= 3;
   const globalDensityLevel = prediction?.global_density_level || prediction?.density_level;
   const globalDensity = DENSITY_CONFIG[globalDensityLevel] || DENSITY_CONFIG.low;
   const roiDensity = DENSITY_CONFIG[prediction?.roi_congestion_level] || DENSITY_CONFIG.low;
@@ -474,17 +467,17 @@ export default function CameraPopup({ camera, onClose }) {
             pointerEvents: 'none', zIndex: 4
           }}
         >
-          {roiPoints.length > 0 && (
+          {validRoiPoints.length > 0 && (
             hasRoadSegment ? (
               <polygon
-                points={roiPoints.map(([x, y]) => `${x * 1000},${y * 1000}`).join(' ')}
+                points={validRoiPoints.map(([x, y]) => `${x * 1000},${y * 1000}`).join(' ')}
                 fill="rgba(59, 130, 246, 0.25)"
                 stroke="#3b82f6"
                 strokeWidth="4"
               />
             ) : (
               <polyline
-                points={roiPoints.map(([x, y]) => `${x * 1000},${y * 1000}`).join(' ')}
+                points={validRoiPoints.map(([x, y]) => `${x * 1000},${y * 1000}`).join(' ')}
                 fill="none"
                 stroke="#3b82f6"
                 strokeWidth="4"
@@ -500,7 +493,7 @@ export default function CameraPopup({ camera, onClose }) {
             pointerEvents: isDrawing ? 'auto' : 'none', zIndex: 5
           }}
         >
-          {roiPoints.length > 0 && roiPoints.map(([x, y], idx) => (
+          {validRoiPoints.length > 0 && validRoiPoints.map(([x, y], idx) => (
             <circle
               key={idx}
               cx={`${x * 100}%`}
@@ -537,12 +530,13 @@ export default function CameraPopup({ camera, onClose }) {
         {isDrawing && (
           <div
             style={{
-              position: 'absolute', left: 8, bottom: 8, zIndex: 10,
+              position: 'absolute', left: 8, top: 8, zIndex: 3,
               padding: '4px 8px', borderRadius: 6, background: 'rgba(15, 23, 42, 0.76)',
-              color: '#fff', fontSize: 11, fontWeight: 600, backdropFilter: 'blur(4px)'
+              color: '#fff', fontSize: 11, fontWeight: 600, backdropFilter: 'blur(4px)',
+              pointerEvents: 'none'
             }}
           >
-            {roiPoints.length < 3 ? `${roiPoints.length}/3 điểm` : 'Đã chọn mặt đường'}
+            {validRoiPoints.length < 3 ? `${validRoiPoints.length}/3 điểm` : 'Đã chọn mặt đường'}
           </div>
         )}
 
@@ -631,20 +625,41 @@ export default function CameraPopup({ camera, onClose }) {
             </div>
 
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 6 }}>
-              <div style={{ background: '#f8fafc', borderRadius: 8, padding: 8, textAlign: 'center' }}>
+              <div style={{ background: '#f8fafc', borderRadius: 8, padding: 8, textAlign: 'center', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
                 <LuCar size={14} color="#3b82f6" />
-                <div style={{ fontWeight: 800, color: '#1e293b' }}>{prediction.has_roi ? prediction.roi_car_count ?? 0 : prediction.car_count}</div>
-                <div style={{ fontSize: 10, color: '#64748b' }}>Ô tô</div>
+                <div style={{ fontWeight: 800, color: '#1e293b', fontSize: '14px', marginTop: '4px' }}>
+                  {prediction.has_roi ? `${prediction.roi_car_count ?? 0}/${prediction.car_count}` : prediction.car_count}
+                </div>
+                <div style={{ fontSize: 10, color: '#64748b', fontWeight: 500 }}>Ô tô</div>
+                {prediction.has_roi && (
+                  <div style={{ fontSize: 9, color: '#3b82f6', fontWeight: 600, marginTop: 2 }}>
+                    {prediction.car_count > 0 ? Math.round(((prediction.roi_car_count ?? 0) / prediction.car_count) * 100) : 0}%
+                  </div>
+                )}
               </div>
-              <div style={{ background: '#f8fafc', borderRadius: 8, padding: 8, textAlign: 'center' }}>
+              <div style={{ background: '#f8fafc', borderRadius: 8, padding: 8, textAlign: 'center', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
                 <LuBike size={14} color="#8b5cf6" />
-                <div style={{ fontWeight: 800, color: '#1e293b' }}>{prediction.has_roi ? prediction.roi_motorbike_count ?? 0 : prediction.motorbike_count}</div>
-                <div style={{ fontSize: 10, color: '#64748b' }}>Xe máy</div>
+                <div style={{ fontWeight: 800, color: '#1e293b', fontSize: '14px', marginTop: '4px' }}>
+                  {prediction.has_roi ? `${prediction.roi_motorbike_count ?? 0}/${prediction.motorbike_count}` : prediction.motorbike_count}
+                </div>
+                <div style={{ fontSize: 10, color: '#64748b', fontWeight: 500 }}>Xe máy</div>
+                {prediction.has_roi && (
+                  <div style={{ fontSize: 9, color: '#8b5cf6', fontWeight: 600, marginTop: 2 }}>
+                    {prediction.motorbike_count > 0 ? Math.round(((prediction.roi_motorbike_count ?? 0) / prediction.motorbike_count) * 100) : 0}%
+                  </div>
+                )}
               </div>
-              <div style={{ background: '#f8fafc', borderRadius: 8, padding: 8, textAlign: 'center' }}>
+              <div style={{ background: '#f8fafc', borderRadius: 8, padding: 8, textAlign: 'center', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
                 <LuTally5 size={14} color="#0f172a" />
-                <div style={{ fontWeight: 800, color: '#1e293b' }}>{prediction.has_roi ? prediction.roi_count ?? 0 : prediction.total_count}</div>
-                <div style={{ fontSize: 10, color: '#64748b' }}>Tổng</div>
+                <div style={{ fontWeight: 800, color: '#1e293b', fontSize: '14px', marginTop: '4px' }}>
+                  {prediction.has_roi ? `${prediction.roi_count ?? 0}/${prediction.total_count}` : prediction.total_count}
+                </div>
+                <div style={{ fontSize: 10, color: '#64748b', fontWeight: 500 }}>Tổng</div>
+                {prediction.has_roi && (
+                  <div style={{ fontSize: 9, color: '#475569', fontWeight: 600, marginTop: 2 }}>
+                    {prediction.total_count > 0 ? Math.round(((prediction.roi_count ?? 0) / prediction.total_count) * 100) : 0}%
+                  </div>
+                )}
               </div>
             </div>
 
@@ -685,7 +700,7 @@ export default function CameraPopup({ camera, onClose }) {
               </button>
               <button
                 onClick={handleUndoPoint}
-                disabled={roiPoints.length === 0}
+                disabled={validRoiPoints.length === 0}
                 className="camera-popup__action-btn camera-popup__action-btn--secondary"
                 title="Lùi 1 điểm"
               >
@@ -694,7 +709,7 @@ export default function CameraPopup({ camera, onClose }) {
               </button>
               <button
                 onClick={handleClearRoi}
-                disabled={roiPoints.length === 0}
+                disabled={validRoiPoints.length === 0}
                 className="camera-popup__action-btn camera-popup__action-btn--danger"
                 title="Xóa tất cả các điểm đã vẽ"
               >
@@ -741,7 +756,7 @@ export default function CameraPopup({ camera, onClose }) {
                 <>
                   {/* Case 2B: Road segment exists */}
                   <button
-                    onClick={() => handlePredict(roiPoints)}
+                    onClick={() => handlePredict(validRoiPoints)}
                     disabled={loading}
                     className="camera-popup__action-btn camera-popup__action-btn--primary"
                   >
