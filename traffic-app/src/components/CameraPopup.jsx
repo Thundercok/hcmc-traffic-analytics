@@ -114,6 +114,13 @@ export default function CameraPopup({ camera, onClose }) {
     : [];
   const hasRoadSegment = validRoiPoints.length >= 3;
 
+  const currentPointsRef = useRef([]);
+
+  // Sync mutable ref with state when state changes
+  useEffect(() => {
+    currentPointsRef.current = roiPoints;
+  }, [roiPoints]);
+
   const setRoiPoints = useCallback((nextPoints) => {
     setRoiState((prev) => ({
       cameraId: camera.id,
@@ -246,16 +253,40 @@ export default function CameraPopup({ camera, onClose }) {
       
       const x = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
       const y = Math.max(0, Math.min(1, (e.clientY - rect.top) / rect.height));
-      setRoiPoints((prev) => {
-        const next = [...prev];
-        next[draggedPointIndex] = [Math.round(x * 1000) / 1000, Math.round(y * 1000) / 1000];
-        return next;
-      });
+
+      const rx = Math.round(x * 1000) / 1000;
+      const ry = Math.round(y * 1000) / 1000;
+
+      // Update mutable ref coordinates
+      const nextPoints = [...currentPointsRef.current];
+      nextPoints[draggedPointIndex] = [rx, ry];
+      currentPointsRef.current = nextPoints;
+
+      // Buttery smooth dragging: Direct DOM updates to bypass React re-rendering lag
+      if (imgWrapRef.current) {
+        const circles = imgWrapRef.current.querySelectorAll('.camera-popup__roi-point');
+        if (circles && circles[draggedPointIndex]) {
+          circles[draggedPointIndex].setAttribute('cx', `${rx * 100}%`);
+          circles[draggedPointIndex].setAttribute('cy', `${ry * 100}%`);
+        }
+
+        const pointsStr = nextPoints.map(([px, py]) => `${px * 1000},${py * 1000}`).join(' ');
+        const polygon = imgWrapRef.current.querySelector('polygon');
+        if (polygon) {
+          polygon.setAttribute('points', pointsStr);
+        }
+        const polyline = imgWrapRef.current.querySelector('polyline');
+        if (polyline) {
+          polyline.setAttribute('points', pointsStr);
+        }
+      }
     };
 
     const handleWindowMouseUp = () => {
       if (draggedPointIndex !== null) {
         justDraggedRef.current = true;
+        // Sync final coordinates to React state once on release
+        setRoiPoints(currentPointsRef.current);
         setTimeout(() => {
           justDraggedRef.current = false;
         }, 50);
@@ -277,11 +308,33 @@ export default function CameraPopup({ camera, onClose }) {
       const touch = e.touches[0];
       const x = Math.max(0, Math.min(1, (touch.clientX - rect.left) / rect.width));
       const y = Math.max(0, Math.min(1, (touch.clientY - rect.top) / rect.height));
-      setRoiPoints((prev) => {
-        const next = [...prev];
-        next[draggedPointIndex] = [Math.round(x * 1000) / 1000, Math.round(y * 1000) / 1000];
-        return next;
-      });
+
+      const rx = Math.round(x * 1000) / 1000;
+      const ry = Math.round(y * 1000) / 1000;
+
+      // Update mutable ref coordinates
+      const nextPoints = [...currentPointsRef.current];
+      nextPoints[draggedPointIndex] = [rx, ry];
+      currentPointsRef.current = nextPoints;
+
+      // Buttery smooth dragging: Direct DOM updates
+      if (imgWrapRef.current) {
+        const circles = imgWrapRef.current.querySelectorAll('.camera-popup__roi-point');
+        if (circles && circles[draggedPointIndex]) {
+          circles[draggedPointIndex].setAttribute('cx', `${rx * 100}%`);
+          circles[draggedPointIndex].setAttribute('cy', `${ry * 100}%`);
+        }
+
+        const pointsStr = nextPoints.map(([px, py]) => `${px * 1000},${py * 1000}`).join(' ');
+        const polygon = imgWrapRef.current.querySelector('polygon');
+        if (polygon) {
+          polygon.setAttribute('points', pointsStr);
+        }
+        const polyline = imgWrapRef.current.querySelector('polyline');
+        if (polyline) {
+          polyline.setAttribute('points', pointsStr);
+        }
+      }
     };
 
     window.addEventListener('mousemove', handleWindowMouseMove);
@@ -491,7 +544,7 @@ export default function CameraPopup({ camera, onClose }) {
         <svg
           style={{
             position: 'absolute', top: 0, left: 0, width: '100%', height: '100%',
-            pointerEvents: isDrawing ? 'auto' : 'none', zIndex: 5
+            pointerEvents: 'none', zIndex: 5
           }}
         >
           {validRoiPoints.length > 0 && validRoiPoints.map(([x, y], idx) => (
@@ -504,7 +557,10 @@ export default function CameraPopup({ camera, onClose }) {
               fill="#ffffff"
               stroke="#2563eb"
               strokeWidth="2.5"
-              style={{ cursor: isDrawing ? (draggedPointIndex === idx ? 'grabbing' : 'grab') : 'default' }}
+              style={{
+                cursor: isDrawing ? (draggedPointIndex === idx ? 'grabbing' : 'grab') : 'default',
+                pointerEvents: isDrawing ? 'auto' : 'none'
+              }}
               onMouseDown={(e) => {
                 if (!isDrawing) return;
                 e.preventDefault();
