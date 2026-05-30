@@ -244,12 +244,11 @@ export default function CameraPopup({ camera, onClose }) {
     if (draggedPointIndex === null) return;
 
     const handleWindowMouseMove = (e) => {
-      let rect = dragRectRef.current;
-      if (!rect && imgWrapRef.current) {
-        rect = imgWrapRef.current.getBoundingClientRect();
-        dragRectRef.current = rect;
-      }
-      if (!rect) return;
+      // Prevent browser default actions (like text selection or image drag-and-drop)
+      e.preventDefault();
+
+      if (!imgWrapRef.current) return;
+      const rect = imgWrapRef.current.getBoundingClientRect();
       
       const x = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
       const y = Math.max(0, Math.min(1, (e.clientY - rect.top) / rect.height));
@@ -263,22 +262,20 @@ export default function CameraPopup({ camera, onClose }) {
       currentPointsRef.current = nextPoints;
 
       // Buttery smooth dragging: Direct DOM updates to bypass React re-rendering lag
-      if (imgWrapRef.current) {
-        const circles = imgWrapRef.current.querySelectorAll('.camera-popup__roi-point');
-        if (circles && circles[draggedPointIndex]) {
-          circles[draggedPointIndex].setAttribute('cx', `${rx * 100}%`);
-          circles[draggedPointIndex].setAttribute('cy', `${ry * 100}%`);
-        }
+      const circles = imgWrapRef.current.querySelectorAll('.camera-popup__roi-point');
+      if (circles && circles[draggedPointIndex]) {
+        circles[draggedPointIndex].setAttribute('cx', `${rx * 100}%`);
+        circles[draggedPointIndex].setAttribute('cy', `${ry * 100}%`);
+      }
 
-        const pointsStr = nextPoints.map(([px, py]) => `${px * 1000},${py * 1000}`).join(' ');
-        const polygon = imgWrapRef.current.querySelector('polygon');
-        if (polygon) {
-          polygon.setAttribute('points', pointsStr);
-        }
-        const polyline = imgWrapRef.current.querySelector('polyline');
-        if (polyline) {
-          polyline.setAttribute('points', pointsStr);
-        }
+      const pointsStr = nextPoints.map(([px, py]) => `${px * 1000},${py * 1000}`).join(' ');
+      const polygon = imgWrapRef.current.querySelector('polygon');
+      if (polygon) {
+        polygon.setAttribute('points', pointsStr);
+      }
+      const polyline = imgWrapRef.current.querySelector('polyline');
+      if (polyline) {
+        polyline.setAttribute('points', pointsStr);
       }
     };
 
@@ -297,14 +294,10 @@ export default function CameraPopup({ camera, onClose }) {
 
     const handleWindowTouchMove = (e) => {
       if (e.touches.length === 0) return;
-      let rect = dragRectRef.current;
-      if (!rect && imgWrapRef.current) {
-        rect = imgWrapRef.current.getBoundingClientRect();
-        dragRectRef.current = rect;
-      }
-      if (!rect) return;
+      if (!imgWrapRef.current) return;
       
       if (e.cancelable) e.preventDefault();
+      const rect = imgWrapRef.current.getBoundingClientRect();
       const touch = e.touches[0];
       const x = Math.max(0, Math.min(1, (touch.clientX - rect.left) / rect.width));
       const y = Math.max(0, Math.min(1, (touch.clientY - rect.top) / rect.height));
@@ -318,26 +311,24 @@ export default function CameraPopup({ camera, onClose }) {
       currentPointsRef.current = nextPoints;
 
       // Buttery smooth dragging: Direct DOM updates
-      if (imgWrapRef.current) {
-        const circles = imgWrapRef.current.querySelectorAll('.camera-popup__roi-point');
-        if (circles && circles[draggedPointIndex]) {
-          circles[draggedPointIndex].setAttribute('cx', `${rx * 100}%`);
-          circles[draggedPointIndex].setAttribute('cy', `${ry * 100}%`);
-        }
+      const circles = imgWrapRef.current.querySelectorAll('.camera-popup__roi-point');
+      if (circles && circles[draggedPointIndex]) {
+        circles[draggedPointIndex].setAttribute('cx', `${rx * 100}%`);
+        circles[draggedPointIndex].setAttribute('cy', `${ry * 100}%`);
+      }
 
-        const pointsStr = nextPoints.map(([px, py]) => `${px * 1000},${py * 1000}`).join(' ');
-        const polygon = imgWrapRef.current.querySelector('polygon');
-        if (polygon) {
-          polygon.setAttribute('points', pointsStr);
-        }
-        const polyline = imgWrapRef.current.querySelector('polyline');
-        if (polyline) {
-          polyline.setAttribute('points', pointsStr);
-        }
+      const pointsStr = nextPoints.map(([px, py]) => `${px * 1000},${py * 1000}`).join(' ');
+      const polygon = imgWrapRef.current.querySelector('polygon');
+      if (polygon) {
+        polygon.setAttribute('points', pointsStr);
+      }
+      const polyline = imgWrapRef.current.querySelector('polyline');
+      if (polyline) {
+        polyline.setAttribute('points', pointsStr);
       }
     };
 
-    window.addEventListener('mousemove', handleWindowMouseMove);
+    window.addEventListener('mousemove', handleWindowMouseMove, { passive: false });
     window.addEventListener('mouseup', handleWindowMouseUp);
     window.addEventListener('touchmove', handleWindowTouchMove, { passive: false });
     window.addEventListener('touchend', handleWindowMouseUp);
@@ -350,9 +341,12 @@ export default function CameraPopup({ camera, onClose }) {
     };
   }, [draggedPointIndex, setRoiPoints]);
 
-  const handleSvgClick = (e) => {
-    if (justDraggedRef.current) return;
+  const handlePointerDown = (e) => {
+    // Only handle left clicks for pointer down (button 0) or touch pointers
+    if (e.button !== 0 && e.pointerType === 'mouse') return;
     if (!isDrawing || !imgWrapRef.current || draggedPointIndex !== null) return;
+    if (e.target.closest('.camera-popup__roi-point')) return;
+
     const rect = imgWrapRef.current.getBoundingClientRect();
     const x = (e.clientX - rect.left) / rect.width;
     const y = (e.clientY - rect.top) / rect.height;
@@ -486,9 +480,9 @@ export default function CameraPopup({ camera, onClose }) {
       {/* Image Container Block */}
       <div
         className="camera-popup__img-wrap"
-        style={{ position: 'relative', cursor: isDrawing ? 'crosshair' : 'default' }}
+        style={{ position: 'relative', cursor: isDrawing ? 'crosshair' : 'default', userSelect: 'none', WebkitUserSelect: 'none' }}
         ref={imgWrapRef}
-        onClick={handleSvgClick}
+        onPointerDown={handlePointerDown}
       >
         {!showHeatmap && (
           <img
@@ -496,6 +490,7 @@ export default function CameraPopup({ camera, onClose }) {
             alt={`Camera ${camera.name}`}
             loading="eager"
             decoding="async"
+            draggable="false"
             style={{ pointerEvents: 'none' }}
             onError={(e) => {
               e.target.src = `https://placehold.co/400x300/e2e8f0/64748b?text=Camera+Offline`;
@@ -508,6 +503,7 @@ export default function CameraPopup({ camera, onClose }) {
             alt={`Camera ${camera.name} Heatmap`}
             loading="eager"
             decoding="async"
+            draggable="false"
             style={{ pointerEvents: 'none' }}
           />
         )}
