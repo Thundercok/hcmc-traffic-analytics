@@ -142,7 +142,8 @@ def _heuristic_predict(image_bytes: bytes) -> dict:
             "density_level": level,
         }
 
-    except Exception:
+    except Exception as e:
+        logger.warning(f"Heuristic prediction fallback failed: {e}", exc_info=True)
         return {
             "total_count": 30,
             "car_count": 5,
@@ -402,6 +403,10 @@ class PredictionWriter:
         tasks = [process(cam) for cam in batch]
         results = await asyncio.gather(*tasks, return_exceptions=True)
 
+        for r in results:
+            if isinstance(r, Exception):
+                logger.error(f"[writer] Process task raised exception: {r}", exc_info=True)
+
         valid = [r for r in results if isinstance(r, dict)]
         for r in valid:
             try:
@@ -414,8 +419,8 @@ class PredictionWriter:
                     density_level=r["density_level"],
                 )
                 self._total_records += 1
-            except Exception:
-                pass
+            except Exception as e:
+                logger.error(f"[writer] Failed to record prediction for camera {r['camera_id']}: {e}", exc_info=True)
 
         success = len(valid)
         total = len(batch)

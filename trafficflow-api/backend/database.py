@@ -84,6 +84,29 @@ async def init_schema():
         """
         )
 
+        if not table_exists:
+            try:
+                await conn.execute(
+                    """
+                    CREATE TABLE prediction_history (
+                        id BIGSERIAL,
+                        camera_id TEXT NOT NULL,
+                        timestamp TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+                        total_count INTEGER NOT NULL,
+                        car_count INTEGER NOT NULL,
+                        motorbike_count INTEGER NOT NULL,
+                        density_level VARCHAR(20) NOT NULL,
+                        confidence FLOAT,
+                        PRIMARY KEY (camera_id, timestamp)
+                    )
+                    """
+                )
+                logger.info("[db] Created prediction_history table.")
+                table_exists = True
+            except Exception as e:
+                logger.error(f"[db] Failed to create prediction_history table: {e}")
+                raise
+
         if table_exists:
             # Check if it already has composite PK with timestamp
             has_pk = await conn.fetchval(

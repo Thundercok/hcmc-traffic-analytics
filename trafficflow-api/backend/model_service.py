@@ -148,6 +148,7 @@ class ZIPModelService:
         density_tensor,
         roi_polygon: Optional[list] = None,
         roi_congestion_level: Optional[str] = None,
+        original_image: Optional[Image.Image] = None,
     ) -> str:
         # Convert (1, num_classes, H, W) or (1, 1, H, W) or (H, W) to (H, W)
         if density_tensor.ndim == 4:
@@ -163,8 +164,33 @@ class ZIPModelService:
         if den.ndim == 3:
             den = den[0]
 
-        norm_map = cv2.normalize(den, None, 0, 255, cv2.NORM_MINMAX, dtype=cv2.CV_8U)
+        # Convert PIL original image to BGR numpy array if provided
+        bgr_img = None
+        if original_image is not None:
+            bgr_img = cv2.cvtColor(np.array(original_image), cv2.COLOR_RGB2BGR)
+            h, w = bgr_img.shape[:2]
+            den = cv2.resize(den, (w, h), interpolation=cv2.INTER_CUBIC)
+        else:
+            h, w = den.shape[:2]
+
+        # Normalize density values for colormap projection
+        den = np.maximum(den, 0)
+        max_den = den.max()
+        if max_den > 0:
+            norm_den = den / max_den
+        else:
+            norm_den = den
+
+        norm_map = (norm_den * 255).astype(np.uint8)
         color_map = cv2.applyColorMap(norm_map, cv2.COLORMAP_JET)
+
+        if bgr_img is not None:
+            # Create alpha transparency mask from normalized density
+            # Scale alpha so even lower density displays clearly, but cap at 0.65 to keep background visible
+            alpha = np.minimum(norm_den * 1.5, 0.65)
+            alpha = np.expand_dims(alpha, axis=2)
+            # Blend: blended = alpha * colormap + (1 - alpha) * original_image
+            color_map = (alpha * color_map + (1.0 - alpha) * bgr_img).astype(np.uint8)
 
         # Draw ROI polygon if provided
         if roi_polygon:
@@ -457,7 +483,7 @@ class ZIPModelService:
         if return_heatmap and den is not None:
             try:
                 result["heatmap_base64"] = self._generate_heatmap_base64(
-                    den, roi_polygon, roi_congestion_level
+                    den, roi_polygon, roi_congestion_level, original_image=image_rgb
                 )
             except Exception as e:
                 logger.warning(f"Failed to generate heatmap: {e}")

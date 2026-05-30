@@ -444,53 +444,61 @@ async def batch_predict(request: Request, body: BatchPredictRequest):
         camera_rois = {}
 
     async def _predict_one(cam: dict) -> dict:
-        roi = camera_rois.get(cam["id"])
-        """Fetch image + run inference for a single camera."""
-        latest = cache.get_latest(cam["id"])
-        if latest:
-            try:
-                last_time = datetime.fromisoformat(latest["timestamp"])
-                if (datetime.now() - last_time).total_seconds() < 120:
-                    logger.info(
-                        f"[batch_predict] CACHE HIT for {cam['id']} ({latest.get('density_level', 'low')})"
-                    )
-                    return {"cam": cam, "result": latest, "ok": True}
-            except Exception:
-                pass
-
         try:
-            async with sem:
-                url = get_camera_image_url(cam["id"])
-                resp = await client.get(url, headers=CAMERA_FETCH_HEADERS)
-                resp.raise_for_status()
-                image_bytes = resp.content
+            roi = camera_rois.get(cam["id"])
+            """Fetch image + run inference for a single camera."""
+            latest = cache.get_latest(cam["id"])
+            if latest:
+                try:
+                    last_time = datetime.fromisoformat(latest["timestamp"])
+                    if (datetime.now() - last_time).total_seconds() < 120:
+                        logger.info(
+                            f"[batch_predict] CACHE HIT for {cam['id']} ({latest.get('density_level', 'low')})"
+                        )
+                        return {"cam": cam, "result": latest, "ok": True}
+                except Exception:
+                    pass
 
-                _cache_image(
-                    cam["id"],
-                    image_bytes,
-                    resp.headers.get("content-type", "image/jpeg"),
-                )
+            try:
+                async with sem:
+                    url = get_camera_image_url(cam["id"])
+                    resp = await client.get(url, headers=CAMERA_FETCH_HEADERS)
+                    resp.raise_for_status()
+                    image_bytes = resp.content
 
-            result = await run_in_threadpool(
-                svc.predict_from_bytes, image_bytes, roi_polygon=roi
-            )
-            cache.record(cam["id"], result)
-            return {"cam": cam, "result": result, "ok": True}
-        except Exception as e:
-            cached = _get_cached_image(cam["id"])
-            if cached:
-                logger.warning(
-                    f"[batch_predict] Fetch failed ({e}), using cached image for {cam['id']}."
-                )
-                image_bytes = cached["content"]
+                    _cache_image(
+                        cam["id"],
+                        image_bytes,
+                        resp.headers.get("content-type", "image/jpeg"),
+                    )
+
                 result = await run_in_threadpool(
                     svc.predict_from_bytes, image_bytes, roi_polygon=roi
                 )
                 cache.record(cam["id"], result)
                 return {"cam": cam, "result": result, "ok": True}
-            else:
-                logger.warning(f"[batch_predict] Failed for {cam['id']}: {e}")
-                return {"cam": cam, "result": None, "ok": False}
+            except Exception as e:
+                cached = _get_cached_image(cam["id"])
+                if cached:
+                    logger.warning(
+                        f"[batch_predict] Fetch failed ({e}), using cached image for {cam['id']}."
+                    )
+                    image_bytes = cached["content"]
+                    try:
+                        result = await run_in_threadpool(
+                            svc.predict_from_bytes, image_bytes, roi_polygon=roi
+                        )
+                        cache.record(cam["id"], result)
+                        return {"cam": cam, "result": result, "ok": True}
+                    except Exception as inner_e:
+                        logger.error(f"[batch_predict] Cached predict failed for {cam['id']}: {inner_e}", exc_info=True)
+                        return {"cam": cam, "result": None, "ok": False}
+                else:
+                    logger.warning(f"[batch_predict] Failed for {cam['id']}: {e}")
+                    return {"cam": cam, "result": None, "ok": False}
+        except Exception as e:
+            logger.error(f"[batch_predict] Critical failure for single camera {cam.get('id')}: {e}", exc_info=True)
+            return {"cam": cam, "result": None, "ok": False}
 
     start_time = time.time()
     tasks = [_predict_one(cam) for cam in cameras]
@@ -643,56 +651,64 @@ async def get_congestion_map(request: Request):
 
     async def _process_camera(cam: dict) -> dict | None:
         """Process single camera."""
-        async with sem:
-            try:
-                url = get_camera_image_url(cam["id"])
-                resp = await client.get(url, headers=CAMERA_FETCH_HEADERS)
-                resp.raise_for_status()
-                image_bytes = resp.content
+        try:
+            async with sem:
+                try:
+                    url = get_camera_image_url(cam["id"])
+                    resp = await client.get(url, headers=CAMERA_FETCH_HEADERS)
+                    resp.raise_for_status()
+                    image_bytes = resp.content
 
-                _cache_image(
-                    cam["id"],
-                    image_bytes,
-                    resp.headers.get("content-type", "image/jpeg"),
-                )
-
-                result = await run_in_threadpool(
-                    svc.detect_congestion, cam["id"], image_bytes
-                )
-
-                return {
-                    "camera_id": cam["id"],
-                    "level": result["level"],
-                    "level_name": result["level_name"],
-                    "color": result["color"],
-                    "emoji": result["emoji"],
-                    "district": cam.get("district"),
-                    "lat": cam.get("lat"),
-                    "lng": cam.get("lng"),
-                    "is_stable": result["is_stable"],
-                }
-
-            except Exception as e:
-                logger.warning(f"[congestion_map] Failed for {cam['id']}: {e}")
-                # Return stale data if available
-                cached = _get_cached_image(cam["id"])
-                if cached:
-                    result = await run_in_threadpool(
-                        svc.detect_congestion, cam["id"], cached["content"]
+                    _cache_image(
+                        cam["id"],
+                        image_bytes,
+                        resp.headers.get("content-type", "image/jpeg"),
                     )
+
+                    result = await run_in_threadpool(
+                        svc.detect_congestion, cam["id"], image_bytes
+                    )
+
                     return {
                         "camera_id": cam["id"],
                         "level": result["level"],
-                        "level_name": result["level_name"] + " (cached)",
+                        "level_name": result["level_name"],
                         "color": result["color"],
-                        "emoji": "⏸️",
+                        "emoji": result["emoji"],
                         "district": cam.get("district"),
                         "lat": cam.get("lat"),
                         "lng": cam.get("lng"),
-                        "is_stable": False,
-                        "is_cached": True,
+                        "is_stable": result["is_stable"],
                     }
-                return None
+
+                except Exception as e:
+                    logger.warning(f"[congestion_map] Failed for {cam['id']}: {e}")
+                    # Return stale data if available
+                    cached = _get_cached_image(cam["id"])
+                    if cached:
+                        try:
+                            result = await run_in_threadpool(
+                                svc.detect_congestion, cam["id"], cached["content"]
+                            )
+                            return {
+                                "camera_id": cam["id"],
+                                "level": result["level"],
+                                "level_name": result["level_name"] + " (cached)",
+                                "color": result["color"],
+                                "emoji": "⏸️",
+                                "district": cam.get("district"),
+                                "lat": cam.get("lat"),
+                                "lng": cam.get("lng"),
+                                "is_stable": False,
+                                "is_cached": True,
+                            }
+                        except Exception as inner_e:
+                            logger.error(f"[congestion_map] Cached detect failed for {cam['id']}: {inner_e}", exc_info=True)
+                            return None
+                    return None
+        except Exception as e:
+            logger.error(f"[congestion_map] Critical failure for camera {cam.get('id')}: {e}", exc_info=True)
+            return None
 
     # Process all cameras concurrently
     tasks = [_process_camera(cam) for cam in cameras]
