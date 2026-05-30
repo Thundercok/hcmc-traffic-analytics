@@ -109,6 +109,11 @@ export default function CameraPopup({ camera, onClose }) {
   const dragRectRef = useRef(null);
   const roiPoints = roiState.cameraId === camera.id ? roiState.points : loadStoredRoi(camera.id);
 
+  const validRoiPoints = Array.isArray(roiPoints)
+    ? roiPoints.filter(p => Array.isArray(p) && p.length === 2 && typeof p[0] === 'number' && typeof p[1] === 'number')
+    : [];
+  const hasRoadSegment = validRoiPoints.length >= 3;
+
   const setRoiPoints = useCallback((nextPoints) => {
     setRoiState((prev) => ({
       cameraId: camera.id,
@@ -402,10 +407,6 @@ export default function CameraPopup({ camera, onClose }) {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [isDrawing, validRoiPoints, loading, camera.id, onClose]);
 
-  const validRoiPoints = Array.isArray(roiPoints)
-    ? roiPoints.filter(p => Array.isArray(p) && p.length === 2 && typeof p[0] === 'number' && typeof p[1] === 'number')
-    : [];
-  const hasRoadSegment = validRoiPoints.length >= 3;
   const globalDensityLevel = prediction?.global_density_level || prediction?.density_level;
   const globalDensity = DENSITY_CONFIG[globalDensityLevel] || DENSITY_CONFIG.low;
   const roiDensity = DENSITY_CONFIG[prediction?.roi_congestion_level] || DENSITY_CONFIG.low;
