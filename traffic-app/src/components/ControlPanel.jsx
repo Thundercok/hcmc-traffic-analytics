@@ -49,6 +49,7 @@ export default function ControlPanel({
   onTravelModeChange,
   routeTraffic,
 }) {
+  const apiUrl = import.meta.env.VITE_API_URL || "/api";
   const [localDestText, setLocalDestText] = useState("");
   const [originSuggestions, setOriginSuggestions] = useState([]);
   const [destSuggestions, setDestSuggestions] = useState([]);
@@ -59,7 +60,6 @@ export default function ControlPanel({
   useEffect(() => {
     const fetchStats = async () => {
       try {
-        const apiUrl = import.meta.env.VITE_API_URL || "/api";
         const res = await fetch(`${apiUrl}/cameras/stats`);
         if (res.ok) {
           const data = await res.json();
@@ -96,7 +96,7 @@ export default function ControlPanel({
     }
     try {
       const res = await fetch(
-        `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(query)}&format=json&addressdetails=1&countrycodes=vn&limit=5`,
+        `${apiUrl}/geocode/search?q=${encodeURIComponent(query)}`,
       );
       const data = await res.json();
       setSuggestions(data);
@@ -129,6 +129,30 @@ export default function ControlPanel({
   const handleDestChange = (e) => {
     setLocalDestText(e.target.value);
     setActiveDropdown("dest");
+  };
+
+  const handleInputKeyDown = async (e, type) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      const query = type === "origin" ? originText : localDestText;
+      if (!query || query.length < 3) return;
+
+      try {
+        const res = await fetch(
+          `${apiUrl}/geocode/search?q=${encodeURIComponent(query)}`,
+        );
+        if (res.ok) {
+          const data = await res.json();
+          if (data && data.length > 0) {
+            selectSuggestion(data[0], type);
+            // Close dropdown
+            setActiveDropdown(null);
+          }
+        }
+      } catch (err) {
+        console.error("Lỗi khi tìm kiếm tự động", err);
+      }
+    }
   };
 
   const selectSuggestion = (item, type) => {
@@ -348,6 +372,7 @@ export default function ControlPanel({
               onChange={handleOriginChange}
               onFocus={() => setActiveDropdown("origin")}
               onBlur={() => setTimeout(() => setActiveDropdown(null), 200)}
+              onKeyDown={(e) => handleInputKeyDown(e, "origin")}
             />
             {originText && (
               <button className="clear-input-btn" onClick={() => clearInput("origin")}>
@@ -375,6 +400,7 @@ export default function ControlPanel({
               onChange={handleDestChange}
               onFocus={() => setActiveDropdown("dest")}
               onBlur={() => setTimeout(() => setActiveDropdown(null), 200)}
+              onKeyDown={(e) => handleInputKeyDown(e, "dest")}
             />
             {localDestText && (
               <button className="clear-input-btn" onClick={() => clearInput("dest")}>

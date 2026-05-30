@@ -103,6 +103,40 @@ def _get_cached_image(camera_id: str) -> dict | None:
 router = APIRouter(prefix="/api", tags=["TrafficFlow API"])
 
 
+# ─── Nominatim Geocoding Proxy ───
+NOMINATIM_HEADERS = {
+    "User-Agent": "TrafficFlowApp/1.0 (contact@trafficflow.vn)",
+    "Accept-Language": "vi-VN,vi;q=0.9,en-US;q=0.8,en;q=0.7",
+}
+
+@router.get("/geocode/search", summary="Proxy Nominatim search queries to avoid CORS/IP blocking")
+async def proxy_geocode_search(q: str = Query(..., min_length=3)):
+    """[proxy_geocode_search] Geocode search queries using Nominatim from the backend."""
+    # Build query safely
+    url = f"https://nominatim.openstreetmap.org/search?q={q}&format=json&addressdetails=1&countrycodes=vn&limit=5"
+    try:
+        async with httpx.AsyncClient(timeout=10.0) as client:
+            resp = await client.get(url, headers=NOMINATIM_HEADERS)
+            resp.raise_for_status()
+            return resp.json()
+    except Exception as e:
+        logger.error(f"Geocode proxy search failed: {e}")
+        return []
+
+@router.get("/geocode/reverse", summary="Proxy Nominatim reverse geocoding to avoid CORS/IP blocking")
+async def proxy_geocode_reverse(lat: float, lon: float):
+    """[proxy_geocode_reverse] Reverse geocode coordinates using Nominatim from the backend."""
+    url = f"https://nominatim.openstreetmap.org/reverse?lat={lat}&lon={lon}&format=json"
+    try:
+        async with httpx.AsyncClient(timeout=10.0) as client:
+            resp = await client.get(url, headers=NOMINATIM_HEADERS)
+            resp.raise_for_status()
+            return resp.json()
+    except Exception as e:
+        logger.error(f"Geocode proxy reverse failed: {e}")
+        return {"display_name": "Vị trí không xác định"}
+
+
 @router.get(
     "/health",
     response_model=HealthResponse,

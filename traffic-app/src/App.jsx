@@ -161,8 +161,9 @@ export default function App() {
       async (position) => {
         const { latitude, longitude } = position.coords;
         try {
+          const apiUrl = import.meta.env.VITE_API_URL || "/api";
           const res = await fetch(
-            `https://nominatim.openstreetmap.org/reverse?lat=${latitude}&lon=${longitude}&format=json`,
+            `${apiUrl}/geocode/reverse?lat=${latitude}&lon=${longitude}`,
           );
           const data = await res.json();
           const address = data.display_name.split(",").slice(0, 3).join(",");

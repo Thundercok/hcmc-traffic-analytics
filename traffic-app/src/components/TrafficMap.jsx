@@ -159,7 +159,8 @@ function debouncedGeocode(lat, lon, callback) {
   // Debounce: wait 500ms before making request
   const timerId = setTimeout(() => {
     _geocodeDebounce.delete(key);
-    fetch(`https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lon}&format=json`)
+    const apiUrl = import.meta.env.VITE_API_URL || "/api";
+    fetch(`${apiUrl}/geocode/reverse?lat=${lat}&lon=${lon}`)
       .then(r => r.json())
       .then(data => {
         const address = data.display_name?.split(",").slice(0, 3).join(",").trim() || "Vị trí không xác định";
