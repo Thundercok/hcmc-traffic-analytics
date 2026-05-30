@@ -161,11 +161,13 @@ async def init_schema():
                 CREATE TABLE IF NOT EXISTS camera_rois (
                     camera_id TEXT PRIMARY KEY,
                     roi_polygon JSONB NOT NULL,
-                    updated_at TIMESTAMPTZ DEFAULT NOW()
+                    updated_at TIMESTAMPTZ DEFAULT NOW(),
+                    is_auto BOOLEAN DEFAULT FALSE
                 )
                 """
             )
-            logger.info("[db] camera_rois table initialized.")
+            await conn.execute("ALTER TABLE camera_rois ADD COLUMN IF NOT EXISTS is_auto BOOLEAN DEFAULT FALSE")
+            logger.info("[db] camera_rois table initialized with is_auto column.")
         except Exception as e:
             logger.error(f"[db] Failed to initialize camera_rois table: {e}")
 
@@ -244,7 +246,7 @@ async def get_camera_roi(camera_id: str) -> list[list[float]] | None:
         return None
 
 
-async def save_camera_roi(camera_id: str, roi_polygon: list[list[float]]) -> None:
+async def save_camera_roi(camera_id: str, roi_polygon: list[list[float]], is_auto: bool = False) -> None:
     """Save the ROI polygon for a camera."""
     import json
     pool = await get_pool()
@@ -252,14 +254,16 @@ async def save_camera_roi(camera_id: str, roi_polygon: list[list[float]]) -> Non
     async with pool.acquire() as conn:
         await conn.execute(
             """
-            INSERT INTO camera_rois (camera_id, roi_polygon, updated_at)
-            VALUES ($1, $2, NOW())
+            INSERT INTO camera_rois (camera_id, roi_polygon, updated_at, is_auto)
+            VALUES ($1, $2, NOW(), $3)
             ON CONFLICT (camera_id) DO UPDATE SET
                 roi_polygon = EXCLUDED.roi_polygon,
-                updated_at = NOW()
+                updated_at = NOW(),
+                is_auto = EXCLUDED.is_auto
             """,
             camera_id,
-            val
+            val,
+            is_auto
         )
 
 
@@ -286,4 +290,40 @@ async def get_all_camera_rois() -> dict[str, list[list[float]]]:
                 res[r["camera_id"]] = json.loads(val)
             else:
                 res[r["camera_id"]] = val
+        return res
+
+
+async def get_camera_roi_with_meta(camera_id: str) -> tuple[list[list[float]] | None, bool]:
+    """Get the saved ROI polygon and its is_auto flag for a camera."""
+    import json
+    pool = await get_pool()
+    async with pool.acquire() as conn:
+        row = await conn.fetchrow(
+            "SELECT roi_polygon, is_auto FROM camera_rois WHERE camera_id = $1",
+            camera_id
+        )
+        if row is not None:
+            val = row["roi_polygon"]
+            is_auto = row["is_auto"] or False
+            if isinstance(val, str):
+                return json.loads(val), is_auto
+            return val, is_auto
+        return None, False
+
+
+async def get_all_camera_rois_with_meta() -> dict[str, dict]:
+    """Get ROI polygons and is_auto flags for all cameras."""
+    import json
+    pool = await get_pool()
+    async with pool.acquire() as conn:
+        rows = await conn.fetch("SELECT camera_id, roi_polygon, is_auto FROM camera_rois")
+        res = {}
+        for r in rows:
+            val = r["roi_polygon"]
+            is_auto = r["is_auto"] or False
+            if isinstance(val, str):
+                poly = json.loads(val)
+            else:
+                poly = val
+            res[r["camera_id"]] = {"roi_polygon": poly, "is_auto": is_auto}
         return res

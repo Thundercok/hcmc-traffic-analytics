@@ -24,14 +24,40 @@ L.Icon.Default.mergeOptions({
   shadowUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png",
 });
 
-// ── Static icons (created once at module level) ──
-const CAMERA_ICON = L.divIcon({
-  className: "",
-  html: `<div class="camera-marker"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m16 13 5.223 3.482a.5.5 0 0 0 .777-.416V7.934a.5.5 0 0 0-.777-.416L16 11"/><rect x="2" y="6" width="14" height="12" rx="2"/></svg></div>`,
-  iconSize: [32, 32],
-  iconAnchor: [16, 16],
-  popupAnchor: [0, -20],
-});
+const getCameraIcon = (isMapped, isSelected, isAuto) => {
+  let className = "camera-marker";
+  let strokeColor = "var(--primary)";
+  
+  if (isMapped) {
+    if (isAuto) {
+      className += " camera-marker--auto-mapped";
+      strokeColor = "#0284c7";
+    } else {
+      className += " camera-marker--mapped";
+      strokeColor = "#10b981";
+    }
+  }
+  if (isSelected) {
+    className += " camera-marker--selected";
+    strokeColor = "#f59e0b";
+  }
+  
+  const size = isSelected ? 38 : 30;
+  const radius = size / 2;
+  
+  return L.divIcon({
+    className: "",
+    html: `<div class="${className}" style="width: ${size}px; height: ${size}px;">
+      <svg xmlns="http://www.w3.org/2000/svg" width="${isSelected ? 20 : 16}" height="${isSelected ? 20 : 16}" viewBox="0 0 24 24" fill="none" stroke="${strokeColor}" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="m16 13 5.223 3.482a.5.5 0 0 0 .777-.416V7.934a.5.5 0 0 0-.777-.416L16 11"/>
+        <rect x="2" y="6" width="14" height="12" rx="2"/>
+      </svg>
+    </div>`,
+    iconSize: [size, size],
+    iconAnchor: [radius, radius],
+    popupAnchor: [0, -radius],
+  });
+};
 
 const USER_ICON = L.divIcon({
   className: "",
@@ -674,7 +700,7 @@ function AIAwareRouting({ from, to, liveCameras, sliderValue, travelMode, onRout
         
         // 1. Request top 3 alternatives from OSRM
         const url = `https://router.project-osrm.org/route/v1/${profile}/${from[1]},${from[0]};${to[1]},${to[0]}?overview=full&geometries=geojson&steps=true&alternatives=3`;
-        logRequest("GET", "/route/v1/*", { profile, camerasCount: uniqueCamIds.size });
+        logRequest("GET", "/route/v1/*", { profile });
         const res = await fetch(url, { signal: AbortSignal.timeout(15000) });
         const data = await res.json();
         logResponse("/route/v1/*", data, res.status);
@@ -689,9 +715,29 @@ function AIAwareRouting({ from, to, liveCameras, sliderValue, travelMode, onRout
           const coords = route.geometry?.coordinates?.map(c => [c[1], c[0]]) || [];
           allCoords.push(coords);
           
-          const sampled = coords.filter((_, i) => i % 10 === 0 || i === coords.length - 1);
-          const nearbyCameras = liveCameras.filter(cam =>
-            sampled.some(coord => haversine(cam.lat, cam.lng, coord[0], coord[1]) <= 500)
+          if (coords.length === 0) {
+            routeCamMap.set(idx, []);
+            return;
+          }
+
+          // Define bounding box with a 300m buffer (approx 0.003 degrees in lat/lng)
+          const lats = coords.map(c => c[0]);
+          const lngs = coords.map(c => c[1]);
+          const minLat = Math.min(...lats) - 0.003;
+          const maxLat = Math.max(...lats) + 0.003;
+          const minLng = Math.min(...lngs) - 0.003;
+          const maxLng = Math.max(...lngs) + 0.003;
+
+          // Filter cameras inside the bounding box first
+          const boxCameras = liveCameras.filter(cam =>
+            cam.lat >= minLat && cam.lat <= maxLat &&
+            cam.lng >= minLng && cam.lng <= maxLng
+          );
+
+          // Verify distance within 300m of route path (sampled every 3 coordinates to be exact and fast)
+          const sampledCoords = coords.filter((_, i) => i % 3 === 0 || i === coords.length - 1);
+          const nearbyCameras = boxCameras.filter(cam =>
+            sampledCoords.some(coord => haversine(cam.lat, cam.lng, coord[0], coord[1]) <= 300)
           );
           routeCamMap.set(idx, nearbyCameras);
         });
@@ -720,7 +766,7 @@ function AIAwareRouting({ from, to, liveCameras, sliderValue, travelMode, onRout
                  logInfo(`Loaded ${camData.predictions.length} predictions`);
                }
             } else {
-              logError("Predict batch failed", await camRes.text());
+               logError("Predict batch failed", await camRes.text());
             }
         }
         
@@ -748,14 +794,17 @@ function AIAwareRouting({ from, to, liveCameras, sliderValue, travelMode, onRout
           let penaltyMins = 0;
 
           if (routePredictions.length > 0) {
+             let moderateCount = 0;
              let heavyCount = 0;
              let severeCount = 0;
              routePredictions.forEach(p => {
-                if (p.prediction.density_level === "heavy") heavyCount++;
-                if (p.prediction.density_level === "severe") severeCount++;
+                const level = p.prediction.density_level;
+                if (level === "moderate") moderateCount++;
+                else if (level === "heavy") heavyCount++;
+                else if (level === "severe") severeCount++;
              });
              
-             penaltyMins = (heavyCount * 5) + (severeCount * 10);
+             penaltyMins = (moderateCount * 2) + (heavyCount * 6) + (severeCount * 12);
              const congestionPoints = heavyCount + severeCount;
              routeTrafficAnalysis = {
                camerasAnalyzed: routePredictions.length,
@@ -909,6 +958,22 @@ const TrafficMap = React.memo(function TrafficMap({
   const mapRef = React.useRef(null);
   const cameraRefs = React.useRef({});
   const [selectedCamera, setSelectedCamera] = React.useState(null);
+  const [hideMapped, setHideMapped] = React.useState(false);
+
+  // Sync ROI change events to map markers dynamically
+  React.useEffect(() => {
+    const handleRoiChanged = (e) => {
+      const { cameraId, hasRoi, isAutoRoi } = e.detail;
+      setLiveCameras((prev) =>
+        prev.map((c) => (c.id === cameraId ? { ...c, has_roi: hasRoi, is_auto_roi: isAutoRoi } : c))
+      );
+      setSelectedCamera((prev) =>
+        prev && prev.id === cameraId ? { ...prev, has_roi: hasRoi, is_auto_roi: isAutoRoi } : prev
+      );
+    };
+    window.addEventListener("cameraRoiChanged", handleRoiChanged);
+    return () => window.removeEventListener("cameraRoiChanged", handleRoiChanged);
+  }, []);
 
   // Listen for openCameraPopup events from Dashboard
   React.useEffect(() => {
@@ -977,24 +1042,37 @@ const TrafficMap = React.memo(function TrafficMap({
     [onSetDestination],
   );
 
+  const filteredCameras = useMemo(() => {
+    if (hideMapped) {
+      return liveCameras.filter((cam) => !cam.has_roi);
+    }
+    return liveCameras;
+  }, [liveCameras, hideMapped]);
+
   const renderedMarkers = useMemo(
     () =>
-      liveCameras.map((cam) => (
-        <Marker
-          key={cam.id}
-          position={[cam.lat, cam.lng]}
-          icon={CAMERA_ICON}
-          eventHandlers={{
-            click: () => {
-              setSelectedCamera(cam);
-            },
-          }}
-          ref={(leafletMarker) => {
-            if (leafletMarker) cameraRefs.current[cam.id] = leafletMarker;
-          }}
-        />
-      )),
-    [liveCameras],
+      filteredCameras.map((cam) => {
+        const isSelected = selectedCamera?.id === cam.id;
+        const isMapped = cam.has_roi === true;
+        const isAuto = cam.is_auto_roi === true;
+        return (
+          <Marker
+            key={cam.id}
+            position={[cam.lat, cam.lng]}
+            icon={getCameraIcon(isMapped, isSelected, isAuto)}
+            opacity={selectedCamera ? (isSelected ? 1.0 : 0.5) : 1.0}
+            eventHandlers={{
+              click: () => {
+                setSelectedCamera(cam);
+              },
+            }}
+            ref={(leafletMarker) => {
+              if (leafletMarker) cameraRefs.current[cam.id] = leafletMarker;
+            }}
+          />
+        );
+      }),
+    [filteredCameras, selectedCamera],
   );
 
   // Memoize polylines to avoid re-creating on every render
@@ -1030,6 +1108,15 @@ const TrafficMap = React.memo(function TrafficMap({
         <MapController userLocation={userLocation} />
         <LongPressHandler onLongPress={handleLongPress} />
         <MapStyleSwitcher mapStyle={mapStyle} onChange={setMapStyle} />
+
+        <button
+          className="map-filter-toggle"
+          onClick={() => setHideMapped(!hideMapped)}
+          title={hideMapped ? "Hiển thị tất cả camera" : "Ẩn các camera đã cấu hình mặt đường"}
+          data-active={hideMapped}
+        >
+          {hideMapped ? "Hiện tất cả" : "Ẩn đã đo"}
+        </button>
 
         <TileLayer
           key={`base-${mapStyle.id}`}

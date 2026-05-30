@@ -144,12 +144,65 @@ async def list_cameras(
     ),
 ):
     """[list_cameras] Returns cameras, optionally filtered by district."""
+    from .database import get_all_camera_rois_with_meta
+    
     if district:
         filtered = get_cameras_by_district(district)
     else:
         filtered = CAMERAS
-    camera_list = [CameraInfo(**cam) for cam in filtered]
+        
+    try:
+        camera_rois = await get_all_camera_rois_with_meta()
+    except Exception as e:
+        logger.error(f"Failed to fetch camera ROIs for listing: {e}")
+        camera_rois = {}
+        
+    camera_list = []
+    for cam in filtered:
+        cam_info = dict(cam)
+        has_roi = cam["id"] in camera_rois
+        is_auto_roi = False
+        if has_roi:
+            is_auto_roi = camera_rois[cam["id"]]["is_auto"]
+        cam_info["has_roi"] = has_roi
+        cam_info["is_auto_roi"] = is_auto_roi
+        camera_list.append(CameraInfo(**cam_info))
+        
     return CameraListResponse(cameras=camera_list, total=len(camera_list))
+
+
+@router.get(
+    "/cameras/stats",
+    summary="Get Camera Mapping Progress Stats",
+    description="Get statistics on road mapping progress: mapped count vs total.",
+)
+async def get_camera_mapping_stats():
+    """[get_camera_mapping_stats] Returns count of mapped cameras vs total cameras."""
+    from .database import get_all_camera_rois_with_meta
+    
+    try:
+        rois = await get_all_camera_rois_with_meta()
+        mapped_count = len(rois)
+        manual_count = sum(1 for r in rois.values() if not r["is_auto"])
+        auto_count = sum(1 for r in rois.values() if r["is_auto"])
+    except Exception as e:
+        logger.error(f"Failed to get camera ROIs count from DB: {e}")
+        mapped_count = 0
+        manual_count = 0
+        auto_count = 0
+        
+    total_count = len(CAMERAS)
+    unmapped_count = max(0, total_count - mapped_count)
+    percentage = round((mapped_count / total_count * 100), 1) if total_count > 0 else 0.0
+    
+    return {
+        "total_cameras": total_count,
+        "mapped_cameras": mapped_count,
+        "manual_cameras": manual_count,
+        "auto_cameras": auto_count,
+        "unmapped_cameras": unmapped_count,
+        "percentage_mapped": percentage
+    }
 
 
 @router.get(
@@ -160,14 +213,14 @@ async def list_cameras(
 )
 async def get_camera_roi_endpoint(camera_id: str):
     """[get_camera_roi_endpoint] Retrieve the saved ROI polygon coordinates for a camera."""
-    from .database import get_camera_roi
+    from .database import get_camera_roi_with_meta
     
     camera = get_camera_by_id(camera_id)
     if camera is None:
         raise HTTPException(status_code=404, detail=f"Camera ID not found: {camera_id}")
         
-    roi = await get_camera_roi(camera_id)
-    return CameraRoiResponse(camera_id=camera_id, roi_polygon=roi)
+    roi, is_auto = await get_camera_roi_with_meta(camera_id)
+    return CameraRoiResponse(camera_id=camera_id, roi_polygon=roi, is_auto=is_auto)
 
 
 @router.post(
@@ -402,7 +455,7 @@ async def predict_from_camera(request: Request, camera_id: str, heatmap: bool = 
     )
 
 
-_BATCH_MAX_CAMERAS = 15
+_BATCH_MAX_CAMERAS = 30
 _BATCH_FETCH_SEMAPHORE = 5
 
 

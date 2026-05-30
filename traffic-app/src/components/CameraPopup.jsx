@@ -14,6 +14,7 @@ import {
   LuCircleX,
   LuRotateCcw,
   LuX,
+  LuZap,
 } from 'react-icons/lu';
 
 const DENSITY_CONFIG = {
@@ -105,6 +106,7 @@ export default function CameraPopup({ camera, onClose }) {
     points: loadStoredRoi(camera.id),
   }));
   const imgWrapRef = useRef(null);
+  const dragRectRef = useRef(null);
   const roiPoints = roiState.cameraId === camera.id ? roiState.points : loadStoredRoi(camera.id);
 
   const setRoiPoints = useCallback((nextPoints) => {
@@ -112,6 +114,17 @@ export default function CameraPopup({ camera, onClose }) {
       cameraId: camera.id,
       points: typeof nextPoints === 'function' ? nextPoints(prev.cameraId === camera.id ? prev.points : loadStoredRoi(camera.id)) : nextPoints,
     }));
+  }, [camera.id]);
+
+  // Reset state when camera ID changes to prevent showing stale data from the previous camera
+  useEffect(() => {
+    setImageUrl(getCameraImageUrl(camera.id));
+    setPrediction(null);
+    setHistory([]);
+    setLoading(false);
+    setError(null);
+    setShowHeatmap(false);
+    setIsDrawing(false);
   }, [camera.id]);
 
   // Auto-refresh image every 5 seconds to simulate real-time feed
@@ -136,10 +149,20 @@ export default function CameraPopup({ camera, onClose }) {
               rois[camera.id] = data.roi_polygon;
               localStorage.setItem('camera_rois', JSON.stringify(rois));
               setRoiPoints(data.roi_polygon);
+              if (!camera.has_roi || camera.is_auto_roi !== data.is_auto) {
+                window.dispatchEvent(new CustomEvent('cameraRoiChanged', {
+                  detail: { cameraId: camera.id, hasRoi: true, isAutoRoi: data.is_auto }
+                }));
+              }
             } else {
               delete rois[camera.id];
               localStorage.setItem('camera_rois', JSON.stringify(rois));
               setRoiPoints([]);
+              if (camera.has_roi) {
+                window.dispatchEvent(new CustomEvent('cameraRoiChanged', {
+                  detail: { cameraId: camera.id, hasRoi: false, isAutoRoi: false }
+                }));
+              }
             }
           }
         }
@@ -151,7 +174,7 @@ export default function CameraPopup({ camera, onClose }) {
     };
     fetchBackendRoi();
     return () => { active = false; };
-  }, [camera.id, setRoiPoints]);
+  }, [camera, setRoiPoints]);
 
   // Fetch prediction history
   const fetchHistory = useCallback(async () => {
@@ -197,8 +220,91 @@ export default function CameraPopup({ camera, onClose }) {
     }
   };
 
+  // SVG Point dragging state
+  const [draggedPointIndex, setDraggedPointIndex] = useState(null);
+  const justDraggedRef = useRef(false);
+
+  // Auto-generate standard perspective road trapezoid
+  const handleAutoRoi = () => {
+    const defaultTrapezoid = [
+      [0.35, 0.4],
+      [0.65, 0.4],
+      [0.9, 0.95],
+      [0.1, 0.95]
+    ];
+    setRoiPoints(defaultTrapezoid);
+    setIsDrawing(true);
+    setShowHeatmap(false);
+  };
+
+  // Add event listener to window for robust dragging across the window coordinates
+  useEffect(() => {
+    if (draggedPointIndex === null) return;
+
+    const handleWindowMouseMove = (e) => {
+      let rect = dragRectRef.current;
+      if (!rect && imgWrapRef.current) {
+        rect = imgWrapRef.current.getBoundingClientRect();
+        dragRectRef.current = rect;
+      }
+      if (!rect) return;
+      
+      const x = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
+      const y = Math.max(0, Math.min(1, (e.clientY - rect.top) / rect.height));
+      setRoiPoints((prev) => {
+        const next = [...prev];
+        next[draggedPointIndex] = [Math.round(x * 1000) / 1000, Math.round(y * 1000) / 1000];
+        return next;
+      });
+    };
+
+    const handleWindowMouseUp = () => {
+      if (draggedPointIndex !== null) {
+        justDraggedRef.current = true;
+        setTimeout(() => {
+          justDraggedRef.current = false;
+        }, 50);
+      }
+      dragRectRef.current = null;
+      setDraggedPointIndex(null);
+    };
+
+    const handleWindowTouchMove = (e) => {
+      if (e.touches.length === 0) return;
+      let rect = dragRectRef.current;
+      if (!rect && imgWrapRef.current) {
+        rect = imgWrapRef.current.getBoundingClientRect();
+        dragRectRef.current = rect;
+      }
+      if (!rect) return;
+      
+      if (e.cancelable) e.preventDefault();
+      const touch = e.touches[0];
+      const x = Math.max(0, Math.min(1, (touch.clientX - rect.left) / rect.width));
+      const y = Math.max(0, Math.min(1, (touch.clientY - rect.top) / rect.height));
+      setRoiPoints((prev) => {
+        const next = [...prev];
+        next[draggedPointIndex] = [Math.round(x * 1000) / 1000, Math.round(y * 1000) / 1000];
+        return next;
+      });
+    };
+
+    window.addEventListener('mousemove', handleWindowMouseMove);
+    window.addEventListener('mouseup', handleWindowMouseUp);
+    window.addEventListener('touchmove', handleWindowTouchMove, { passive: false });
+    window.addEventListener('touchend', handleWindowMouseUp);
+
+    return () => {
+      window.removeEventListener('mousemove', handleWindowMouseMove);
+      window.removeEventListener('mouseup', handleWindowMouseUp);
+      window.removeEventListener('touchmove', handleWindowTouchMove);
+      window.removeEventListener('touchend', handleWindowMouseUp);
+    };
+  }, [draggedPointIndex, setRoiPoints]);
+
   const handleSvgClick = (e) => {
-    if (!isDrawing || !imgWrapRef.current) return;
+    if (justDraggedRef.current) return;
+    if (!isDrawing || !imgWrapRef.current || draggedPointIndex !== null) return;
     const rect = imgWrapRef.current.getBoundingClientRect();
     const x = (e.clientX - rect.left) / rect.width;
     const y = (e.clientY - rect.top) / rect.height;
@@ -217,6 +323,10 @@ export default function CameraPopup({ camera, onClose }) {
       delete rois[camera.id];
       localStorage.setItem('camera_rois', JSON.stringify(rois));
 
+      window.dispatchEvent(new CustomEvent('cameraRoiChanged', {
+        detail: { cameraId: camera.id, hasRoi: false }
+      }));
+
       await fetch(`${API_URL}/cameras/${camera.id}/roi`, { method: 'DELETE' });
     } catch (err) {
       console.error("Failed to delete ROI on backend:", err);
@@ -230,6 +340,10 @@ export default function CameraPopup({ camera, onClose }) {
         rois[camera.id] = roiPoints;
         localStorage.setItem('camera_rois', JSON.stringify(rois));
 
+        window.dispatchEvent(new CustomEvent('cameraRoiChanged', {
+          detail: { cameraId: camera.id, hasRoi: true }
+        }));
+
         try {
           await fetch(`${API_URL}/cameras/${camera.id}/roi`, {
             method: 'POST',
@@ -242,6 +356,10 @@ export default function CameraPopup({ camera, onClose }) {
       } else {
         delete rois[camera.id];
         localStorage.setItem('camera_rois', JSON.stringify(rois));
+
+        window.dispatchEvent(new CustomEvent('cameraRoiChanged', {
+          detail: { cameraId: camera.id, hasRoi: false }
+        }));
 
         try {
           await fetch(`${API_URL}/cameras/${camera.id}/roi`, { method: 'DELETE' });
@@ -259,6 +377,40 @@ export default function CameraPopup({ camera, onClose }) {
       console.error("Failed to save ROI:", e);
     }
   };
+
+  // Keyboard Shortcuts for calibration
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      // Escape to cancel/close
+      if (e.key === 'Escape') {
+        if (isDrawing) {
+          setIsDrawing(false);
+          setRoiPoints(loadStoredRoi(camera.id));
+        } else {
+          onClose?.();
+        }
+      }
+      
+      // Active drawing keyboard shortcuts
+      if (isDrawing) {
+        // Ctrl+Z or Backspace to undo point
+        if (((e.ctrlKey || e.metaKey) && e.key === 'z') || e.key === 'Backspace') {
+          e.preventDefault();
+          handleUndoPoint();
+        }
+        
+        // Ctrl+S or Enter to save (if valid)
+        if (((e.ctrlKey || e.metaKey) && e.key === 's') || e.key === 'Enter') {
+          if (roiPoints.length >= 3 && !loading) {
+            e.preventDefault();
+            handleSaveRoi();
+          }
+        }
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [isDrawing, roiPoints, loading, camera.id, onClose]);
 
   const hasRoadSegment = roiPoints.length >= 3;
   const globalDensityLevel = prediction?.global_density_level || prediction?.density_level;
@@ -313,43 +465,73 @@ export default function CameraPopup({ camera, onClose }) {
           />
         )}
 
-        {/* SVG Drawing/Viewer Canvas */}
+        {/* SVG Drawing/Viewer Canvas - Vectors (Polygon/Polyline) Layer */}
+        <svg
+          viewBox="0 0 1000 1000"
+          preserveAspectRatio="none"
+          style={{
+            position: 'absolute', top: 0, left: 0, width: '100%', height: '100%',
+            pointerEvents: 'none', zIndex: 4
+          }}
+        >
+          {roiPoints.length > 0 && (
+            hasRoadSegment ? (
+              <polygon
+                points={roiPoints.map(([x, y]) => `${x * 1000},${y * 1000}`).join(' ')}
+                fill="rgba(59, 130, 246, 0.25)"
+                stroke="#3b82f6"
+                strokeWidth="4"
+              />
+            ) : (
+              <polyline
+                points={roiPoints.map(([x, y]) => `${x * 1000},${y * 1000}`).join(' ')}
+                fill="none"
+                stroke="#3b82f6"
+                strokeWidth="4"
+              />
+            )
+          )}
+        </svg>
+
+        {/* SVG Drawing/Viewer Canvas - Interactive Circles (Handles) Layer */}
         <svg
           style={{
             position: 'absolute', top: 0, left: 0, width: '100%', height: '100%',
             pointerEvents: isDrawing ? 'auto' : 'none', zIndex: 5
           }}
         >
-          {roiPoints.length > 0 && (
-            <>
-              {hasRoadSegment ? (
-                <polygon
-                  points={roiPoints.map(([x, y]) => `${x * 100}%,${y * 100}%`).join(' ')}
-                  fill="rgba(59, 130, 246, 0.25)"
-                  stroke="#3b82f6"
-                  strokeWidth="2"
-                />
-              ) : (
-                <polyline
-                  points={roiPoints.map(([x, y]) => `${x * 100}%,${y * 100}%`).join(' ')}
-                  fill="none"
-                  stroke="#3b82f6"
-                  strokeWidth="2"
-                />
-              )}
-              {roiPoints.map(([x, y], idx) => (
-                <circle
-                  key={idx}
-                  cx={`${x * 100}%`}
-                  cy={`${y * 100}%`}
-                  r="4"
-                  fill="#ffffff"
-                  stroke="#2563eb"
-                  strokeWidth="2"
-                />
-              ))}
-            </>
-          )}
+          {roiPoints.length > 0 && roiPoints.map(([x, y], idx) => (
+            <circle
+              key={idx}
+              cx={`${x * 100}%`}
+              cy={`${y * 100}%`}
+              r={draggedPointIndex === idx ? 8 : 5}
+              className={`camera-popup__roi-point ${draggedPointIndex === idx ? 'camera-popup__roi-point--dragging' : ''}`}
+              fill="#ffffff"
+              stroke="#2563eb"
+              strokeWidth="2.5"
+              style={{ cursor: isDrawing ? (draggedPointIndex === idx ? 'grabbing' : 'grab') : 'default' }}
+              onMouseDown={(e) => {
+                if (!isDrawing) return;
+                e.preventDefault();
+                e.stopPropagation();
+                if (imgWrapRef.current) {
+                  dragRectRef.current = imgWrapRef.current.getBoundingClientRect();
+                }
+                setDraggedPointIndex(idx);
+              }}
+              onTouchStart={(e) => {
+                if (!isDrawing) return;
+                e.preventDefault();
+                e.stopPropagation();
+                if (imgWrapRef.current) {
+                  dragRectRef.current = imgWrapRef.current.getBoundingClientRect();
+                }
+                setDraggedPointIndex(idx);
+              }}
+              onClick={(e) => e.stopPropagation()}
+            />
+          ))}
         </svg>
 
         {isDrawing && (
@@ -382,8 +564,17 @@ export default function CameraPopup({ camera, onClose }) {
       <div className="camera-popup__info">
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
           <div>
-            <div className="camera-popup__title">{camera.name}</div>
-            <div className="camera-popup__subtitle">{camera.district}</div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flexWrap: 'wrap' }}>
+              <div className="camera-popup__title" style={{ margin: 0 }}>{camera.name}</div>
+              {!camera.has_roi ? (
+                <span className="badge badge--warning">Chưa đo</span>
+              ) : camera.is_auto_roi ? (
+                <span className="badge badge--info" title="Mặt đường được AI dựng mẫu tự động">AI Mẫu</span>
+              ) : (
+                <span className="badge badge--success" title="Mặt đường đã đo thủ công">Thủ công</span>
+              )}
+            </div>
+            <div className="camera-popup__subtitle" style={{ marginTop: '2px' }}>{camera.district}</div>
           </div>
           {onClose && (
             <button
@@ -403,49 +594,91 @@ export default function CameraPopup({ camera, onClose }) {
           )}
         </div>
 
-        <div style={{ display: 'flex', gap: 6, marginTop: 10, flexWrap: 'wrap' }}>
-          {!isDrawing ? (
+        {/* Banner Alert for Drawing Mode */}
+        {isDrawing && (
+          <div className="camera-popup__drawing-banner">
+            <LuPenTool size={14} />
+            <span>Chế độ vẽ: Click để chấm điểm HOẶC ấn <strong>Tự động</strong>, sau đó kéo các điểm để khớp mặt đường.</span>
+          </div>
+        )}
+
+        {prediction && (
+          <div className="prediction-result" style={{ background: '#ffffff', borderRadius: 10, border: '1px solid #e2e8f0', padding: 12, display: 'flex', flexDirection: 'column', gap: 10 }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+              <span style={{ fontSize: 11, fontWeight: 800, color: '#475569', letterSpacing: '0.05em', textTransform: 'uppercase' }}>
+                {prediction.has_roi ? 'ÙN TẮC MẶT ĐƯỜNG' : 'KẾT QUẢ TOÀN KHUNG'}
+              </span>
+              <span className="prediction-result__time" style={{ fontSize: 10, color: '#94a3b8', display: 'flex', alignItems: 'center', gap: 3 }}>
+                <LuClock size={10} />
+                {prediction.inference_time_ms}ms
+              </span>
+            </div>
+
+            <div
+              style={{
+                display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+                padding: '10px 12px', borderRadius: 8, background: primaryDensity.bg,
+                border: `1px solid ${primaryDensity.color}33`
+              }}
+            >
+              <span style={{ display: 'flex', alignItems: 'center', gap: 6, color: primaryDensity.color, fontWeight: 800, fontSize: 15 }}>
+                <LuActivity size={16} />
+                {primaryDensity.label}
+              </span>
+              {prediction.has_roi && prediction.roi_density_score != null && (
+                <strong style={{ color: primaryDensity.color, fontSize: 16 }}>{prediction.roi_density_score}</strong>
+              )}
+            </div>
+
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 6 }}>
+              <div style={{ background: '#f8fafc', borderRadius: 8, padding: 8, textAlign: 'center' }}>
+                <LuCar size={14} color="#3b82f6" />
+                <div style={{ fontWeight: 800, color: '#1e293b' }}>{prediction.has_roi ? prediction.roi_car_count ?? 0 : prediction.car_count}</div>
+                <div style={{ fontSize: 10, color: '#64748b' }}>Ô tô</div>
+              </div>
+              <div style={{ background: '#f8fafc', borderRadius: 8, padding: 8, textAlign: 'center' }}>
+                <LuBike size={14} color="#8b5cf6" />
+                <div style={{ fontWeight: 800, color: '#1e293b' }}>{prediction.has_roi ? prediction.roi_motorbike_count ?? 0 : prediction.motorbike_count}</div>
+                <div style={{ fontSize: 10, color: '#64748b' }}>Xe máy</div>
+              </div>
+              <div style={{ background: '#f8fafc', borderRadius: 8, padding: 8, textAlign: 'center' }}>
+                <LuTally5 size={14} color="#0f172a" />
+                <div style={{ fontWeight: 800, color: '#1e293b' }}>{prediction.has_roi ? prediction.roi_count ?? 0 : prediction.total_count}</div>
+                <div style={{ fontSize: 10, color: '#64748b' }}>Tổng</div>
+              </div>
+            </div>
+
+            {prediction.has_roi ? (
+              <div style={{ fontSize: 10, color: '#64748b', textAlign: 'center', background: '#f8fafc', padding: 5, borderRadius: 6 }}>
+                Intersection: density map ∩ mặt đường · {(prediction.roi_area_ratio * 100).toFixed(1)}% khung ảnh
+              </div>
+            ) : (
+              <div className="camera-popup__hint-text">
+                💡 Phân tích toàn bộ khung ảnh. Chọn mặt đường bên dưới để phân tích chính xác theo phân đoạn.
+              </div>
+            )}
+
+            <TrendSparkline history={history} />
+          </div>
+        )}
+
+        {/* Unified Actions Layout */}
+        <div className="camera-popup__actions-group">
+          {isDrawing ? (
             <>
               <button
-                onClick={() => {
-                  setIsDrawing(true);
-                  setShowHeatmap(false);
-                }}
-                style={{
-                  display: 'flex', alignItems: 'center', gap: 4, fontSize: 12,
-                  padding: '6px 10px', borderRadius: 6, border: '1px solid #cbd5e1',
-                  background: '#f8fafc', color: '#334155', cursor: 'pointer', fontWeight: 700
-                }}
+                onClick={handleAutoRoi}
+                className="camera-popup__action-btn camera-popup__action-btn--primary"
+                style={{ background: 'linear-gradient(135deg, #a855f7 0%, #7e22ce 100%)', boxShadow: '0 4px 12px rgba(168, 85, 247, 0.2)', color: 'white' }}
+                title="Tự động tạo mặt đường mẫu"
               >
-                <LuPenTool size={14} />
-                {hasRoadSegment ? 'Sửa mặt đường' : 'Chọn mặt đường'}
+                <LuZap size={14} />
+                Tự động
               </button>
-              {hasRoadSegment && (
-                <button
-                  onClick={() => handlePredict()}
-                  disabled={loading}
-                  style={{
-                    display: 'flex', alignItems: 'center', gap: 4, fontSize: 12,
-                    padding: '6px 10px', borderRadius: 6, border: 'none',
-                    background: '#2563eb', color: '#fff', cursor: 'pointer', fontWeight: 700
-                  }}
-                >
-                  <LuScanSearch size={14} />
-                  {loading ? 'Đang đo...' : 'Đo ùn tắc'}
-                </button>
-              )}
-            </>
-          ) : (
-            <>
               <button
                 onClick={handleSaveRoi}
                 disabled={!hasRoadSegment || loading}
-                style={{
-                  display: 'flex', alignItems: 'center', gap: 4, fontSize: 12,
-                  padding: '6px 10px', borderRadius: 6, border: 'none',
-                  background: hasRoadSegment ? '#10b981' : '#cbd5e1',
-                  color: 'white', cursor: hasRoadSegment ? 'pointer' : 'not-allowed', fontWeight: 700
-                }}
+                className="camera-popup__action-btn camera-popup__action-btn--success"
               >
                 <LuSave size={14} />
                 Lưu & đo
@@ -453,22 +686,17 @@ export default function CameraPopup({ camera, onClose }) {
               <button
                 onClick={handleUndoPoint}
                 disabled={roiPoints.length === 0}
-                style={{
-                  display: 'flex', alignItems: 'center', gap: 4, fontSize: 12,
-                  padding: '6px 10px', borderRadius: 6, border: '1px solid #cbd5e1',
-                  background: '#f8fafc', color: '#475569', cursor: 'pointer', fontWeight: 600
-                }}
+                className="camera-popup__action-btn camera-popup__action-btn--secondary"
+                title="Lùi 1 điểm"
               >
                 <LuRotateCcw size={14} />
                 Lùi
               </button>
               <button
                 onClick={handleClearRoi}
-                style={{
-                  display: 'flex', alignItems: 'center', gap: 4, fontSize: 12,
-                  padding: '6px 10px', borderRadius: 6, border: '1px solid #ef4444',
-                  background: 'transparent', color: '#ef4444', cursor: 'pointer', fontWeight: 600
-                }}
+                disabled={roiPoints.length === 0}
+                className="camera-popup__action-btn camera-popup__action-btn--danger"
+                title="Xóa tất cả các điểm đã vẽ"
               >
                 <LuTrash2 size={14} />
                 Xóa
@@ -478,110 +706,73 @@ export default function CameraPopup({ camera, onClose }) {
                   setIsDrawing(false);
                   setRoiPoints(loadStoredRoi(camera.id));
                 }}
-                style={{
-                  display: 'flex', alignItems: 'center', gap: 4, fontSize: 12,
-                  padding: '6px 10px', borderRadius: 6, border: '1px solid #cbd5e1',
-                  background: '#f8fafc', color: '#64748b', cursor: 'pointer', fontWeight: 600
-                }}
+                className="camera-popup__action-btn camera-popup__action-btn--secondary"
               >
                 <LuCircleX size={14} />
                 Hủy
               </button>
             </>
-          )}
-        </div>
-
-        <div style={{ marginTop: 10 }}>
-          {prediction ? (
-            <div className="prediction-result" style={{ background: '#ffffff', borderRadius: 10, border: '1px solid #e2e8f0', padding: 12, display: 'flex', flexDirection: 'column', gap: 10 }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                <span style={{ fontSize: 11, fontWeight: 800, color: '#475569', letterSpacing: '0.05em', textTransform: 'uppercase' }}>
-                  {prediction.has_roi ? 'ÙN TẮC MẶT ĐƯỜNG' : 'KẾT QUẢ TOÀN KHUNG'}
-                </span>
-                <span className="prediction-result__time" style={{ fontSize: 10, color: '#94a3b8', display: 'flex', alignItems: 'center', gap: 3 }}>
-                  <LuClock size={10} />
-                  {prediction.inference_time_ms}ms
-                </span>
-              </div>
-
-              <div
-                style={{
-                  display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-                  padding: '10px 12px', borderRadius: 8, background: primaryDensity.bg,
-                  border: `1px solid ${primaryDensity.color}33`
-                }}
-              >
-                <span style={{ display: 'flex', alignItems: 'center', gap: 6, color: primaryDensity.color, fontWeight: 800, fontSize: 15 }}>
-                  <LuActivity size={16} />
-                  {primaryDensity.label}
-                </span>
-                {prediction.has_roi && prediction.roi_density_score != null && (
-                  <strong style={{ color: primaryDensity.color, fontSize: 16 }}>{prediction.roi_density_score}</strong>
-                )}
-              </div>
-
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 6 }}>
-                <div style={{ background: '#f8fafc', borderRadius: 8, padding: 8, textAlign: 'center' }}>
-                  <LuCar size={14} color="#3b82f6" />
-                  <div style={{ fontWeight: 800, color: '#1e293b' }}>{prediction.has_roi ? prediction.roi_car_count ?? 0 : prediction.car_count}</div>
-                  <div style={{ fontSize: 10, color: '#64748b' }}>Ô tô</div>
-                </div>
-                <div style={{ background: '#f8fafc', borderRadius: 8, padding: 8, textAlign: 'center' }}>
-                  <LuBike size={14} color="#8b5cf6" />
-                  <div style={{ fontWeight: 800, color: '#1e293b' }}>{prediction.has_roi ? prediction.roi_motorbike_count ?? 0 : prediction.motorbike_count}</div>
-                  <div style={{ fontSize: 10, color: '#64748b' }}>Xe máy</div>
-                </div>
-                <div style={{ background: '#f8fafc', borderRadius: 8, padding: 8, textAlign: 'center' }}>
-                  <LuTally5 size={14} color="#0f172a" />
-                  <div style={{ fontWeight: 800, color: '#1e293b' }}>{prediction.has_roi ? prediction.roi_count ?? 0 : prediction.total_count}</div>
-                  <div style={{ fontSize: 10, color: '#64748b' }}>Tổng</div>
-                </div>
-              </div>
-
-              {prediction.has_roi ? (
-                <div style={{ fontSize: 10, color: '#64748b', textAlign: 'center', background: '#f8fafc', padding: 5, borderRadius: 6 }}>
-                  Intersection: density map ∩ mặt đường · {(prediction.roi_area_ratio * 100).toFixed(1)}% khung ảnh
-                </div>
-              ) : (
-                <button
-                  onClick={() => {
-                    setIsDrawing(true);
-                    setShowHeatmap(false);
-                  }}
-                  className="predict-button"
-                  style={{ marginTop: 2, fontSize: 12, padding: '7px 10px' }}
-                >
-                  <LuPenTool size={14} />
-                  Chọn mặt đường để đo đúng đề tài
-                </button>
-              )}
-
-              <TrendSparkline history={history} />
-            </div>
-          ) : hasRoadSegment ? (
-            <button
-              onClick={() => handlePredict()}
-              disabled={loading || isDrawing}
-              className="predict-button"
-            >
-              <LuScanSearch size={16} />
-              {loading ? 'Đang đo...' : 'Đo ùn tắc mặt đường'}
-            </button>
           ) : (
-            <button
-              onClick={() => {
-                setIsDrawing(true);
-                setShowHeatmap(false);
-              }}
-              disabled={loading}
-              className="predict-button"
-            >
-              <LuPenTool size={16} />
-              Chọn mặt đường
-            </button>
+            <>
+              {/* Not Drawing mode */}
+              {!hasRoadSegment ? (
+                <>
+                  {/* Case 2A: No road segment defined */}
+                  <button
+                    onClick={() => {
+                      setIsDrawing(true);
+                      setShowHeatmap(false);
+                    }}
+                    className="camera-popup__action-btn camera-popup__action-btn--primary"
+                  >
+                    <LuPenTool size={14} />
+                    Chọn mặt đường
+                  </button>
+                  <button
+                    onClick={() => handlePredict([])}
+                    disabled={loading}
+                    className="camera-popup__action-btn camera-popup__action-btn--secondary"
+                  >
+                    <LuScanSearch size={14} />
+                    {loading ? 'Đang đo...' : prediction ? 'Đo lại toàn khung' : 'Đo toàn khung'}
+                  </button>
+                </>
+              ) : (
+                <>
+                  {/* Case 2B: Road segment exists */}
+                  <button
+                    onClick={() => handlePredict(roiPoints)}
+                    disabled={loading}
+                    className="camera-popup__action-btn camera-popup__action-btn--primary"
+                  >
+                    <LuScanSearch size={14} />
+                    {loading ? 'Đang đo...' : prediction ? 'Đo lại' : 'Đo mặt đường'}
+                  </button>
+                  <button
+                    onClick={() => {
+                      setIsDrawing(true);
+                      setShowHeatmap(false);
+                    }}
+                    className="camera-popup__action-btn camera-popup__action-btn--secondary"
+                  >
+                    <LuPenTool size={14} />
+                    Sửa mặt đường
+                  </button>
+                  <button
+                    onClick={handleClearRoi}
+                    className="camera-popup__action-btn camera-popup__action-btn--danger"
+                    style={{ flex: '0 0 auto', width: 'auto', minWidth: '40px', padding: '10px' }}
+                    title="Xóa mặt đường"
+                  >
+                    <LuTrash2 size={15} />
+                  </button>
+                </>
+              )}
+            </>
           )}
-          {error && <div style={{ color: '#ef4444', fontSize: '12px', marginTop: '4px' }}>{error}</div>}
         </div>
+
+        {error && <div style={{ color: '#ef4444', fontSize: '12px', marginTop: '4px', textAlign: 'center' }}>{error}</div>}
       </div>
     </div>
   );

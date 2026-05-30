@@ -981,6 +981,119 @@ body,
     stroke: var(--on-surface-variant);
 }
 
+/* Mapped camera marker */
+.camera-marker--mapped {
+    border-color: #10b981 !important;
+    background: #f0fdf4 !important;
+}
+.camera-marker--mapped svg {
+    stroke: #10b981 !important;
+}
+
+/* Auto-mapped camera marker (AI preset) */
+.camera-marker--auto-mapped {
+    border-color: #0284c7 !important;
+    background: #f0f9ff !important;
+}
+.camera-marker--auto-mapped svg {
+    stroke: #0284c7 !important;
+}
+
+/* Selected camera marker */
+.camera-marker--selected {
+    border-color: #f59e0b !important;
+    background: #fffbeb !important;
+    box-shadow: 0 0 14px rgba(245, 158, 11, 0.7) !important;
+    animation: camera-pulse 1.5s infinite alternate;
+}
+.camera-marker--selected svg {
+    stroke: #d97706 !important;
+}
+
+/* Mapped + Selected camera marker */
+.camera-marker--mapped.camera-marker--selected {
+    border-color: #f59e0b !important;
+    background: #fffbeb !important;
+    box-shadow: 0 0 14px rgba(245, 158, 11, 0.9), 0 0 0 3px rgba(16, 185, 129, 0.4) !important;
+}
+.camera-marker--mapped.camera-marker--selected svg {
+    stroke: #d97706 !important;
+}
+
+@keyframes camera-pulse {
+    0% {
+        box-shadow: 0 0 6px rgba(245, 158, 11, 0.4);
+    }
+    100% {
+        box-shadow: 0 0 16px rgba(245, 158, 11, 0.8), 0 0 0 4px rgba(245, 158, 11, 0.2);
+    }
+}
+
+/* Badge Styles */
+.badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 2px 8px;
+    border-radius: var(--radius-full);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    height: 18px;
+    line-height: 1;
+}
+.badge--success {
+    background-color: #e6f7ed;
+    color: #10b981;
+    border: 1px solid rgba(16, 185, 129, 0.2);
+}
+.badge--info {
+    background-color: #e0f2fe;
+    color: #0284c7;
+    border: 1px solid rgba(2, 132, 199, 0.2);
+}
+.badge--warning {
+    background-color: #fef3c7;
+    color: #d97706;
+    border: 1px solid rgba(245, 158, 11, 0.2);
+}
+
+/* Floating Map Filter Toggle */
+.map-filter-toggle {
+    position: absolute;
+    bottom: 32px;
+    right: 60px;
+    height: 40px;
+    padding: 0 16px;
+    border-radius: var(--radius-full);
+    background: #fff;
+    border: 1px solid var(--outline-variant);
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    cursor: pointer;
+    color: var(--on-surface-variant);
+    font-size: 12px;
+    font-weight: 600;
+    gap: 6px;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.map-filter-toggle[data-active="true"] {
+    background: #10b981;
+    color: #fff;
+    border-color: #10b981;
+    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+}
+.map-filter-toggle:hover {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+    transform: translateY(-1px);
+}
+.map-filter-toggle:active {
+    transform: translateY(0);
+}
+
 /* ---------- Prediction Result (CameraPopup) ---------- */
 .prediction-result {
     background: #f8fafc;
@@ -1496,7 +1609,7 @@ body,
     top: 16px;
     right: 16px;
     bottom: 16px;
-    width: 380px;
+    width: 440px;
     background: rgba(255, 255, 255, 0.95);
     backdrop-filter: blur(16px);
     -webkit-backdrop-filter: blur(16px);
@@ -1529,7 +1642,7 @@ body,
 }
 
 .camera-sidebar-container .camera-popup__img-wrap {
-    height: 240px;
+    height: 280px;
     flex-shrink: 0;
 }
 
@@ -1564,7 +1677,7 @@ body,
         right: 12px;
         bottom: 12px;
         width: auto;
-        height: 60vh;
+        height: 68vh;
         animation: sidebar-slide-up 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
     }
     .camera-sidebar-container .camera-popup__img-wrap {
@@ -1581,5 +1694,147 @@ body,
         opacity: 1;
         transform: translateY(0);
     }
+}
+
+/* ===== Premium CameraPopup Action Layout & Styling ===== */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-4px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.camera-popup__actions-group {
+    display: flex;
+    gap: 8px;
+    margin-top: 12px;
+    flex-wrap: wrap;
+    width: 100%;
+}
+
+.camera-popup__action-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    font-size: 13px;
+    font-weight: 600;
+    padding: 10px 16px;
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    font-family: inherit;
+    flex: 1;
+    min-width: 105px;
+    border: 1px solid transparent;
+    outline: none;
+    user-select: none;
+}
+
+.camera-popup__action-btn:active {
+    transform: scale(0.97);
+}
+
+.camera-popup__action-btn:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+    background: var(--surface-highest) !important;
+    color: var(--outline) !important;
+    border-color: var(--outline-variant) !important;
+    box-shadow: none !important;
+    transform: none !important;
+}
+
+/* Button Variants */
+.camera-popup__action-btn--primary {
+    background: linear-gradient(135deg, var(--primary) 0%, #004ea6 100%);
+    color: var(--on-primary);
+    box-shadow: 0 4px 12px rgba(0, 88, 189, 0.16);
+}
+.camera-popup__action-btn--primary:hover:not(:disabled) {
+    background: linear-gradient(135deg, #0066d6 0%, #0058bd 100%);
+    box-shadow: 0 6px 16px rgba(0, 88, 189, 0.24);
+}
+
+.camera-popup__action-btn--secondary {
+    background: var(--surface-lowest);
+    color: var(--on-surface-variant);
+    border-color: var(--outline-variant);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.02);
+}
+.camera-popup__action-btn--secondary:hover:not(:disabled) {
+    background: var(--surface-low);
+    color: var(--on-surface);
+    border-color: var(--outline);
+}
+
+.camera-popup__action-btn--success {
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    color: white;
+    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.16);
+}
+.camera-popup__action-btn--success:hover:not(:disabled) {
+    background: linear-gradient(135deg, #34d399 0%, #10b981 100%);
+    box-shadow: 0 6px 16px rgba(16, 185, 129, 0.24);
+}
+
+.camera-popup__action-btn--danger {
+    background: var(--surface-lowest);
+    color: var(--error);
+    border-color: rgba(186, 26, 26, 0.2);
+}
+.camera-popup__action-btn--danger:hover:not(:disabled) {
+    background: rgba(186, 26, 26, 0.05);
+    border-color: var(--error);
+}
+
+/* Banner Alert for Drawing Mode */
+.camera-popup__drawing-banner {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 14px;
+    background: rgba(0, 88, 189, 0.05);
+    border-left: 3px solid var(--primary);
+    border-radius: 6px;
+    font-size: 12px;
+    color: var(--primary);
+    font-weight: 550;
+    margin-bottom: 8px;
+    animation: fadeIn 0.25s ease-out forwards;
+}
+
+.camera-popup__hint-text {
+    font-size: 11px;
+    color: var(--on-surface-variant);
+    text-align: center;
+    background: var(--surface-low);
+    padding: 8px 12px;
+    border-radius: var(--radius-md);
+    line-height: 1.4;
+    border: 1px dashed var(--outline-variant);
+}
+
+/* SVG interactive ROI points styling */
+.camera-popup__roi-point {
+    cursor: grab;
+    transition: r 0.15s cubic-bezier(0.4, 0, 0.2, 1), fill 0.15s, stroke 0.15s;
+    pointer-events: auto;
+}
+.camera-popup__roi-point:hover {
+    r: 7px;
+    fill: #2563eb !important;
+    stroke: #ffffff !important;
+}
+.camera-popup__roi-point--dragging {
+    cursor: grabbing;
+    r: 9px;
+    fill: #1d4ed8 !important;
+    stroke: #ffffff !important;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.25));
 }
 

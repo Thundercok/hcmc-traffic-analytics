@@ -54,6 +54,33 @@ export default function ControlPanel({
   const [destSuggestions, setDestSuggestions] = useState([]);
   const [activeDropdown, setActiveDropdown] = useState(null); // "origin" | "dest"
   const [isExpanded, setIsExpanded] = useState(false);
+  const [stats, setStats] = useState(null);
+
+  useEffect(() => {
+    const fetchStats = async () => {
+      try {
+        const apiUrl = import.meta.env.VITE_API_URL || "/api";
+        const res = await fetch(`${apiUrl}/cameras/stats`);
+        if (res.ok) {
+          const data = await res.json();
+          setStats(data);
+        }
+      } catch (err) {
+        console.error("Failed to fetch camera mapping stats", err);
+      }
+    };
+    fetchStats();
+    // Refresh stats every 10 seconds
+    const interval = setInterval(fetchStats, 10000);
+    
+    // Listen to ROI changes and refresh stats immediately
+    window.addEventListener("cameraRoiChanged", fetchStats);
+    
+    return () => {
+      clearInterval(interval);
+      window.removeEventListener("cameraRoiChanged", fetchStats);
+    };
+  }, []);
 
   // Sync prop destText to local state when map is clicked
   useEffect(() => {
@@ -239,6 +266,75 @@ export default function ControlPanel({
         className="control-panel__body"
         style={{ display: isExpanded ? "flex" : "none", paddingTop: 0 }}
       >
+        {/* Camera Mapping Progress Stats */}
+        {stats && (
+          <div style={{
+            background: "linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%)",
+            border: "1px solid #bbf7d0",
+            borderRadius: "12px",
+            padding: "10px 14px",
+            marginTop: "10px",
+            marginBottom: "12px",
+            display: "flex",
+            flexDirection: "column",
+            gap: "5px",
+            boxShadow: "0 2px 8px rgba(16, 185, 129, 0.04)"
+          }}>
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+              <span style={{ fontSize: "12px", fontWeight: "700", color: "#166534", display: "flex", alignItems: "center", gap: "6px" }}>
+                <LuVideo size={14} />
+                Số hóa mặt đường
+              </span>
+              <span style={{ fontSize: "12px", fontWeight: "800", color: "#15803d" }}>
+                {stats.mapped_cameras} / {stats.total_cameras} (cam)
+              </span>
+            </div>
+            
+            {/* Progress bar container */}
+            <div style={{
+              width: "100%",
+              height: "6px",
+              background: "rgba(21, 128, 61, 0.1)",
+              borderRadius: "10px",
+              overflow: "hidden"
+            }}>
+              <div style={{
+                width: `${stats.percentage_mapped}%`,
+                height: "100%",
+                background: "linear-gradient(90deg, #10b981 0%, #059669 100%)",
+                borderRadius: "10px",
+                transition: "width 0.4s cubic-bezier(0.4, 0, 0.2, 1)"
+              }} />
+            </div>
+            
+            <div style={{ display: "flex", justifyContent: "space-between", fontSize: "10px", color: "#166534", opacity: 0.8 }}>
+              <span>Hoàn thành: {stats.percentage_mapped}%</span>
+              <span>Còn lại: {stats.unmapped_cameras} camera</span>
+            </div>
+
+            {/* Detailed breakdown counts */}
+            <div style={{ 
+              display: "flex", 
+              flexDirection: "column", 
+              gap: "3px", 
+              borderTop: "1px dashed rgba(22, 101, 52, 0.2)", 
+              paddingTop: "6px", 
+              marginTop: "4px", 
+              fontSize: "10.5px", 
+              color: "#166534" 
+            }}>
+              <div style={{ display: "flex", justifyContent: "space-between" }}>
+                <span>✍️ Thủ công (do bạn vẽ):</span>
+                <span style={{ fontWeight: "700" }}>{stats.manual_cameras || 0} cam</span>
+              </div>
+              <div style={{ display: "flex", justifyContent: "space-between" }}>
+                <span>🤖 Tự động (AI dựng):</span>
+                <span style={{ fontWeight: "700" }}>{stats.auto_cameras || 0} cam</span>
+              </div>
+            </div>
+          </div>
+        )}
+
         {/* Route Inputs */}
         <div className="route-inputs" style={{ position: "relative" }}>
           <div className="route-inputs__line" />

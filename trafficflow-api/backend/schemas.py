@@ -12,6 +12,8 @@ class CameraInfo(BaseModel):
     district: str = Field(..., description="District name")
     lat: float = Field(..., description="Latitude")
     lng: float = Field(..., description="Longitude")
+    has_roi: Optional[bool] = Field(False, description="Whether this camera has a saved ROI polygon")
+    is_auto_roi: Optional[bool] = Field(False, description="Whether this ROI was automatically generated")
 
 
 class CameraListResponse(BaseModel):
@@ -314,3 +316,4 @@ class CameraRoiResponse(BaseModel):
 
     camera_id: str
     roi_polygon: Optional[list[list[float]]] = Field(None, description="List of normalized [x, y] coordinates")
+    is_auto: Optional[bool] = Field(False, description="Whether this ROI was automatically generated")
