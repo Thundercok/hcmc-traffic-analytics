@@ -67,10 +67,10 @@ class CongestionDetector:
             "description": "Giao thông thông thoáng, xe di chuyển bình thường",
         },
         1: {
-            "name": "Đông đúc",
+            "name": "Đông vừa",
             "color": "#eab308",
             "emoji": "🟡",
-            "description": "Xe di chuyển chậm, một số đoạn đông đúc",
+            "description": "Xe di chuyển chậm, một số đoạn đông vừa",
         },
         2: {
             "name": "Kẹt xe",
@@ -79,7 +79,7 @@ class CongestionDetector:
             "description": "Nhiều điểm kẹt, thời gian di chuyển tăng đáng kể",
         },
         3: {
-            "name": "Ùn tắc nghiêm trọng",
+            "name": "Kẹt cứng",
             "color": "#ef4444",
             "emoji": "🔴",
             "description": "Kẹt cứng, gần như đứng yên hoặc di chuyển rất chậm",

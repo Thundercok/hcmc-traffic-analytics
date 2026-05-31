@@ -75,6 +75,15 @@ async def lifespan(app: FastAPI):
     if hasattr(app.state, "writer"):
         await _stop_writer()
     await app.state.http_client.aclose()
+
+    # Close database pool
+    try:
+        from .database import close_db_pool
+        await close_db_pool()
+        logger.info("[shutdown] - Database pool closed.")
+    except Exception as db_err:
+        logger.warning(f"[shutdown] - Failed to close database pool: {db_err}")
+
     logger.info("[shutdown] Cleaned up resources.")
 
 

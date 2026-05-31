@@ -526,6 +526,13 @@ async def predict_from_camera(
         logger.error(f"[predict_from_camera] Inference failed: {e}", exc_info=True)
         raise HTTPException(status_code=500, detail="Internal prediction error")
 
+    # Record prediction to in-memory cache for instant trend chart update
+    try:
+        cache = PredictionCache.get_instance()
+        cache.record(camera_id, result)
+    except Exception as cache_err:
+        logger.warning(f"[predict_from_camera] Failed to record to cache: {cache_err}")
+
     return _build_predict_response(
         result, camera_id=camera_id, camera_name=camera.get("name")
     )
@@ -871,11 +878,11 @@ async def get_congestion_map(request: Request):
     if avg_level < 0.5:
         overall_status = "Thông thoáng trên toàn thành phố"
     elif avg_level < 1.5:
-        overall_status = "Một số nơi đông đúc"
+        overall_status = "Một số nơi đông vừa"
     elif avg_level < 2.5:
         overall_status = "Kẹt xe nhiều nơi"
     else:
-        overall_status = "Ùn tắc nghiêm trọng"
+        overall_status = "Kẹt cứng diện rộng"
 
     summary = {
         "total": len(successful),
@@ -1051,6 +1058,36 @@ async def prediction_history(camera_id: str):
 
     cache = PredictionCache.get_instance()
     history = cache.get_history(camera_id)
+
+    # Fallback to DB if cache has few entries (cold start)
+    if len(history) < 5:
+        try:
+            from .database import get_camera_history
+            db_history = await get_camera_history(camera_id, minutes=60)
+            if db_history:
+                formatted_db = []
+                for entry in reversed(db_history):
+                    ts = entry["timestamp"]
+                    ts_str = ts.isoformat() if hasattr(ts, "isoformat") else str(ts)
+                    formatted_db.append({
+                        "timestamp": ts_str,
+                        "total_count": entry["total_count"],
+                        "car_count": entry["car_count"],
+                        "motorbike_count": entry["motorbike_count"],
+                        "density_level": entry["density_level"]
+                    })
+                # Populate in-memory cache
+                with cache._lock:
+                    cache._data[camera_id].clear()
+                    for item in formatted_db:
+                        cache._data[camera_id].append({
+                            **item,
+                            "inference_time_ms": 0
+                        })
+                history = cache.get_history(camera_id)
+        except Exception as e:
+            logger.warning(f"[prediction_history] Failed to fetch fallback history from DB: {e}")
+
     return PredictionHistoryResponse(
         camera_id=camera_id,
         camera_name=camera.get("name"),

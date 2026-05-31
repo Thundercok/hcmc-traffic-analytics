@@ -49,9 +49,9 @@ function dayLabel(s) {
 // ─── Density config ─────────────────────────────────────────────────────────
 const DENSITY = {
   low:      { label: "Thông thoáng", color: "#10b981", bg: "#d1fae5", border: "#6ee7b7", emoji: "🟢" },
-  moderate: { label: "Đông đúc",    color: "#f59e0b", bg: "#fef3c7", border: "#fcd34d", emoji: "🟡" },
+  moderate: { label: "Đông vừa",    color: "#f59e0b", bg: "#fef3c7", border: "#fcd34d", emoji: "🟡" },
   heavy:    { label: "Kẹt xe",       color: "#ef4444", bg: "#fee2e2", border: "#fca5a5", emoji: "🔴" },
-  severe:   { label: "Ùn tắc",       color: "#7f1d1d", bg: "#fee2e2", border: "#f87171", emoji: "⛔" },
+  severe:   { label: "Kẹt cứng",     color: "#7f1d1d", bg: "#fee2e2", border: "#f87171", emoji: "⛔" },
   unknown:  { label: "Không rõ",     color: "#6b7280", bg: "#f3f4f6", border: "#d1d5db", emoji: "⚪" },
 };
 function DensityBadge({ level, showEmoji = true }) {
@@ -547,7 +547,7 @@ export default function DebugPage({ onBack }) {
               <Section icon={<LuGauge size={16} />} title="Thống kê nhanh">
                 <HProgress label="🚗 Thông thoáng" value={overall.low_pct || 0} max={100}
                   color="#10b981" pct={overall.low_pct} />
-                <HProgress label="🟡 Đông đúc" value={overall.moderate_pct || 0} max={100}
+                <HProgress label="🟡 Đông vừa" value={overall.moderate_pct || 0} max={100}
                   color="#f59e0b" pct={overall.moderate_pct} />
                 <HProgress label="🔴 Kẹt xe" value={overall.heavy_pct || 0} max={100}
                   color="#ef4444" pct={overall.heavy_pct} />
@@ -701,7 +701,7 @@ export default function DebugPage({ onBack }) {
 
               <Section icon={<LuActivity size={16} />} title="Phân bổ chi tiết">
                 <HProgress label="🟢 Thông thoáng" color="#10b981" pct={overall.low_pct} />
-                <HProgress label="🟡 Đông đúc" color="#f59e0b" pct={overall.moderate_pct} />
+                <HProgress label="🟡 Đông vừa" color="#f59e0b" pct={overall.moderate_pct} />
                 <HProgress label="🔴 Kẹt xe" color="#ef4444" pct={overall.heavy_pct} />
                 <div style={{ marginTop: 16, paddingTop: 12, borderTop: "1px solid #f3f4f6" }}>
                   <div style={{ fontSize: 13, fontWeight: 700, color: "#111827", marginBottom: 10 }}>Chi tiết xe</div>

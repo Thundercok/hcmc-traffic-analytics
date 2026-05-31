@@ -1,5 +1,3 @@
-version: "3.8"
-
 services:
   # Frontend - Vite React App
   frontend:
@@ -30,11 +28,11 @@ services:
       - TF_HOST=0.0.0.0
       - TF_PORT=8000
     volumes:
-      - ./trafficflow-api/ZIP:/app/ZIP:ro
+      - ./trafficflow-api:/app
     depends_on:
-      - db
+      db:
+        condition: service_healthy
     restart: unless-stopped
-    # Port 8000 không cần public - chỉ nginx truy cập nội bộ
 
   # PostgreSQL with TimescaleDB
   db:
@@ -48,7 +46,7 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U trafficflow"]
+      test: [ "CMD-SHELL", "pg_isready -U trafficflow" ]
       interval: 5s
       timeout: 5s
       retries: 5

@@ -27,6 +27,16 @@ if ZIP_PROJECT_ROOT not in sys.path:
     sys.path.insert(0, ZIP_PROJECT_ROOT)
 
 
+def resize_density_map(x: torch.Tensor, size: tuple[int, int]) -> torch.Tensor:
+    """Upsample block-level density map while preserving counting integral."""
+    import torch.nn.functional as F
+    x_sum = torch.sum(x, dim=(-1, -2), keepdim=True)
+    x = F.interpolate(x, size=size, mode="bilinear", align_corners=False)
+    x_sum_new = torch.sum(x, dim=(-1, -2), keepdim=True)
+    scale_factor = torch.nan_to_num(x_sum / x_sum_new, nan=0.0, posinf=0.0, neginf=0.0)
+    return x * scale_factor
+
+
 class ZIPModelService:
     """
     Service cho ZIP model inference (vehicle counting).
@@ -165,35 +175,6 @@ class ZIPModelService:
 
         norm_map = cv2.normalize(den, None, 0, 255, cv2.NORM_MINMAX, dtype=cv2.CV_8U)
         color_map = cv2.applyColorMap(norm_map, cv2.COLORMAP_JET)
-
-        # Draw ROI polygon if provided
-        if roi_polygon:
-            h, w = color_map.shape[:2]
-            pts = np.array(
-                [[pt[0] * w, pt[1] * h] for pt in roi_polygon], dtype=np.int32
-            )
-            # Match colors with density level
-            colors = {
-                "low": (0, 255, 0),
-                "moderate": (0, 180, 255),
-                "heavy": (0, 0, 255),
-                "severe": (0, 0, 150),
-            }
-            color = colors.get(roi_congestion_level, (255, 255, 255))
-
-            # Semitransparent fill
-            overlay = color_map.copy()
-            cv2.fillPoly(overlay, [pts], color)
-            cv2.addWeighted(overlay, 0.25, color_map, 0.75, 0, dst=color_map)
-            # Solid border
-            cv2.polylines(
-                color_map,
-                [pts],
-                isClosed=True,
-                color=color,
-                thickness=2,
-                lineType=cv2.LINE_AA,
-            )
 
         _, buffer = cv2.imencode(".png", color_map)
         return "data:image/png;base64," + base64.b64encode(buffer).decode("utf-8")
@@ -340,6 +321,11 @@ class ZIPModelService:
         inference_time_ms = round((time.time() - start_time) * 1000, 1)
 
         den = self._normalize_density_tensor(model_out)
+        if den is not None:
+            try:
+                den = resize_density_map(den, (self.input_size, self.input_size))
+            except Exception as e:
+                logger.warning(f"[predict_from_image] Failed to resize density map: {e}")
         car_count = 0
         motorbike_count = 0
         total_count = 0
@@ -400,21 +386,31 @@ class ZIPModelService:
 
                 # Calculate active heatmap intersection with road segment
                 total_den = den[0].sum(dim=0)
-                active_heatmap = (total_den > 0.2).to(dtype=den.dtype)
+                active_heatmap = (total_den > 0.05).to(dtype=den.dtype)
                 intersection = active_heatmap * mask_tensor
                 
-                road_pixels = float(mask_tensor.sum().item())
-                intersection_pixels = float(intersection.sum().item())
+                # Calculate Traffic PCU (Passenger Car Unit) inside ROI
+                # Class 0: Cars/Buses (PCU weight 2.0), Class 1: Motorbikes (PCU weight 0.4)
+                num_classes = den.shape[1]
+                if num_classes >= 2:
+                    pcu_val = (roi_car_count * 2.0) + (roi_motorbike_count * 0.4)
+                else:
+                    pcu_val = roi_count * 0.8
                 
-                coverage_percentage = (intersection_pixels / road_pixels * 100) if road_pixels > 0 else 0.0
-                roi_density_score = round(coverage_percentage, 1)
+                # Road capacity is proportional to the ROI area ratio
+                # Base capacity constant: a road covering 100% of the image can hold ~45 PCUs
+                base_capacity = 45.0
+                road_capacity = max(1.0, roi_area_ratio * base_capacity)
                 
-                # Classify based on coverage percentage
-                if coverage_percentage < 15.0:
+                congestion_score = (pcu_val / road_capacity) * 100.0
+                roi_density_score = min(100.0, round(congestion_score, 1))
+                
+                # Classify based on congestion score
+                if roi_density_score < 15.0:
                     roi_congestion_level = "low"
-                elif coverage_percentage < 40.0:
+                elif roi_density_score < 40.0:
                     roi_congestion_level = "moderate"
-                elif coverage_percentage < 70.0:
+                elif roi_density_score < 70.0:
                     roi_congestion_level = "heavy"
                 else:
                     roi_congestion_level = "severe"

@@ -10,7 +10,7 @@ import {
 } from "react-icons/lu";
 
 // ─── Config ────────────────────────────────────────────────────────────────
-const API = "/api";
+const API = import.meta.env.VITE_API_URL || "/api";
 
 // ─── Helpers ──────────────────────────────────────────────────────────────
 const fmt = (n) => (n == null ? "—" : Number(n).toLocaleString("vi-VN"));
@@ -31,7 +31,7 @@ const DENSITY_META = {
   low:      { label: "Thông thoáng", color: "#10b981", bg: "#d1fae5",   border: "#6ee7b7", text: "#065f46", icon: LuCircleCheck },
   moderate: { label: "Đông vừa",   color: "#f59e0b", bg: "#fef3c7",   border: "#fcd34d", text: "#92400e", icon: LuUsers },
   heavy:    { label: "Kẹt xe",     color: "#ef4444", bg: "#fee2e2",   border: "#fca5a5", text: "#991b1b", icon: LuFlame },
-  severe:   { label: "Ùn tắc",      color: "#7f1d1d", bg: "#fee2e2",   border: "#f87171", text: "#7f1d1d", icon: LuX },
+  severe:   { label: "Kẹt cứng",      color: "#7f1d1d", bg: "#fee2e2",   border: "#f87171", text: "#7f1d1d", icon: LuX },
   unknown:  { label: "Không rõ",    color: "#6b7280", bg: "#f3f4f6",   border: "#d1d5db", text: "#374151", icon: LuFileQuestion },
 };
 
@@ -305,7 +305,7 @@ function TrafficLegend() {
           { level: "low",      desc: "Đường thông thoáng, xe di chuyển bình thường, không có dấu hiệu ùn ứ." },
           { level: "moderate", desc: "Mật độ xe đông vừa phải, một số đoạn có thể di chuyển chậm hơn bình thường." },
           { level: "heavy",    desc: "Kẹt xe rõ rệt, nhiều đoạn ùn ứ, thời gian di chuyển tăng đáng kể." },
-          { level: "severe",   desc: "Ùn tắc nghiêm trọng, giao thông hầu như dừng hoàn toàn, cần tránh tuyến đường này." },
+          { level: "severe",   desc: "Kẹt cứng nghiêm trọng, giao thông hầu như dừng hoàn toàn, cần tránh tuyến đường này." },
         ].map(({ level, desc }) => {
           const d = DENSITY_META[level];
           return (

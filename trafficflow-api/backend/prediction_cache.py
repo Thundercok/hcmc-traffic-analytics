@@ -24,14 +24,30 @@ class PredictionCache:
 
     def record(self, camera_id: str, result: dict) -> None:
         """[record] Store a prediction result for a camera."""
+        has_roi = result.get("has_roi", False)
+        total_count = result.get("roi_count", 0) if has_roi else result.get("total_count", 0)
+        car_count = result.get("roi_car_count", 0) if has_roi else result.get("car_count", 0)
+        motorbike_count = result.get("roi_motorbike_count", 0) if has_roi else result.get("motorbike_count", 0)
+        density_level = result.get("roi_congestion_level", "low") if has_roi else result.get("density_level", "low")
+
+        # Fallback to general counts if ROI counts are None (e.g. if mask failed but has_roi was true)
+        if total_count is None:
+            total_count = result.get("total_count", 0)
+        if car_count is None:
+            car_count = result.get("car_count", 0)
+        if motorbike_count is None:
+            motorbike_count = result.get("motorbike_count", 0)
+        if density_level is None:
+            density_level = result.get("density_level", "low")
+
         with self._lock:
             self._data[camera_id].append(
                 {
                     "timestamp": datetime.now().isoformat(),
-                    "total_count": result.get("total_count", 0),
-                    "car_count": result.get("car_count", 0),
-                    "motorbike_count": result.get("motorbike_count", 0),
-                    "density_level": result.get("density_level", "low"),
+                    "total_count": int(total_count),
+                    "car_count": int(car_count),
+                    "motorbike_count": int(motorbike_count),
+                    "density_level": str(density_level),
                     "inference_time_ms": result.get("inference_time_ms", 0),
                 }
             )

@@ -316,8 +316,10 @@ class PredictionWriter:
 
         # Select next cameras (cycle through all)
         batch = []
+        last_inspected_idx = self._cursor
         for i in range(len(CAMERAS)):
             idx = (self._cursor + i) % len(CAMERAS)
+            last_inspected_idx = idx
             c = CAMERAS[idx]
             if c["id"] not in skipped and c["id"] not in self._skipped_this_session:
                 batch.append(c)
@@ -328,7 +330,8 @@ class PredictionWriter:
             logger.warning("[writer] All cameras in skip window, waiting...")
             return
 
-        self._cursor = (self._cursor + len(batch)) % len(CAMERAS)
+        # Advance cursor to the index immediately following the last inspected camera
+        self._cursor = (last_inspected_idx + 1) % len(CAMERAS)
 
         fetch_semaphore = asyncio.Semaphore(30)
         infer_semaphore = asyncio.Semaphore(2)  # Limit concurrent CPU inferences to protect API response latency

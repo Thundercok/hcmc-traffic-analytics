@@ -717,8 +717,57 @@ export default function CameraPopup({ camera, onClose }) {
             </div>
 
             {prediction.has_roi ? (
-              <div style={{ fontSize: 10, color: '#64748b', textAlign: 'center', background: '#f8fafc', padding: 5, borderRadius: 6 }}>
-                Intersection: density map ∩ mặt đường · {(prediction.roi_area_ratio * 100).toFixed(1)}% khung ảnh
+              <div style={{ 
+                display: 'flex', 
+                flexDirection: 'column', 
+                gap: '12px', 
+                background: '#f8fafc', 
+                padding: '14px', 
+                borderRadius: '8px', 
+                border: '1px solid #e2e8f0',
+                fontSize: '12px',
+                color: '#334155'
+              }}>
+                <div style={{ 
+                  fontWeight: 700, 
+                  color: '#1e293b', 
+                  textTransform: 'uppercase', 
+                  fontSize: '10px', 
+                  letterSpacing: '0.05em', 
+                  borderBottom: '1px solid #e2e8f0', 
+                  paddingBottom: '6px', 
+                  marginBottom: '2px' 
+                }}>
+                  Phân tích kỹ thuật phân đoạn (Segment Analytics)
+                </div>
+                
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '3px' }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                    <span style={{ fontWeight: 600, color: '#475569' }}>
+                      Road Mapping Ratio (mặt đường / khung ảnh)
+                    </span>
+                    <span style={{ fontWeight: 800, fontFamily: 'monospace', color: '#0f172a', fontSize: '13px' }}>
+                      {(prediction.roi_area_ratio * 100).toFixed(1)}%
+                    </span>
+                  </div>
+                  <div style={{ fontSize: '10px', color: '#64748b', fontFamily: 'monospace' }}>
+                    Formula: Area(ROI) / Area(Frame)
+                  </div>
+                </div>
+                
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '3px' }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                    <span style={{ fontWeight: 600, color: '#475569' }}>
+                      Congestion Index (Chỉ số ùn tắc PCU)
+                    </span>
+                    <span style={{ fontWeight: 800, fontFamily: 'monospace', color: '#ef4444', fontSize: '13px' }}>
+                      {prediction.roi_density_score != null ? `${prediction.roi_density_score.toFixed(1)}%` : '0.0%'}
+                    </span>
+                  </div>
+                  <div style={{ fontSize: '10px', color: '#64748b', fontFamily: 'monospace' }}>
+                    Formula: PCU / Capacity = (Cars*2.0 + Bikes*0.4) / (ROI * 45.0)
+                  </div>
+                </div>
               </div>
             ) : (
               <div className="camera-popup__hint-text">
