@@ -7,7 +7,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from .config import settings
-from .router import router
+from .routers import router, start_debug_scheduler, stop_debug_scheduler
 from .model_service import ZIPModelService
 from .prediction_writer import start_writer, stop_writer
 from .database import init_db_pool, close_db_pool, init_schema
@@ -75,7 +75,21 @@ async def lifespan(app: FastAPI):
             logger.warning(f"[startup] - Prediction writer failed to start: {e}")
             logger.warning("[startup] - Forecasting features will be unavailable.")
 
+    # Start periodic background analytics caching loop
+    try:
+        start_debug_scheduler(app)
+        logger.info("[startup] - Debug analytics scheduler started.")
+    except Exception as e:
+        logger.warning(f"[startup] - Debug analytics scheduler failed to start: {e}")
+
     yield
+
+    # Stop debug analytics scheduler
+    try:
+        stop_debug_scheduler()
+        logger.info("[shutdown] - Debug analytics scheduler stopped.")
+    except Exception as e:
+        logger.warning(f"[shutdown] - Failed to stop debug analytics scheduler: {e}")
 
     # Cleanup prediction writer
     if hasattr(app.state, "writer"):
