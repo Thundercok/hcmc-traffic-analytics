@@ -9,7 +9,7 @@ logger = logging.getLogger("import_rois")
 
 async def import_rois():
     await init_db_pool()
-    pool = get_pool()
+    pool = await get_pool()
     
     # Check if file is at /app/camera_rois_backup.json (Docker volume) or local relative path
     docker_path = "/app/camera_rois_backup.json"

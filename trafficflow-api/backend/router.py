@@ -32,8 +32,9 @@ from .schemas import (
     ForecastResponse,
     CameraRoiRequest,
     CameraRoiResponse,
+    WeatherReportCreate,
+    WeatherReportResponse,
 )
-from .forecast_service import get_forecaster
 from .cameras import (
     CAMERAS,
     get_camera_by_id,
@@ -44,6 +45,7 @@ from .cameras import (
 from .model_service import ZIPModelService
 from .prediction_cache import PredictionCache
 from .config import settings
+
 
 logger = logging.getLogger("trafficflow.router")
 
@@ -1158,52 +1160,6 @@ async def proxy_camera_image(request: Request, camera_id: str):
     )
 
 
-# ============================================================
-# FORECAST ENDPOINTS (Prediction from historical data)
-# ============================================================
-
-
-@router.get(
-    "/forecast/{camera_id}",
-    response_model=ForecastResponse,
-    summary="Predict Traffic Future",
-    description="Predict traffic density for next 15/30/60 minutes based on 30-minute history.",
-)
-async def get_traffic_forecast(camera_id: str):
-    """
-    [get_traffic_forecast] Dự đoán giao thông tương lai dựa trên lịch sử 30 phút.
-
-    Sử dụng:
-    - Weighted Moving Average
-    - Trend detection (linear regression)
-    - Time-based features (rush hour patterns)
-
-    Yêu cầu: Camera phải có ít nhất 3 điểm dữ liệu trong 30 phút qua.
-    """
-    camera = get_camera_by_id(camera_id)
-    if camera is None:
-        raise HTTPException(status_code=404, detail=f"Camera ID not found: {camera_id}")
-
-    forecaster = get_forecaster()
-    result = await forecaster.predict(camera_id)
-
-    if result is None:
-        raise HTTPException(
-            status_code=503,
-            detail=f"Not enough history data for camera {camera_id}. "
-            "Need at least 3 prediction points in the last 30 minutes.",
-        )
-
-    return ForecastResponse(
-        camera_id=camera_id,
-        timestamp=datetime.now(),
-        history_points=result["history_points"],
-        current=result["current"],
-        statistics=result["statistics"],
-        forecasts=result["forecasts"],
-        time_features=result["time_features"],
-    )
-
 
 # ============================================================
 # DEBUG ENDPOINT - System Status Dashboard
@@ -1856,3 +1812,46 @@ async def list_camera_ids(request: Request):
     except Exception as e:
         logger.warning(f"[list_camera_ids] error: {e}")
         return {"cameras": [], "error": str(e)}
+
+
+@router.post(
+    "/weather/report",
+    response_model=WeatherReportResponse,
+    summary="Submit a Crowdsourced Weather Report",
+    description="Allows users to submit a real-time weather report (rain, flooding, sun) for their location."
+)
+async def submit_weather_report(payload: WeatherReportCreate):
+    """[submit_weather_report] Create and store a new crowdsourced weather report."""
+    from .database import create_weather_report
+    try:
+        report = await create_weather_report(
+            lat=payload.lat,
+            lng=payload.lng,
+            weather_state=payload.weather_state,
+            rain_intensity=payload.rain_intensity,
+            flood_depth_cm=payload.flood_depth_cm,
+            reporter_name=payload.reporter_name,
+            notes=payload.notes
+        )
+        return report
+    except Exception as e:
+        logger.error(f"Failed to save weather report: {e}", exc_info=True)
+        raise HTTPException(status_code=500, detail=f"Database error: {str(e)}")
+
+
+@router.get(
+    "/weather/reports",
+    response_model=list[WeatherReportResponse],
+    summary="Get Active Weather Reports",
+    description="Retrieve all crowdsourced weather reports submitted in the last N hours."
+)
+async def get_weather_reports(hours: int = Query(4, ge=1, le=24)):
+    """[get_weather_reports] Get active weather reports."""
+    from .database import get_active_weather_reports
+    try:
+        reports = await get_active_weather_reports(hours_limit=hours)
+        return reports
+    except Exception as e:
+        logger.error(f"Failed to fetch weather reports: {e}", exc_info=True)
+        raise HTTPException(status_code=500, detail=f"Database error: {str(e)}")
+

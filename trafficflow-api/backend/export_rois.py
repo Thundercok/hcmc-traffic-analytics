@@ -14,7 +14,7 @@ logger = logging.getLogger("export_rois")
 
 async def export_rois():
     await init_db_pool()
-    pool = get_pool()
+    pool = await get_pool()
     
     # Ghi thẳng file backup ra thư mục gốc /app của container
     output_file = "/app/camera_rois_backup.json"

@@ -13,6 +13,7 @@ import {
 import L from "leaflet";
 import { useDebug } from "../contexts/DebugContext";
 import CameraPopup from "./CameraPopup";
+import WeatherReportForm from "./WeatherReportForm";
 import "leaflet/dist/leaflet.css";
 
 // Fix Leaflet default icon issue in bundlers
@@ -608,8 +609,50 @@ function MapStyleSwitcher({ mapStyle, onChange }) {
   );
 }
 
-// ── DroppedPin: shows popup with address + origin/destination buttons ──
-function DroppedPin({ position, onSetOrigin, onSetDestination, onClose }) {
+// ── Weather icon helper ──
+const getWeatherStateIcon = (weatherState, rainIntensity, floodDepth) => {
+  let emoji = "☀️";
+  let color = "#eab308"; // sunny yellow
+  
+  if (weatherState === "rainy") {
+    emoji = "🌧️";
+    color = "#3b82f6"; // blue
+  } else if (weatherState === "flooded") {
+    emoji = "🌊";
+    color = "#ef4444"; // red
+  } else if (weatherState === "cloudy") {
+    emoji = "☁️";
+    color = "#64748b"; // gray
+  }
+
+  const size = 32;
+  const radius = size / 2;
+
+  return L.divIcon({
+    className: "",
+    html: `<div style="
+      width: ${size}px; 
+      height: ${size}px; 
+      border: 2px solid ${color}; 
+      background: white; 
+      border-radius: 50%; 
+      display: flex; 
+      align-items: center; 
+      justify-content: center; 
+      font-size: 18px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+      cursor: pointer;
+    ">
+      ${emoji}
+    </div>`,
+    iconSize: [size, size],
+    iconAnchor: [radius, radius],
+    popupAnchor: [0, -radius],
+  });
+};
+
+// ── DroppedPin: shows popup with address + origin/destination/weather report buttons ──
+function DroppedPin({ position, onSetOrigin, onSetDestination, onOpenReportForm, onClose }) {
   const [address, setAddress] = useState("Đang tải địa chỉ...");
 
   useEffect(() => {
@@ -638,7 +681,7 @@ function DroppedPin({ position, onSetOrigin, onSetDestination, onClose }) {
     display: "flex",
     alignItems: "center",
     gap: 4,
-    flex: 1,
+    flex: "1 1 calc(50% - 4px)",
     justifyContent: "center",
   };
 
@@ -649,7 +692,7 @@ function DroppedPin({ position, onSetOrigin, onSetDestination, onClose }) {
         closeButton={true}
         eventHandlers={{ remove: onClose }}
       >
-        <div style={{ minWidth: 180 }}>
+        <div style={{ minWidth: 200 }}>
           <div
             style={{
               fontSize: 12,
@@ -661,7 +704,7 @@ function DroppedPin({ position, onSetOrigin, onSetDestination, onClose }) {
           >
             📍 {address}
           </div>
-          <div style={{ display: "flex", gap: 6 }}>
+          <div style={{ display: "flex", gap: 6, flexWrap: "wrap" }}>
             <button
               style={{ ...btnStyle, background: "#3b82f6", color: "white" }}
               onClick={() => onSetOrigin(position, address)}
@@ -673,6 +716,12 @@ function DroppedPin({ position, onSetOrigin, onSetDestination, onClose }) {
               onClick={() => onSetDestination(position, address)}
             >
               Đến đây
+            </button>
+            <button
+              style={{ ...btnStyle, background: "#10b981", color: "white", flex: "1 1 100%" }}
+              onClick={() => onOpenReportForm(position, address)}
+            >
+              📢 Báo cáo thời tiết
             </button>
           </div>
         </div>
@@ -951,15 +1000,19 @@ const TrafficMap = React.memo(function TrafficMap({
   onRouteTraffic,
   travelMode,
   sliderValue,
+  weatherReports,
+  onReportSubmitted,
 }) {
   const [liveCameras, setLiveCameras] = React.useState([]);
   const [droppedPin, setDroppedPin] = React.useState(null);
+  const [activeReportPin, setActiveReportPin] = React.useState(null);
   const [mapStyle, setMapStyle] = React.useState(MAP_STYLES.voyager);
   const { logRequest, logResponse, logError, logInfo, startAnalysis, endAnalysis } = useDebug();
   const mapRef = React.useRef(null);
   const cameraRefs = React.useRef({});
   const [selectedCamera, setSelectedCamera] = React.useState(null);
   const [hideMapped, setHideMapped] = React.useState(false);
+
 
   // Sync ROI change events to map markers dynamically
   React.useEffect(() => {
@@ -1145,6 +1198,7 @@ const TrafficMap = React.memo(function TrafficMap({
             position={droppedPin}
             onSetOrigin={handlePinOrigin}
             onSetDestination={handlePinDestination}
+            onOpenReportForm={(pos, addr) => setActiveReportPin({ position: pos, address: addr })}
             onClose={() => setDroppedPin(null)}
           />
         )}
@@ -1174,6 +1228,46 @@ const TrafficMap = React.memo(function TrafficMap({
             onRouteTraffic={onRouteTraffic}
           />
         )}
+
+        {/* Crowdsourced weather reports */}
+        {weatherReports?.map((report) => (
+          <Marker
+            key={`weather-${report.id}`}
+            position={[report.lat, report.lng]}
+            icon={getWeatherStateIcon(report.weather_state, report.rain_intensity, report.flood_depth_cm)}
+          >
+            <Popup>
+              <div style={{ minWidth: 160 }}>
+                <div style={{ fontWeight: 700, fontSize: 13, marginBottom: 4, color: "#1e293b" }}>
+                  {report.weather_state === "sunny" ? "☀️ Trời nắng" :
+                   report.weather_state === "cloudy" ? "☁️ Nhiều mây" :
+                   report.weather_state === "rainy" ? "🌧️ Trời mưa" : "🌊 Ngập lụt"}
+                </div>
+                {report.weather_state === "rainy" && (
+                  <div style={{ fontSize: 12, color: "#475569" }}>
+                    Cường độ: {report.rain_intensity === "heavy" ? "Mưa to" : "Mưa nhỏ"}
+                  </div>
+                )}
+                {report.weather_state === "flooded" && (
+                  <div style={{ fontSize: 12, color: "#ef4444", fontWeight: 600 }}>
+                    Độ sâu ngập: {report.flood_depth_cm} cm
+                  </div>
+                )}
+                <div style={{ fontSize: 11, color: "#64748b", marginTop: 4 }}>
+                  Bởi: {report.reporter_name}
+                </div>
+                {report.notes && (
+                  <div style={{ fontSize: 11, color: "#334155", fontStyle: "italic", borderTop: "1px solid #e2e8f0", marginTop: 4, paddingTop: 4 }}>
+                    "{report.notes}"
+                  </div>
+                )}
+                <div style={{ fontSize: 10, color: "#94a3b8", marginTop: 4 }}>
+                  {new Date(report.timestamp).toLocaleTimeString("vi-VN", { hour: '2-digit', minute: '2-digit' })}
+                </div>
+              </div>
+            </Popup>
+          </Marker>
+        ))}
         
         {/* Direct markers without clustering */}
         {renderedMarkers}
@@ -1187,6 +1281,16 @@ const TrafficMap = React.memo(function TrafficMap({
             onClose={() => setSelectedCamera(null)}
           />
         </div>
+      )}
+
+      {/* Crowdsourced weather report form modal */}
+      {activeReportPin && (
+        <WeatherReportForm
+          position={activeReportPin.position}
+          address={activeReportPin.address}
+          onClose={() => setActiveReportPin(null)}
+          onReportSubmitted={onReportSubmitted}
+        />
       )}
     </div>
   );

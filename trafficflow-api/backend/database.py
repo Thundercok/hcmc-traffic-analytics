@@ -171,6 +171,28 @@ async def init_schema():
         except Exception as e:
             logger.error(f"[db] Failed to initialize camera_rois table: {e}")
 
+        # Create weather_reports table
+        try:
+            await conn.execute(
+                """
+                CREATE TABLE IF NOT EXISTS weather_reports (
+                    id BIGSERIAL PRIMARY KEY,
+                    lat FLOAT NOT NULL,
+                    lng FLOAT NOT NULL,
+                    weather_state VARCHAR(20) NOT NULL,
+                    rain_intensity VARCHAR(20) DEFAULT 'none',
+                    flood_depth_cm INTEGER DEFAULT 0,
+                    reporter_name VARCHAR(100) DEFAULT 'Cộng đồng',
+                    notes TEXT,
+                    timestamp TIMESTAMPTZ NOT NULL DEFAULT NOW()
+                )
+                """
+            )
+            await conn.execute("CREATE INDEX IF NOT EXISTS idx_weather_reports_timestamp ON weather_reports (timestamp DESC)")
+            logger.info("[db] weather_reports table initialized.")
+        except Exception as e:
+            logger.error(f"[db] Failed to initialize weather_reports table: {e}")
+
         logger.info("[db] Schema initialized successfully.")
 
 
@@ -327,3 +349,50 @@ async def get_all_camera_rois_with_meta() -> dict[str, dict]:
                 poly = val
             res[r["camera_id"]] = {"roi_polygon": poly, "is_auto": is_auto}
         return res
+
+
+async def create_weather_report(
+    lat: float,
+    lng: float,
+    weather_state: str,
+    rain_intensity: str = "none",
+    flood_depth_cm: int = 0,
+    reporter_name: str = "Cộng đồng",
+    notes: str = None
+) -> dict:
+    """Create a crowdsourced weather report."""
+    pool = await get_pool()
+    async with pool.acquire() as conn:
+        row = await conn.fetchrow(
+            """
+            INSERT INTO weather_reports 
+                (lat, lng, weather_state, rain_intensity, flood_depth_cm, reporter_name, notes, timestamp)
+            VALUES ($1, $2, $3, $4, $5, $6, $7, NOW())
+            RETURNING id, lat, lng, weather_state, rain_intensity, flood_depth_cm, reporter_name, notes, timestamp
+            """,
+            lat,
+            lng,
+            weather_state,
+            rain_intensity,
+            flood_depth_cm,
+            reporter_name,
+            notes,
+        )
+        return dict(row)
+
+
+async def get_active_weather_reports(hours_limit: int = 4) -> list[dict]:
+    """Get active weather reports within the last N hours."""
+    pool = await get_pool()
+    async with pool.acquire() as conn:
+        rows = await conn.fetch(
+            """
+            SELECT id, lat, lng, weather_state, rain_intensity, flood_depth_cm, reporter_name, notes, timestamp
+            FROM weather_reports
+            WHERE timestamp > NOW() - INTERVAL '1 hour' * $1
+            ORDER BY timestamp DESC
+            """,
+            hours_limit
+        )
+        return [dict(row) for row in rows]
+

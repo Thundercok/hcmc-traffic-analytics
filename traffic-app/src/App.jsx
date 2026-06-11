@@ -107,12 +107,32 @@ export default function App() {
   }
 
   // Main App
+  const [weatherReports, setWeatherReports] = useState([]);
   const [sliderValue, setSliderValue] = useState(0);
   const [originObj, setOriginObj] = useState(null);
   const [destObj, setDestObj] = useState(null);
   const [originText, setOriginText] = useState("");
   const [isNavigating, setIsNavigating] = useState(false);
   const [travelMode, setTravelMode] = useState("car");
+
+  const fetchWeatherReports = useCallback(async () => {
+    try {
+      const apiUrl = import.meta.env.VITE_API_URL || "/api";
+      const response = await fetch(`${apiUrl}/weather/reports?hours=4`);
+      if (response.ok) {
+        const data = await response.json();
+        setWeatherReports(data);
+      }
+    } catch (err) {
+      console.error("Lỗi lấy báo cáo thời tiết:", err);
+    }
+  }, []);
+
+  useEffect(() => {
+    fetchWeatherReports();
+    const interval = setInterval(fetchWeatherReports, 30000);
+    return () => clearInterval(interval);
+  }, [fetchWeatherReports]);
 
   const [routeData, setRouteData] = useState({
     segments: [],
@@ -242,6 +262,8 @@ export default function App() {
         onRouteTraffic={handleRouteTraffic}
         travelMode={travelMode}
         sliderValue={sliderValue}
+        weatherReports={weatherReports}
+        onReportSubmitted={fetchWeatherReports}
       />
 
       {!isNavigating && (

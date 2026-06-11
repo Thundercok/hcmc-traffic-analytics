@@ -317,3 +317,30 @@ class CameraRoiResponse(BaseModel):
     camera_id: str
     roi_polygon: Optional[list[list[float]]] = Field(None, description="List of normalized [x, y] coordinates")
     is_auto: Optional[bool] = Field(False, description="Whether this ROI was automatically generated")
+
+
+class WeatherReportCreate(BaseModel):
+    """Schema for submitting a crowdsourced weather report."""
+
+    lat: float = Field(..., description="Latitude of the report")
+    lng: float = Field(..., description="Longitude of the report")
+    weather_state: str = Field(..., description="Weather status: sunny, cloudy, rainy, flooded")
+    rain_intensity: Optional[str] = Field("none", description="Precipitation level: none, light, heavy")
+    flood_depth_cm: Optional[int] = Field(0, description="Estimated flooding depth in cm")
+    reporter_name: Optional[str] = Field("Cộng đồng", description="Name of the reporter")
+    notes: Optional[str] = Field(None, description="Optional extra text details")
+
+
+class WeatherReportResponse(BaseModel):
+    """Schema for returning a weather report."""
+
+    id: int
+    lat: float
+    lng: float
+    weather_state: str
+    rain_intensity: str
+    flood_depth_cm: int
+    reporter_name: str
+    notes: Optional[str] = None
+    timestamp: datetime
+

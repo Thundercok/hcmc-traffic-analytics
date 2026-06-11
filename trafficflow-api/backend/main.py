@@ -10,6 +10,7 @@ from .config import settings
 from .router import router
 from .model_service import ZIPModelService
 from .prediction_writer import start_writer, stop_writer
+from .database import init_db_pool, close_db_pool, init_schema
 
 logging.basicConfig(
     level=logging.INFO,
@@ -43,6 +44,7 @@ async def lifespan(app: FastAPI):
             "Predictions will fail until a model is loaded."
         )
 
+    # Setup HTTP client
     transport = httpx.AsyncHTTPTransport(retries=5)
     app.state.http_client = httpx.AsyncClient(
         transport=transport,
@@ -52,14 +54,20 @@ async def lifespan(app: FastAPI):
     )
     logger.info("[startup] - Shared HTTP client created.")
 
+    # Initialize Database pool and schema on startup
+    try:
+        await init_db_pool()
+        await init_schema()
+        logger.info("[startup] - Database pool and schema initialized.")
+    except Exception as db_err:
+        logger.error(f"[startup] - Database initialization failed: {db_err}", exc_info=True)
+
     # Start prediction writer - continuous recording every 15 seconds
     # Set WRITER_INTERVAL_SECONDS=0 to disable, or set custom interval
     writer_interval = int(os.getenv("WRITER_INTERVAL_SECONDS", "15"))
     if writer_interval > 0:
         try:
-            from .prediction_writer import start_writer as _start_writer
-
-            app.state.writer = await _start_writer(interval_seconds=writer_interval)
+            app.state.writer = await start_writer(interval_seconds=writer_interval)
             logger.info(
                 f"[startup] - Prediction writer started (interval: {writer_interval}s)"
             )
@@ -69,22 +77,22 @@ async def lifespan(app: FastAPI):
 
     yield
 
-    # Cleanup
-    from .prediction_writer import stop_writer as _stop_writer
-
+    # Cleanup prediction writer
     if hasattr(app.state, "writer"):
-        await _stop_writer()
-    await app.state.http_client.aclose()
+        await stop_writer()
 
+    # Cleanup http client
+    await app.state.http_client.aclose()
+    
     # Close database pool
     try:
-        from .database import close_db_pool
         await close_db_pool()
         logger.info("[shutdown] - Database pool closed.")
     except Exception as db_err:
         logger.warning(f"[shutdown] - Failed to close database pool: {db_err}")
 
     logger.info("[shutdown] Cleaned up resources.")
+
 
 
 app = FastAPI(

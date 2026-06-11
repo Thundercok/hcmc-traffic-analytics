@@ -168,7 +168,7 @@ class LightConvDownsample(nn.Module):
         # shortcut
         out += self.downsample(identity)
         out = self.act3(out)
-        return x
+        return out
     
 
 class LighterConvDownsample(nn.Module):
