@@ -92,8 +92,8 @@ class TestRoiLogic(unittest.TestCase):
         os._exit(0)
 
     def test_predict_camera_with_db_roi(self):
-        # Trần Quang Khải - Trần Khắc Chân
-        camera_id = "662b86c41afb9c00172dd31c"
+        # Huỳnh Tấn Phát - Phạm Hữu Lầu
+        camera_id = "63bd1f21bfd3d90017ec3d04"
         print(f"Testing GET /api/predict/camera/{camera_id}...")
         
         roi_polygon = [[0.2, 0.2], [0.8, 0.2], [0.8, 0.8], [0.2, 0.8]]

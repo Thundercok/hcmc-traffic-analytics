@@ -4377,6 +4377,9 @@ CAMERAS = [
     },
 ]
 
+# Isolate application to only Quận 7 and Huyện Nhà Bè
+CAMERAS = [cam for cam in CAMERAS if cam["district"] in ("Quận 7", "Huyện Nhà Bè")]
+
 
 # ──── Pre-built indexes for O(1) lookups (V-18) ────
 _CAMERA_INDEX: dict[str, dict] = {cam["id"]: cam for cam in CAMERAS}

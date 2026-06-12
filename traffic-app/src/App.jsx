@@ -9,6 +9,7 @@ import {
   LuRuler,
 } from "react-icons/lu";
 import ControlPanel from "./components/ControlPanel";
+import AdminPanel from "./components/AdminPanel";
 import TrafficMap from "./components/TrafficMap";
 import DebugPage from "./pages/DebugPage";
 import DashboardPage from "./pages/DashboardPage";
@@ -76,6 +77,7 @@ const NavigationOverlay = React.memo(function NavigationOverlay({
 export default function App() {
   // Client-side routing
   const [page, setPage] = useState(window.location.pathname === "/dashboard" ? "dashboard" : "main");
+  const [isAdminMode, setIsAdminMode] = useState(false);
 
   useEffect(() => {
     const handlePopState = () => {
@@ -264,28 +266,47 @@ export default function App() {
         sliderValue={sliderValue}
         weatherReports={weatherReports}
         onReportSubmitted={fetchWeatherReports}
+        isAdminMode={isAdminMode}
       />
+
+      {/* Mode Toggle Switch */}
+      <div className="admin-toggle-wrap">
+        <button
+          onClick={() => setIsAdminMode(!isAdminMode)}
+          className={`admin-toggle-btn ${isAdminMode ? "admin-toggle-btn--admin" : ""}`}
+          title={isAdminMode ? "Chuyển sang Chế độ Bản đồ" : "Chuyển sang Chế độ Quản trị"}
+        >
+          <span className="led-indicator"></span>
+          <span className="font-label-md" style={{ letterSpacing: "0.5px" }}>
+            {isAdminMode ? "CHẾ ĐỘ QUẢN TRỊ" : "CHẾ ĐỘ NGƯỜI DÙNG"}
+          </span>
+        </button>
+      </div>
 
       {!isNavigating && (
         <>
-          <ControlPanel
-            originText={originText}
-            setOriginText={setOriginText}
-            destText={destText}
-            onOriginSelect={setOriginObj}
-            onDestinationSelect={setDestObj}
-            onSwapLocations={handleSwapLocations}
-            sliderValue={sliderValue}
-            onSliderChange={setSliderValue}
-            eta={routeData.eta}
-            distance={routeData.distance}
-            trafficLevel={routeData.trafficLevel}
-            navigationSteps={routeData.steps}
-            onStartNavigation={handleStartNavigation}
-            travelMode={travelMode}
-            onTravelModeChange={setTravelMode}
-            routeTraffic={routeTraffic}
-          />
+          {isAdminMode ? (
+            <AdminPanel onNavigateToDashboard={() => navigateTo("/dashboard")} />
+          ) : (
+            <ControlPanel
+              originText={originText}
+              setOriginText={setOriginText}
+              destText={destText}
+              onOriginSelect={setOriginObj}
+              onDestinationSelect={setDestObj}
+              onSwapLocations={handleSwapLocations}
+              sliderValue={sliderValue}
+              onSliderChange={setSliderValue}
+              eta={routeData.eta}
+              distance={routeData.distance}
+              trafficLevel={routeData.trafficLevel}
+              navigationSteps={routeData.steps}
+              onStartNavigation={handleStartNavigation}
+              travelMode={travelMode}
+              onTravelModeChange={setTravelMode}
+              routeTraffic={routeTraffic}
+            />
+          )}
 
           <button
             onClick={handleFloatingGPSClick}
@@ -294,7 +315,6 @@ export default function App() {
           >
             <LuLocateFixed size={20} />
           </button>
-
         </>
       )}
 

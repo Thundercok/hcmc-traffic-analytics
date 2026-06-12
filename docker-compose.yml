@@ -38,7 +38,7 @@ services:
   db:
     image: timescale/timescaledb:latest-pg15
     ports:
-      - "5432:5432"
+      - "5435:5432"
     environment:
       - POSTGRES_USER=trafficflow
       - POSTGRES_PASSWORD=trafficpass123
