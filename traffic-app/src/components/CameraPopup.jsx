@@ -94,6 +94,7 @@ function TrendSparkline({ history }) {
 export default function CameraPopup({ camera, onClose }) {
   const [imageUrl, setImageUrl] = useState(getCameraImageUrl(camera.id));
   const [prediction, setPrediction] = useState(null);
+  const [floodData, setFloodData] = useState(null);
   const [history, setHistory] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -640,6 +641,40 @@ export default function CameraPopup({ camera, onClose }) {
             </button>
           )}
         </div>
+
+        
+            {/* 🌊 Flood Severity & Vehicle Advice Widget */}
+            {floodData?.flood && (
+              <div style={{
+                background: floodData.flood.severity_code === 2 ? '#fef2f2' : floodData.flood.severity_code === 1 ? '#eff6ff' : '#f0fdf4',
+                borderRadius: 8,
+                border: `1px solid ${floodData.flood.severity_code === 2 ? '#fca5a5' : floodData.flood.severity_code === 1 ? '#93c5fd' : '#86efac'}`,
+                padding: '10px 12px',
+                display: 'flex',
+                flexDirection: 'column',
+                gap: 6
+              }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                  <span style={{ fontSize: 11, fontWeight: 800, color: floodData.flood.severity_code === 2 ? '#991b1b' : floodData.flood.severity_code === 1 ? '#1e40af' : '#166534', letterSpacing: '0.05em' }}>
+                    🌊 TRIỀU CƯỜNG & NGẬP NƯỚC {floodData.is_nhabe_hotspot ? '(RỐN NGẬP NHÀ BÈ)' : ''}
+                  </span>
+                  <span style={{ fontSize: 10, fontWeight: 700, padding: '2px 6px', borderRadius: 4, background: '#ffffff', color: '#334155' }}>
+                    {(floodData.flood.confidence * 100).toFixed(0)}% tin cậy
+                  </span>
+                </div>
+                <div style={{ fontSize: 13, fontWeight: 800, color: floodData.flood.severity_code === 2 ? '#dc2626' : floodData.flood.severity_code === 1 ? '#2563eb' : '#16a34a' }}>
+                  {floodData.flood.severity_display}
+                </div>
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 6, marginTop: 2, fontSize: 11 }}>
+                  <div style={{ background: '#ffffff', padding: '6px 8px', borderRadius: 6, border: '1px solid #e2e8f0' }}>
+                    <strong style={{ color: '#0f172a' }}>🏍️ Xe máy:</strong> <span style={{ color: '#334155' }}>{floodData.flood.motorbike_advice}</span>
+                  </div>
+                  <div style={{ background: '#ffffff', padding: '6px 8px', borderRadius: 6, border: '1px solid #e2e8f0' }}>
+                    <strong style={{ color: '#0f172a' }}>🚗 Ô tô:</strong> <span style={{ color: '#334155' }}>{floodData.flood.car_advice}</span>
+                  </div>
+                </div>
+              </div>
+            )}
 
         {/* Banner Alert for Drawing Mode */}
         {isDrawing && (

@@ -10,6 +10,7 @@ from .predict import router as predict_router
 from .congestion import router as congestion_router
 from .weather import router as weather_router
 from .debug import router as debug_router
+from .flood import router as flood_router
 from .debug import start_debug_scheduler, stop_debug_scheduler
 
 # Core router for TrafficFlow API
@@ -40,3 +41,5 @@ router.include_router(predict_router)
 router.include_router(congestion_router)
 router.include_router(weather_router)
 router.include_router(debug_router)
+router.include_router(flood_router, prefix="/flood", tags=["Flood Severity"])
+

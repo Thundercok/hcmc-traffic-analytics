@@ -9,6 +9,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from .config import settings
 from .routers import router, start_debug_scheduler, stop_debug_scheduler
 from .model_service import ZIPModelService
+from .flood_service import FloodModelService
 from .prediction_writer import start_writer, stop_writer
 from .database import init_db_pool, close_db_pool, init_schema
 
@@ -34,15 +35,28 @@ async def lifespan(app: FastAPI):
                 device=settings.zip_model_device,
                 input_size=settings.zip_input_size,
             )
-            logger.info("[startup] - Model loaded. Server ready for predictions.")
+            logger.info("[startup] - ZIP Model loaded. Server ready for predictions.")
         except Exception as e:
-            logger.error(f"[startup] Failed to load model: {e}", exc_info=True)
-            logger.warning("[startup] Server will start without model.")
+            logger.error(f"[startup] Failed to load ZIP model: {e}", exc_info=True)
+            logger.warning("[startup] Server will start without ZIP model.")
     else:
         logger.warning(
-            f"[startup] - Model file not found at {model_path}. "
+            f"[startup] - ZIP Model file not found at {model_path}. "
             "Predictions will fail until a model is loaded."
         )
+
+    # Initialize Flood Severity Model Service (EfficientNet-B0)
+    flood_path = os.path.normpath(settings.flood_model_path)
+    try:
+        f_svc = FloodModelService.get_instance()
+        f_svc.load_model(
+            model_path=flood_path,
+            device=settings.flood_model_device,
+            confidence_gate=settings.flood_confidence_gate,
+        )
+        logger.info(f"[startup] - Flood Severity Model Service initialized (path: {flood_path}).")
+    except Exception as e:
+        logger.warning(f"[startup] - Flood model service failed to initialize: {e}")
 
     # Setup HTTP client
     transport = httpx.AsyncHTTPTransport(retries=5)

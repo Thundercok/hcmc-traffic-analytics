@@ -27,6 +27,16 @@ class Settings(BaseSettings):
     zip_input_size: int = 320
     vehicle_split_motorbike_ratio: float = 0.7
 
+    # Flood Severity Prediction Model (EfficientNet-B0)
+    flood_model_path: str = os.path.join(
+        os.path.dirname(__file__),
+        "models",
+        "flood_model.pth",
+    )
+    flood_model_device: str = "cpu"
+    flood_input_size: int = 224
+    flood_confidence_gate: float = 0.65
+
     # Congestion Detection (Rule-based, no training)
     congestion_enabled: bool = True
     congestion_min_frames_stable: int = 3

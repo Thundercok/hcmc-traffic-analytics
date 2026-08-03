@@ -344,3 +344,62 @@ class WeatherReportResponse(BaseModel):
     notes: Optional[str] = None
     timestamp: datetime
 
+
+# ── Flood Severity Prediction Schemas ──
+
+class FloodProbabilities(BaseModel):
+    Dry: float = Field(..., description="Probability of dry road surface")
+    Wet: float = Field(..., description="Probability of wet/shallow puddle road")
+    Flooded: float = Field(..., description="Probability of deep tidal flooding (>=15cm)")
+
+
+class FloodPredictionResult(BaseModel):
+    """Output for flood severity prediction."""
+
+    severity_code: int = Field(..., description="0: Dry, 1: Wet, 2: Flooded")
+    severity_label: str = Field(..., description="Dry / Wet / Flooded")
+    severity_display: str = Field(..., description="Display label in Vietnamese")
+    confidence: float = Field(..., description="Confidence score between 0 and 1")
+    raw_prediction: int = Field(..., description="Raw model prediction code before gating")
+    is_gated_to_dry: bool = Field(..., description="True if Wet prediction was gated to Dry")
+    motorbike_advice: str = Field(..., description="Passability advice for motorbikes")
+    car_advice: str = Field(..., description="Passability advice for automobiles")
+    probabilities: FloodProbabilities
+    status: str = Field("success", description="Inference status")
+
+
+class FloodCameraResponse(BaseModel):
+    """Response for GET /api/flood/camera/{cam_id}."""
+
+    camera_id: str
+    camera_name: str
+    district: str
+    is_nhabe_hotspot: bool
+    flood: FloodPredictionResult
+    timestamp: datetime
+
+
+class FloodHotspotItem(BaseModel):
+    camera_id: str
+    camera_name: str
+    district: str
+    matched_keyword: Optional[str] = None
+    severity_code: int
+    severity_label: str
+    severity_display: str
+    confidence: float
+    motorbike_advice: str
+    car_advice: str
+
+
+class FloodHotspotSummary(BaseModel):
+    """Summary response for all Nhà Bè & South Corridor flood hotspot cameras."""
+
+    total_hotspots: int
+    dry_count: int
+    wet_count: int
+    flooded_count: int
+    hotspots: list[FloodHotspotItem]
+    timestamp: datetime
+
+
