@@ -57,6 +57,17 @@ class Settings(BaseSettings):
     )
     camera_fetch_timeout: int = 10
 
+    # Background writer and historical data
+    writer_interval_seconds: int = 15
+    writer_batch_size: int = 100
+    data_retention_minutes: int = 7 * 24 * 60
+    camera_offline_skip_minutes: int = 30
+
+    # Forecasting and data deficiency handling
+    forecast_history_minutes: int = 7 * 24 * 60
+    forecast_min_history_points: int = 12
+    data_coverage_window_hours: int = 24
+
     # CORS
     cors_origins: list[str] = ["*"]
 

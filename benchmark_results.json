@@ -1,0 +1,18 @@
+{
+  "device": "MPS",
+  "iterations": 50,
+  "cold_start_total_ms": 6000.67,
+  "yolo_load_time_ms": 30.28,
+  "yolo_infer_mean_ms": 35.86,
+  "yolo_infer_std_ms": 53.44,
+  "flood_infer_mean_ms": 1.28,
+  "flood_infer_std_ms": 0.39,
+  "postprocess_mean_ms": 0.52,
+  "total_latency_mean_ms": 37.72,
+  "total_latency_std_ms": 53.97,
+  "total_latency_min_ms": 23.34,
+  "total_latency_max_ms": 412.71,
+  "total_latency_p50_ms": 28.46,
+  "total_latency_p95_ms": 40.12,
+  "throughput_fps": 26.51
+}

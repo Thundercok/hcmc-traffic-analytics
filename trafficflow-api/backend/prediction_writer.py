@@ -29,13 +29,13 @@ CAMERA_FETCH_HEADERS = {
 # Error page detection thresholds
 ERROR_BRIGHTNESS_MIN = 0.90
 ERROR_SIZE_MIN = 2000
-ERROR_VARNCE_MAX = 0.0005
+ERROR_VARIANCE_MAX = 0.0005
 
 # Skip offline cameras for 30 minutes
-OFFLINE_SKIP_HOURS = 0.5
+OFFLINE_SKIP_MINUTES = settings.camera_offline_skip_minutes
 
 # Data retention — keep only last 60 minutes
-DATA_RETENTION_MINUTES = 60
+DATA_RETENTION_MINUTES = settings.data_retention_minutes
 CLEANUP_INTERVAL_BATCHES = 10  # run cleanup every 10 batches
 
 
@@ -69,7 +69,7 @@ def _is_error_image(image_bytes: bytes) -> tuple[bool, str]:
         brightness = arr.mean()
         variance = arr.var()
 
-        if brightness > ERROR_BRIGHTNESS_MIN and variance < ERROR_VARNCE_MAX:
+        if brightness > ERROR_BRIGHTNESS_MIN and variance < ERROR_VARIANCE_MAX:
             return True, "flat_bright_page"
 
         # Check for red error boxes (very small red regions in mostly white image)
@@ -135,11 +135,16 @@ def _heuristic_predict(image_bytes: bytes) -> dict:
         else:
             level = "severe"
 
+        quality_score = max(0.25, min(0.95, float((texture_far + texture_near) / 2)))
+
         return {
             "total_count": total,
             "car_count": car,
             "motorbike_count": moto,
             "density_level": level,
+            "confidence": round(0.45 + quality_score * 0.35, 3),
+            "data_source": "live_heuristic",
+            "quality_score": round(quality_score, 3),
         }
 
     except Exception as e:
@@ -149,6 +154,9 @@ def _heuristic_predict(image_bytes: bytes) -> dict:
             "car_count": 5,
             "motorbike_count": 25,
             "density_level": "moderate",
+            "confidence": 0.25,
+            "data_source": "fallback_default",
+            "quality_score": 0.2,
         }
 
 
@@ -236,7 +244,7 @@ class PredictionWriter:
 
     async def _log_error(self, camera_id: str, error_type: str):
         pool = await get_pool()
-        expires = datetime.now(timezone.utc) + timedelta(hours=OFFLINE_SKIP_HOURS)
+        expires = datetime.now(timezone.utc) + timedelta(minutes=OFFLINE_SKIP_MINUTES)
         async with pool.acquire() as conn:
             await conn.execute(
                 "INSERT INTO camera_error_log(camera_id, error_type, expires_at) VALUES($1, $2, $3)",
@@ -251,11 +259,14 @@ class PredictionWriter:
         async with pool.acquire() as conn:
             deleted = await conn.fetchval(
                 """
-                DELETE FROM prediction_history
-                WHERE timestamp < NOW() - INTERVAL '%d minutes'
-                RETURNING COUNT(*)
-                """
-                % DATA_RETENTION_MINUTES
+                WITH deleted AS (
+                    DELETE FROM prediction_history
+                    WHERE timestamp < NOW() - INTERVAL '1 minute' * $1
+                    RETURNING 1
+                )
+                SELECT COUNT(*) FROM deleted
+                """,
+                DATA_RETENTION_MINUTES,
             )
             if deleted and deleted > 0:
                 logger.info(
@@ -375,6 +386,9 @@ class PredictionWriter:
                                 "car_count": model_pred["roi_car_count"],
                                 "motorbike_count": model_pred["roi_motorbike_count"],
                                 "density_level": model_pred["roi_congestion_level"],
+                                "confidence": model_pred.get("confidence", 0.8),
+                                "data_source": "live_model_roi",
+                                "quality_score": model_pred.get("roi_density_score"),
                             }
                         else:
                             pred = {
@@ -382,6 +396,9 @@ class PredictionWriter:
                                 "car_count": model_pred["car_count"],
                                 "motorbike_count": model_pred["motorbike_count"],
                                 "density_level": model_pred["density_level"],
+                                "confidence": model_pred.get("confidence", 0.75),
+                                "data_source": "live_model",
+                                "quality_score": model_pred.get("confidence", 0.75),
                             }
                     except Exception as e:
                         logger.error(f"[writer] ML prediction failed for {camera_id}, using heuristic fallback: {e}")
@@ -420,6 +437,9 @@ class PredictionWriter:
                     car_count=r["car_count"],
                     motorbike_count=r["motorbike_count"],
                     density_level=r["density_level"],
+                    confidence=r.get("confidence"),
+                    data_source=r.get("data_source", "live"),
+                    quality_score=r.get("quality_score"),
                 )
                 self._total_records += 1
             except Exception as e:
@@ -436,10 +456,13 @@ class PredictionWriter:
 _writer: PredictionWriter | None = None
 
 
-async def start_writer(interval_seconds: int = 15):
+async def start_writer(interval_seconds: int = 15, batch_size: int | None = None):
     global _writer
     if _writer is None:
-        _writer = PredictionWriter(interval_seconds=interval_seconds)
+        _writer = PredictionWriter(
+            interval_seconds=interval_seconds,
+            batch_size=batch_size or settings.writer_batch_size,
+        )
         await _writer.start()
     return _writer
 

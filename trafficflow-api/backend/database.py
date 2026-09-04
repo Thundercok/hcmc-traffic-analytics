@@ -108,17 +108,22 @@ async def init_schema():
                 raise
 
         if table_exists:
-            # Check if it already has composite PK with timestamp
-            has_pk = await conn.fetchval(
+            # Check if it already has composite PK with camera_id + timestamp.
+            pk_columns = await conn.fetch(
                 """
-                SELECT EXISTS (
-                    SELECT 1 FROM pg_constraint 
-                    WHERE conrelid = 'prediction_history'::regclass
-                    AND contype = 'p'
-                    AND conkey = '{2}'  -- timestamp is column 2
-                )
+                SELECT a.attname
+                FROM pg_constraint c
+                JOIN unnest(c.conkey) WITH ORDINALITY AS cols(attnum, ord)
+                    ON TRUE
+                JOIN pg_attribute a
+                    ON a.attrelid = c.conrelid
+                   AND a.attnum = cols.attnum
+                WHERE c.conrelid = 'prediction_history'::regclass
+                  AND c.contype = 'p'
+                ORDER BY cols.ord
             """
             )
+            has_pk = [r["attname"] for r in pk_columns] == ["camera_id", "timestamp"]
 
             if not has_pk:
                 # Drop existing primary key and recreate with composite
@@ -135,6 +140,41 @@ async def init_schema():
                     )
                 except Exception as e:
                     logger.warning(f"[db] Could not modify PK: {e}")
+
+            try:
+                await conn.execute(
+                    "ALTER TABLE prediction_history ADD COLUMN IF NOT EXISTS confidence FLOAT"
+                )
+                await conn.execute(
+                    """
+                    ALTER TABLE prediction_history
+                    ADD COLUMN IF NOT EXISTS data_source VARCHAR(32) NOT NULL DEFAULT 'live'
+                    """
+                )
+                await conn.execute(
+                    "ALTER TABLE prediction_history ADD COLUMN IF NOT EXISTS quality_score FLOAT"
+                )
+                await conn.execute(
+                    """
+                    CREATE INDEX IF NOT EXISTS idx_prediction_timestamp
+                        ON prediction_history(timestamp DESC)
+                    """
+                )
+                await conn.execute(
+                    """
+                    CREATE INDEX IF NOT EXISTS idx_prediction_camera_time
+                        ON prediction_history(camera_id, timestamp DESC)
+                    """
+                )
+                await conn.execute(
+                    """
+                    CREATE INDEX IF NOT EXISTS idx_prediction_source_time
+                        ON prediction_history(data_source, timestamp DESC)
+                    """
+                )
+                logger.info("[db] prediction_history quality/source columns ready.")
+            except Exception as e:
+                logger.warning(f"[db] Could not update prediction_history columns: {e}")
 
         # Try to convert to hypertable (TimescaleDB)
         try:
@@ -203,6 +243,9 @@ async def record_prediction(
     car_count: int,
     motorbike_count: int,
     density_level: str,
+    confidence: float | None = None,
+    data_source: str = "live",
+    quality_score: float | None = None,
 ):
     """Record a prediction to the database."""
     pool = await get_pool()
@@ -211,13 +254,26 @@ async def record_prediction(
         await conn.execute(
             """
             INSERT INTO prediction_history 
-                (camera_id, timestamp, total_count, car_count, motorbike_count, density_level)
-            VALUES ($1, $2, $3, $4, $5, $6)
+                (
+                    camera_id,
+                    timestamp,
+                    total_count,
+                    car_count,
+                    motorbike_count,
+                    density_level,
+                    confidence,
+                    data_source,
+                    quality_score
+                )
+            VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)
             ON CONFLICT (camera_id, timestamp) DO UPDATE SET
                 total_count = EXCLUDED.total_count,
                 car_count = EXCLUDED.car_count,
                 motorbike_count = EXCLUDED.motorbike_count,
-                density_level = EXCLUDED.density_level
+                density_level = EXCLUDED.density_level,
+                confidence = EXCLUDED.confidence,
+                data_source = EXCLUDED.data_source,
+                quality_score = EXCLUDED.quality_score
             """,
             camera_id,
             timestamp,
@@ -225,12 +281,16 @@ async def record_prediction(
             car_count,
             motorbike_count,
             density_level,
+            confidence,
+            data_source[:32],
+            quality_score,
         )
 
 
 async def get_camera_history(
     camera_id: str,
     minutes: int = 30,
+    limit: int = 500,
 ) -> list[dict]:
     """Get prediction history for a camera."""
     pool = await get_pool()
@@ -238,18 +298,78 @@ async def get_camera_history(
     async with pool.acquire() as conn:
         rows = await conn.fetch(
             """
-            SELECT timestamp, total_count, car_count, motorbike_count, density_level
+            SELECT
+                timestamp,
+                total_count,
+                car_count,
+                motorbike_count,
+                density_level,
+                confidence,
+                data_source,
+                quality_score
             FROM prediction_history
             WHERE camera_id = $1
               AND timestamp > NOW() - INTERVAL '1 minute' * $2
             ORDER BY timestamp DESC
-            LIMIT 100
+            LIMIT $3
             """,
             camera_id,
             minutes,
+            limit,
         )
 
         return [dict(row) for row in rows]
+
+
+async def get_data_coverage(minutes: int = 24 * 60) -> dict:
+    """Return high-level data coverage statistics for the given time window."""
+    pool = await get_pool()
+
+    async with pool.acquire() as conn:
+        overall = await conn.fetchrow(
+            """
+            SELECT
+                COUNT(*) AS total_records,
+                COUNT(DISTINCT camera_id) AS cameras_with_data,
+                MIN(timestamp) AS oldest_record,
+                MAX(timestamp) AS latest_record
+            FROM prediction_history
+            WHERE timestamp > NOW() - INTERVAL '1 minute' * $1
+            """,
+            minutes,
+        )
+        by_source = await conn.fetch(
+            """
+            SELECT data_source, COUNT(*) AS count
+            FROM prediction_history
+            WHERE timestamp > NOW() - INTERVAL '1 minute' * $1
+            GROUP BY data_source
+            ORDER BY count DESC
+            """,
+            minutes,
+        )
+        by_camera = await conn.fetch(
+            """
+            SELECT
+                camera_id,
+                COUNT(*) AS record_count,
+                MAX(timestamp) AS latest_record
+            FROM prediction_history
+            WHERE timestamp > NOW() - INTERVAL '1 minute' * $1
+            GROUP BY camera_id
+            ORDER BY record_count DESC
+            """,
+            minutes,
+        )
+
+    return {
+        "total_records": overall["total_records"] or 0,
+        "cameras_with_data": overall["cameras_with_data"] or 0,
+        "oldest_record": overall["oldest_record"],
+        "latest_record": overall["latest_record"],
+        "by_source": {r["data_source"] or "unknown": r["count"] for r in by_source},
+        "by_camera": [dict(row) for row in by_camera],
+    }
 
 
 async def get_camera_roi(camera_id: str) -> list[list[float]] | None:

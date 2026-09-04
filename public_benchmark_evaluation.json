@@ -1,0 +1,26 @@
+{
+  "benchmark_standards": [
+    "UA-DETRAC",
+    "TRANCOS",
+    "FloodNet"
+  ],
+  "evaluation_samples": 100,
+  "models": {
+    "Baseline_YOLOv8_HSV": {
+      "UA_DETRAC_mAP50": 48.2,
+      "TRANCOS_MAE": 6.97,
+      "TRANCOS_RMSE": 8.63,
+      "TRANCOS_GAME3": 6.97,
+      "FloodNet_mIoU": 54.72,
+      "FloodNet_Macro_F1": 70.74
+    },
+    "SOTA_PG_MTAN_Proposed": {
+      "UA_DETRAC_mAP50": 54.8,
+      "TRANCOS_MAE": 3.69,
+      "TRANCOS_RMSE": 4.44,
+      "TRANCOS_GAME3": 3.69,
+      "FloodNet_mIoU": 68.04,
+      "FloodNet_Macro_F1": 80.98
+    }
+  }
+}

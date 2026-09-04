@@ -78,12 +78,21 @@ async def lifespan(app: FastAPI):
 
     # Start prediction writer - continuous recording every 15 seconds
     # Set WRITER_INTERVAL_SECONDS=0 to disable, or set custom interval
-    writer_interval = int(os.getenv("WRITER_INTERVAL_SECONDS", "15"))
+    writer_interval = int(
+        os.getenv("WRITER_INTERVAL_SECONDS", str(settings.writer_interval_seconds))
+    )
+    writer_batch_size = int(
+        os.getenv("WRITER_BATCH_SIZE", str(settings.writer_batch_size))
+    )
     if writer_interval > 0:
         try:
-            app.state.writer = await start_writer(interval_seconds=writer_interval)
+            app.state.writer = await start_writer(
+                interval_seconds=writer_interval,
+                batch_size=writer_batch_size,
+            )
             logger.info(
-                f"[startup] - Prediction writer started (interval: {writer_interval}s)"
+                f"[startup] - Prediction writer started "
+                f"(interval: {writer_interval}s, batch: {writer_batch_size})"
             )
         except Exception as e:
             logger.warning(f"[startup] - Prediction writer failed to start: {e}")

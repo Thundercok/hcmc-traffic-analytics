@@ -1,0 +1,20 @@
+{
+  "baseline": {
+    "model": "YOLOv8 + HSV Baseline",
+    "load_time_ms": 35.48,
+    "mean_latency_ms": 28.82,
+    "std_latency_ms": 3.35,
+    "p50_latency_ms": 27.65,
+    "p95_latency_ms": 36.52,
+    "throughput_fps": 34.7
+  },
+  "pg_mtan": {
+    "model": "SOTA PG-MTAN (Proposed)",
+    "load_time_ms": 252.41,
+    "mean_latency_ms": 37.58,
+    "std_latency_ms": 8.85,
+    "p50_latency_ms": 38.81,
+    "p95_latency_ms": 51.67,
+    "throughput_fps": 26.61
+  }
+}
